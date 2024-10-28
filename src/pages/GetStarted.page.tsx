@@ -1,9 +1,6 @@
-import cx from 'clsx';
-import { element } from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { Burger, Button, Container, Group, Modal, Overlay, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { HomePage } from '../pages/Home.page';
 import { RegistrationForm } from './RegistrationForm';
 import otherclasses from '../CSS/HeaderMegaMenu.module.css';
 import classes from '../CSS/HeroImageBackground.module.css';
