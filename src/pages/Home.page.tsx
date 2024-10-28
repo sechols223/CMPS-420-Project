@@ -29,6 +29,7 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { RegistrationForm } from './RegistrationForm';
 import classes from '../CSS/HeaderMegaMenu.module.css';
 
 const mockdata = [
@@ -100,7 +101,8 @@ export function HomePage() {
           <Group visibleFrom="sm">
             <Button variant="default">Log in</Button>
             <Modal opened={opened} onClose={close} title="Sign up">
-              {<TextInput withAsterisk label="Email" placeholder="ex. user@gmail.com" />}
+              <RegistrationForm />
+              {/* Use the RegistrationForm component */}
             </Modal>
             <Button onClick={open}>Sign up</Button>
           </Group>
