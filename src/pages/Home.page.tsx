@@ -19,15 +19,9 @@ import {
   UnstyledButton,
   useMantineTheme,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { RegistrationForm } from './RegistrationForm';
 import classes from '../CSS/HeaderMegaMenu.module.css';
 
 export function HomePage() {
-  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
-  const theme = useMantineTheme();
-  const [opened, { open, close }] = useDisclosure(false);
-
   return (
     <Box pb={120}>
       <header className={classes.header}>
