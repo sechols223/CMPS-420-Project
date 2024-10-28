@@ -1,22 +1,33 @@
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button, TextInput } from '@mantine/core';
 import styles from './RegistrationForm.module.css';
 
+type Inputs = {
+  example: string;
+  exampleRequired: string;
+};
+
 export function LoginForm() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+  };
   return (
-    <form>
-      <TextInput withAsterisk label="Email" placeholder="ex. user@gmail.com" required />
-      <TextInput withAsterisk label="Username" placeholder="ex. username" mt="md" required />
-      <TextInput
-        withAsterisk
-        label="Password"
-        placeholder="Password"
-        type="password"
-        mt="md"
-        required
-      />
-      <Button type="submit" fullWidth mt="xl">
-        Log in
-      </Button>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {/* register your input into the hook by invoking the "register" function */}
+      <input defaultValue="test" {...register('example')} />
+
+      {/* include validation with required or other standard HTML validation rules */}
+      <input {...register('exampleRequired', { required: true })} />
+      {/* errors will return when field validation fails  */}
+      {errors.exampleRequired && <span>This field is required</span>}
+
+      <input type="submit" />
     </form>
   );
 }
