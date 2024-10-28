@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { Burger, Button, Container, Group, Modal, Overlay, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { RegistrationForm } from './RegistrationForm';
-import otherclasses from '../CSS/HeaderMegaMenu.module.css';
-import classes from '../CSS/HeroImageBackground.module.css';
+import { LoginForm } from '@/login/login-form';
+import { RegistrationForm } from '../../registration/RegistrationForm';
+import otherclasses from '../../CSS/HeaderMegaMenu.module.css';
+import classes from '../../CSS/HeroImageBackground.module.css';
 
 export function GetStartedPage() {
   const [opened, { open, close }] = useDisclosure(false);
+  const [loginModalOpened, loginModalHandlers] = useDisclosure(false);
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   let navigate = useNavigate();
   const routeChange = () => {
@@ -15,10 +17,22 @@ export function GetStartedPage() {
   };
   return (
     <>
-      <header className={otherclasses.header}>
+      <header
+        className={otherclasses.header}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          padding: '20px 0',
+        }}
+      >
         <Container>
-          <Group justify="flex-end" visibleFrom="sm">
-            <Button variant="default">Log in</Button>
+          <Group visibleFrom="sm">
+            <Modal opened={loginModalOpened} onClose={loginModalHandlers.close} title="Log in">
+              <LoginForm />
+            </Modal>
+            <Button onClick={loginModalHandlers.open} variant="default">
+              Log in
+            </Button>
             <Modal opened={opened} onClose={close} title="Sign up">
               <RegistrationForm />
             </Modal>
