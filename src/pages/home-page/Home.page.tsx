@@ -1,25 +1,5 @@
-import {
-  IconBook,
-  IconChartPie3,
-  IconChevronDown,
-  IconCode,
-  IconCoin,
-  IconFingerprint,
-  IconNotification,
-} from '@tabler/icons-react';
-import {
-  Box,
-  Burger,
-  Button,
-  Group,
-  Modal,
-  rem,
-  Text,
-  ThemeIcon,
-  UnstyledButton,
-  useMantineTheme,
-} from '@mantine/core';
-import classes from '../CSS/HeaderMegaMenu.module.css';
+import { Box, Group } from '@mantine/core';
+import classes from '../../CSS/HeaderMegaMenu.module.css';
 
 export function HomePage() {
   return (
