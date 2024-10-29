@@ -18,7 +18,7 @@ export function HomePage() {
   };
 
   return (
-    <Box pb={120}>
+    <Box pb={50}>
       <header className={classes.header}>
         <Group h="100%" gap={10} visibleFrom="sm">
           <Button title="Home" onClick={routeToUserHome}>
@@ -30,7 +30,6 @@ export function HomePage() {
           <Button title="Alubms" onClick={routeToAlbums}>
             Albums
           </Button>
-          <Avatar variant="filled" radius="sm" src="" />
         </Group>
       </header>
     </Box>

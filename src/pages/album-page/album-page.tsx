@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Box, Button, Group } from '@mantine/core';
+import { Box, Button, Center, Group, Stack, Title } from '@mantine/core';
 import classes from '../../CSS/HeaderMegaMenu.module.css';
 
 export function AlbumPage() {
@@ -18,20 +18,33 @@ export function AlbumPage() {
   };
 
   return (
-    <Box pb={120}>
-      <header className={classes.header}>
-        <Group h="100%" gap={10} visibleFrom="sm">
-          <Button title="Home" onClick={routeToUserHome}>
-            Home
-          </Button>
-          <Button title="Gallery" onClick={routeToGallery}>
-            Gallery
-          </Button>
-          <Button title="Alubms" onClick={routeToAlbums}>
-            Albums
-          </Button>
-        </Group>
-      </header>
-    </Box>
+    <>
+      {' '}
+      <Box pb={50}>
+        <header className={classes.header}>
+          <Group h="100%" gap={10} visibleFrom="sm">
+            <Button title="Home" onClick={routeToUserHome}>
+              Home
+            </Button>
+            <Button title="Gallery" onClick={routeToGallery}>
+              Gallery
+            </Button>
+            <Button title="Alubms" onClick={routeToAlbums}>
+              Albums
+            </Button>
+          </Group>
+        </header>
+      </Box>
+      <Stack>
+        <Center>
+          <Title style={{ marginBottom: '20px' }}> Albums </Title>
+        </Center>
+        <Center>
+          <Group style={{ display: 'flex', alignContent: 'center' }}>
+            {/* Vanna, put all your stuff in here. */}
+          </Group>
+        </Center>
+      </Stack>
+    </>
   );
 }
