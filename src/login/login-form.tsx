@@ -1,7 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { Button, Container, TextInput } from '@mantine/core';
-import styles from '../CSS/forms.css';
 
 export function LoginForm() {
   const {

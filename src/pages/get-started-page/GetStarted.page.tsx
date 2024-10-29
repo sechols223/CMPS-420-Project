@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Burger, Button, Container, Group, Modal, Overlay, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { LoginForm } from '@/login/login-form';
-import { RegistrationForm } from '../../registration/RegistrationForm';
 import otherclasses from '../../CSS/HeaderMegaMenu.module.css';
 import classes from '../../CSS/HeroImageBackground.module.css';
 

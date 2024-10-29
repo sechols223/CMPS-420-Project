@@ -1,5 +1,4 @@
 import { Button, Container, TextInput } from '@mantine/core';
-import styles from './RegistrationForm.module.css';
 
 export function RegistrationForm() {
   return (
