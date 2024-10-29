@@ -1,22 +1,33 @@
-import { Button, TextInput } from '@mantine/core';
-import styles from './RegistrationForm.module.css';
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import { Button, Container, Group, Space, TextInput } from '@mantine/core';
 
 export function LoginForm() {
+  const {
+    register,
+    formState: { errors },
+    getValues,
+    handleSubmit,
+  } = useForm();
+
   return (
-    <form>
-      <TextInput withAsterisk label="Email" placeholder="ex. user@gmail.com" required />
-      <TextInput withAsterisk label="Username" placeholder="ex. username" mt="md" required />
-      <TextInput
-        withAsterisk
-        label="Password"
-        placeholder="Password"
-        type="password"
-        mt="md"
-        required
-      />
-      <Button type="submit" fullWidth mt="xl">
-        Log in
-      </Button>
-    </form>
+    <>
+      <Container>
+        <h1>Login</h1>
+        <form onSubmit={handleSubmit((data) => console.log(data))}>
+          <TextInput label="Username" placeholder="username"></TextInput>
+          <TextInput label="Password" placeholder="password"></TextInput>
+          <small>
+            <Link to="/signupform">Dont have an account?</Link>
+          </small>
+          <br></br>
+
+          <Group>
+            <Button type="submit">Submit</Button>
+            <Button type="button">Cancel</Button>
+          </Group>
+        </form>
+      </Container>
+    </>
   );
 }
