@@ -1554,20 +1554,20 @@ __metadata:
   linkType: hard
 
 "@tabler/icons-react@npm:^3.20.0":
-  version: 3.20.0
-  resolution: "@tabler/icons-react@npm:3.20.0"
+  version: 3.21.0
+  resolution: "@tabler/icons-react@npm:3.21.0"
   dependencies:
-    "@tabler/icons": "npm:3.20.0"
+    "@tabler/icons": "npm:3.21.0"
   peerDependencies:
     react: ">= 16"
-  checksum: 10c0/468aa5034c489e6db443cafbf20a3794ef5f2ad7dc719dca8ce957fd19ea5d94f6ad8ada4c68b7621d6e5cdf747e40f6b2cc65e89c5a4f2b21e4ea727dd1b67c
+  checksum: 10c0/c415c0f2495dc846d5d32bb8a97cd426316c738c5a89cde2fec06f40b7d04f56cd37afb5e997eba541ea145a67a81cb4cf99ec6e2f381096120b3fbf4c9d696a
   languageName: node
   linkType: hard
 
-"@tabler/icons@npm:3.20.0":
-  version: 3.20.0
-  resolution: "@tabler/icons@npm:3.20.0"
-  checksum: 10c0/81650ed119f1a87fabe55dc33f4956a5e427cfad48629ac3ea1b8946486935c3206ff20aad080270a5df4f3080848dbb8e22c6dfa0a9290cf111a228ef1fefc9
+"@tabler/icons@npm:3.21.0":
+  version: 3.21.0
+  resolution: "@tabler/icons@npm:3.21.0"
+  checksum: 10c0/45d0201683e948348e0f247c88d39a2b2e7c05be2715180d911a5c11821ff31d96d54a2d6452ea6e23304cdb4836a21ba2cc043ee9abc6e73804e2192b4c6527
   languageName: node
   linkType: hard
 
@@ -2348,7 +2348,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aria-query@npm:5.3.0, aria-query@npm:^5.0.0":
+"aria-query@npm:5.3.0":
   version: 5.3.0
   resolution: "aria-query@npm:5.3.0"
   dependencies:
@@ -5292,7 +5292,7 @@ __metadata:
     "@testing-library/jest-dom": "npm:^6.5.0"
     "@testing-library/react": "npm:^16.0.1"
     "@testing-library/user-event": "npm:^14.5.2"
-    "@types/react": "npm:^18.3.5"
+    "@types/react": "npm:^18.3.12"
     "@types/react-dom": "npm:^18.3.0"
     "@vitejs/plugin-react": "npm:^4.3.1"
     eslint: "npm:^9.10.0"
@@ -5308,7 +5308,9 @@ __metadata:
     prop-types: "npm:^15.8.1"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
+    react-hook-form: "npm:^7.53.1"
     react-router-dom: "npm:^6.26.1"
+    stash: "npm:^0.0.3"
     storybook: "npm:^8.2.9"
     storybook-dark-mode: "npm:^4.0.2"
     stylelint: "npm:^16.9.0"
@@ -6281,6 +6283,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.53.1":
+  version: 7.53.1
+  resolution: "react-hook-form@npm:7.53.1"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 10c0/dd2466359a633f873755b366d367d51ab17100566b687fb3b098f704232bc6ab1c79d29f879151e492880ca5eeac35e9425fbe5a309e2a55f7a4b5baf7826e8d
+  languageName: node
+  linkType: hard
+
 "react-is@npm:18.1.0":
   version: 18.1.0
   resolution: "react-is@npm:18.1.0"
@@ -6941,6 +6952,13 @@ __metadata:
   version: 0.0.2
   resolution: "stackback@npm:0.0.2"
   checksum: 10c0/89a1416668f950236dd5ac9f9a6b2588e1b9b62b1b6ad8dff1bfc5d1a15dbf0aafc9b52d2226d00c28dffff212da464eaeebfc6b7578b9d180cef3e3782c5983
+  languageName: node
+  linkType: hard
+
+"stash@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "stash@npm:0.0.3"
+  checksum: 10c0/f8e08db2451e727cbd44bcf13b89e856fe8b1c81951a50a66aadd0deba5cc968469ac576a1ec5fe3d0b8c1050179b6fcb0bbebcaf03aba5a6890d94ec375a0d2
   languageName: node
   linkType: hard
 
