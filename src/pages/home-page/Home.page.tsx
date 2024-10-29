@@ -6,13 +6,22 @@ export function HomePage() {
     <Box pb={120}>
       <header className={classes.header}>
         <Group h="100%" gap={0} visibleFrom="sm">
-          <a href="#" className={classes.link}>
+          <a
+            className={classes.link}
+            href="#"
+          >
             Home
           </a>
-          <a href="#" className={classes.link}>
+          <a 
+            className={classes.link} 
+            href="/gallery"
+          >
             Gallery
           </a>
-          <a href="#" className={classes.link}>
+          <a 
+            className={classes.link}
+            href="/albums"
+          >
             Albums
           </a>
         </Group>
