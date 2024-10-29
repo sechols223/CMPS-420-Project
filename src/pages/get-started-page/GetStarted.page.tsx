@@ -17,6 +17,10 @@ export function GetStartedPage() {
     let path = '/signupform';
     navigate(path);
   };
+  const routeToUserHome = () => {
+    let path = '/home';
+    navigate(path);
+  };
   return (
     <>
       <header
@@ -32,6 +36,9 @@ export function GetStartedPage() {
             Log in
           </Button>
           <Button onClick={routeToSignup}>Sign up</Button>
+          <Button title="goto userhome" onClick={routeToUserHome}>
+            Go to user home
+          </Button>
         </Group>
         <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
       </header>

@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Avatar, Box, Button, Group, Space } from '@mantine/core';
+import { Box, Button, Group } from '@mantine/core';
 import classes from '../../CSS/HeaderMegaMenu.module.css';
 
-export function HomePage() {
+export function AlbumPage() {
   let navigate = useNavigate();
   const routeToUserHome = () => {
     let path = '/home';
@@ -30,7 +30,6 @@ export function HomePage() {
           <Button title="Alubms" onClick={routeToAlbums}>
             Albums
           </Button>
-          <Avatar variant="filled" radius="sm" src="" />
         </Group>
       </header>
     </Box>
