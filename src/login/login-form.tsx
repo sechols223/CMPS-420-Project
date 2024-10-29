@@ -1,6 +1,6 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { Button, Container, TextInput } from '@mantine/core';
+import { Button, Container, Group, Space, TextInput } from '@mantine/core';
 
 export function LoginForm() {
   const {
@@ -11,7 +11,7 @@ export function LoginForm() {
   } = useForm();
 
   return (
-    <div className="loginform">
+    <>
       <Container>
         <h1>Login</h1>
         <form onSubmit={handleSubmit((data) => console.log(data))}>
@@ -21,10 +21,13 @@ export function LoginForm() {
             <Link to="/signupform">Dont have an account?</Link>
           </small>
           <br></br>
-          <Button type="submit">Submit</Button>
+
+          <Group>
+            <Button type="submit">Submit</Button>
+            <Button type="button">Cancel</Button>
+          </Group>
         </form>
-        <Button type="button">Cancel</Button>
       </Container>
-    </div>
+    </>
   );
 }
