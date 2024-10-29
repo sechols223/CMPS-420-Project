@@ -24,6 +24,7 @@ export function LoginForm() {
           <br></br>
           <Button type="submit">Submit</Button>
         </form>
+        <Button type="button">Cancel</Button>
       </Container>
     </div>
   );
