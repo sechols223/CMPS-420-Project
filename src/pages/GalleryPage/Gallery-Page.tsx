@@ -4,10 +4,12 @@ import {
   Box,
   Button,
   Card,
+  Center,
   Container,
   Group,
   Image,
   SimpleGrid,
+  Stack,
   Text,
   Title,
 } from '@mantine/core';
@@ -71,7 +73,7 @@ export default function GalleryPage() {
 
   return (
     <>
-      <Box pb={120}>
+      <Box pb={50}>
         <header className={classes.header}>
           <Group h="100%" gap={10} visibleFrom="sm">
             <Button title="Home" onClick={routeToUserHome}>
@@ -86,11 +88,16 @@ export default function GalleryPage() {
           </Group>
         </header>
       </Box>
-
-      <Container py="xl">
-        <Title> Gallery </Title>
-        <SimpleGrid cols={{ base: 1, sm: 2 }}>{cards}</SimpleGrid>
-      </Container>
+      <Stack>
+        <Center>
+          <Title style={{ marginBottom: '20px' }}> Gallery </Title>
+        </Center>
+        <Center>
+          <Group style={{ display: 'flex', alignContent: 'center' }}>
+            <SimpleGrid cols={{ base: 1, sm: 2 }}>{cards}</SimpleGrid>
+          </Group>
+        </Center>
+      </Stack>
     </>
   );
 }
