@@ -1,5 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Button, TextInput } from '@mantine/core';
+import { Link } from 'react-router-dom';
+import { Button, Container, TextInput } from '@mantine/core';
 import styles from '../CSS/forms.css';
 
 export function LoginForm() {
@@ -12,12 +13,18 @@ export function LoginForm() {
 
   return (
     <div className="loginform">
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
-        <input {...register('password', { required: 'Password is required' })} />
-        {errors.password && <p style={{ color: 'white' }}></p>}
-        <button type="submit">Trigger</button>
-      </form>
+      <Container>
+        <h1>Login</h1>
+        <form onSubmit={handleSubmit((data) => console.log(data))}>
+          <TextInput label="Username" placeholder="username"></TextInput>
+          <TextInput label="Password" placeholder="password"></TextInput>
+          <small>
+            <Link to="/signupform">Dont have an account?</Link>
+          </small>
+          <br></br>
+          <Button type="submit">Submit</Button>
+        </form>
+      </Container>
     </div>
   );
 }

@@ -29,15 +29,13 @@ export function GetStartedPage() {
           padding: '20px 0',
         }}
       >
-        <Container>
-          <Group visibleFrom="sm">
-            <Button title="Log in" onClick={routeToLogin}>
-              Log in
-            </Button>
-            <Button onClick={routeToSignup}>Sign up</Button>
-          </Group>
-          <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
-        </Container>
+        <Group visibleFrom="sm">
+          <Button title="Log in" onClick={routeToLogin}>
+            Log in
+          </Button>
+          <Button onClick={routeToSignup}>Sign up</Button>
+        </Group>
+        <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
       </header>
       <div className={classes.wrapper}>
         <Overlay color="#000" opacity={0.65} zIndex={1} />
