@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@mantine/core": "7.13.0",
+    "@mantine/dropzone": "^7.13.4",
     "@mantine/hooks": "7.13.0",
     "@tabler/icons-react": "^3.20.0",
     "react": "^18.3.1",
