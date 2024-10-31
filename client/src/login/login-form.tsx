@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Container, Group, Space, TextInput } from '@mantine/core';
 
 export function LoginForm() {
@@ -9,7 +9,11 @@ export function LoginForm() {
     getValues,
     handleSubmit,
   } = useForm();
-
+  let navigate = useNavigate();
+  const navBack = () => {
+    let path = '/';
+    navigate(path);
+  };
   return (
     <>
       <Container>
@@ -21,10 +25,11 @@ export function LoginForm() {
             <Link to="/signupform">Dont have an account?</Link>
           </small>
           <br></br>
+          <br></br>
 
           <Group>
             <Button type="submit">Submit</Button>
-            <Button type="button">Cancel</Button>
+            <Button onClick={navBack}>Cancel</Button>
           </Group>
         </form>
       </Container>
