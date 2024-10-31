@@ -49,7 +49,7 @@ export default function GalleryPage() {
     navigate(path);
   };
   const routeToAlbums = () => {
-    let path = '/';
+    let path = '/albums';
     navigate(path);
   };
   const routeToHome = () => {
@@ -77,7 +77,7 @@ export default function GalleryPage() {
           <Group h="100%" gap={15} visibleFrom="sm">
             <Button onClick={routeToHome}>Home</Button>
             <Button onClick={routeToGallery}>Gallery</Button>
-            <Button>Albums</Button>
+            <Button onClick={routeToAlbums}>Albums</Button>
           </Group>
         </header>
       </Box>
