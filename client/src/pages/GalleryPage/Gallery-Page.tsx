@@ -1,6 +1,19 @@
-import { Box, Card, Image, Text, Group, Container, AspectRatio, SimpleGrid, Title  } from "@mantine/core";
+import { useNavigate } from 'react-router-dom';
+import {
+  AspectRatio,
+  Box,
+  Button,
+  Card,
+  Center,
+  Container,
+  Group,
+  Image,
+  SimpleGrid,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core';
 import classes from '../GalleryPage/Gallery-Page.module.css';
-
 
 const mockdata = [
   {
@@ -30,7 +43,19 @@ const mockdata = [
 ];
 
 export default function GalleryPage() {
-
+  let navigate = useNavigate();
+  const routeToGallery = () => {
+    let path = '/gallery';
+    navigate(path);
+  };
+  const routeToAlbums = () => {
+    let path = '/';
+    navigate(path);
+  };
+  const routeToHome = () => {
+    let path = '/home';
+    navigate(path);
+  };
   const cards = mockdata.map((article) => (
     <Card key={article.title} p="md" radius="md" component="a" href="#" className={classes.card}>
       <AspectRatio ratio={1920 / 1080}>
@@ -49,25 +74,24 @@ export default function GalleryPage() {
     <>
       <Box pb={120}>
         <header className={classes.header}>
-          <Group h="100%" gap={0} visibleFrom="sm">
-            <a href="#" className={classes.link}>
-              Home
-            </a>
-            <a href="#" className={classes.link}>
-              Gallery
-            </a>
-            <a href="#" className={classes.link}>
-              Albums
-            </a>
+          <Group h="100%" gap={15} visibleFrom="sm">
+            <Button onClick={routeToHome}>Home</Button>
+            <Button onClick={routeToGallery}>Gallery</Button>
+            <Button>Albums</Button>
           </Group>
         </header>
       </Box>
-        
-      <Container py="xl">
-        <Title> Gallery </Title>
-        <SimpleGrid cols={{ base: 1, sm: 2 }}>{cards}</SimpleGrid>
-      </Container>
-        
+
+      <Group>
+        <Center>
+          <Stack>
+            <Center>
+              <Title> Gallery </Title>
+            </Center>
+            <SimpleGrid cols={{ base: 1, sm: 2 }}>{cards}</SimpleGrid>
+          </Stack>
+        </Center>
+      </Group>
     </>
-  )
+  );
 }
