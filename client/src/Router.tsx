@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { LoginForm } from './login/login-form';
+import AlbumPage from './pages/album-page/album-page';
 import GalleryPage from './pages/GalleryPage/Gallery-Page';
 import { GetStartedPage } from './pages/get-started-page/GetStarted.page';
 import { HomePage } from './pages/home-page/Home.page';
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: '/signupform',
     element: <RegistrationForm />,
+  },
+  {
+    path: '/albums',
+    element: <AlbumPage />,
   },
 ]);
 
