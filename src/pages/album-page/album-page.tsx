@@ -1,5 +1,14 @@
 // Stuff I added
-import { IconDots, IconEye, IconFileZip, IconPlus, IconTrash } from '@tabler/icons-react'; // Stuff I added
+import {
+  IconArrowRight,
+  IconDots,
+  IconEye,
+  IconFileZip,
+  IconPlus,
+  IconSearch,
+  IconTrash,
+} from '@tabler/icons-react';
+// Stuff I added
 import { Link, useNavigate } from 'react-router-dom';
 import {
   ActionIcon,
@@ -14,12 +23,16 @@ import {
   SimpleGrid,
   Stack,
   Text,
+  TextInput,
+  TextInputProps,
   Title,
+  useMantineTheme,
 } from '@mantine/core';
 import classes from '../../CSS/HeaderMegaMenu.module.css';
 
 export function AlbumPage() {
   let navigate = useNavigate();
+  const theme = useMantineTheme(); // Get the theme object
   const routeToUserHome = () => {
     let path = '/home';
     navigate(path);
@@ -73,10 +86,25 @@ export function AlbumPage() {
             <Button title="Gallery" onClick={routeToGallery}>
               Gallery
             </Button>
-            <Button title="Alubms" onClick={routeToAlbums}>
+            <Button title="Albums" onClick={routeToAlbums}>
               Albums
             </Button>
           </Group>
+          <div className={classes.searchBar}>
+            <TextInput
+              radius="xl"
+              size="md"
+              placeholder="Search images, albums, and more"
+              rightSectionWidth={42}
+              leftSection={<IconSearch style={{ width: rem(18), height: rem(18) }} stroke={1.5} />}
+              rightSection={
+                <ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
+                  <IconArrowRight style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
+                </ActionIcon>
+              }
+              style={{ width: '40%' }}
+            />
+          </div>
         </header>
       </Box>
       <Stack>
