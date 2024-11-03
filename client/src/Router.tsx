@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { LoginForm } from './login/login-form';
-import GalleryPage from './pages/GalleryPage/Gallery-Page';
+import GalleryPage from './pages/gallery-page/gallery-page';
 import { GetStartedPage } from './pages/get-started-page/GetStarted.page';
 import { HomePage } from './pages/home-page/Home.page';
 import { RegistrationForm } from './registration/RegistrationForm';
