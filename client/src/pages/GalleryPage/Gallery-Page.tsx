@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import {
+  ActionIcon,
   AspectRatio,
   Box,
   Button,
@@ -8,12 +9,17 @@ import {
   Container,
   Group,
   Image,
+  rem,
   SimpleGrid,
   Stack,
   Text,
+  TextInput,
   Title,
 } from '@mantine/core';
-import classes from '../GalleryPage/Gallery-Page.module.css';
+import classes from '../../CSS/HeaderMegaMenu.module.css';
+import logo from '../../components/Images/Logo_Small@2x.png'; // Adjust the path as needed
+import { IconArrowRight, IconSearch } from '@tabler/icons-react';
+import { theme } from '@/theme';
 
 const mockdata = [
   {
@@ -49,10 +55,14 @@ export default function GalleryPage() {
     navigate(path);
   };
   const routeToAlbums = () => {
-    let path = '/';
+    let path = '/albums';
     navigate(path);
   };
   const routeToHome = () => {
+    let path = '/home';
+    navigate(path);
+  };
+  const routeToUserHome = () => {
     let path = '/home';
     navigate(path);
   };
@@ -72,13 +82,50 @@ export default function GalleryPage() {
 
   return (
     <>
-      <Box pb={120}>
+      {' '}
+      <Box pb={50}>
         <header className={classes.header}>
-          <Group h="100%" gap={15} visibleFrom="sm">
-            <Button onClick={routeToHome}>Home</Button>
-            <Button onClick={routeToGallery}>Gallery</Button>
-            <Button>Albums</Button>
+          <div className={classes.logoContainer}>
+            <img src={logo} alt="Logo" className={classes.logo} />
+          </div>
+          <Group h="100%" gap={10} visibleFrom="sm">
+            <Button
+              title="Home"
+              onClick={routeToUserHome}
+              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
+            >
+              Home
+            </Button>
+            <Button
+              title="Gallery"
+              onClick={routeToGallery}
+              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
+            >
+              Gallery
+            </Button>
+            <Button
+              title="Albums"
+              onClick={routeToAlbums}
+              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
+            >
+              Albums
+            </Button>
           </Group>
+          <div className={classes.searchBar}>
+            <TextInput
+              radius="xl"
+              size="md"
+              placeholder="Search images, albums, and more"
+              rightSectionWidth={42}
+              leftSection={<IconSearch style={{ width: rem(18), height: rem(18) }} stroke={1.5} />}
+              rightSection={
+                <ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
+                  <IconArrowRight style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
+                </ActionIcon>
+              }
+              style={{ width: '40%' }}
+            />
+          </div>
         </header>
       </Box>
 
