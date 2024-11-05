@@ -9,7 +9,7 @@ export function HomePage() {
     navigate(path);
   };
   const routeToAlbums = () => {
-    let path = '/';
+    let path = '/albums';
     navigate(path);
   };
   const routeToHome = () => {
@@ -22,7 +22,7 @@ export function HomePage() {
         <Group h="100%" gap={15} visibleFrom="sm">
           <Button onClick={routeToHome}>Home</Button>
           <Button onClick={routeToGallery}>Gallery</Button>
-          <Button>Albums</Button>
+          <Button onClick={routeToAlbums}>Albums</Button>
         </Group>
       </header>
     </Box>
