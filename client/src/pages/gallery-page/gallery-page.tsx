@@ -27,7 +27,6 @@ import { useContext, useRef } from 'react';
 import { IconBadge4k, IconCloudUpload, IconDownload, IconMoon, IconSun, IconX } from '@tabler/icons-react';
 import classes from '../gallery-page/gallery-page.module.css';
 import '@mantine/dropzone/styles.css';
-import { faMoon } from '@fortawesome/free-solid-svg-icons';
 
 const mockdata = [
   {
