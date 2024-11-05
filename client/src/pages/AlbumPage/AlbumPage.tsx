@@ -28,7 +28,7 @@ import {
   Title,
   useMantineTheme,
 } from '@mantine/core';
-import logo from '../../components/Images/Logo_Small_2x.png'; // Adjust the path as needed
+import logo from '../../components/Images/Logo_Small@2x.png'; // Adjust the path as needed
 import classes from '../../CSS/HeaderMegaMenu.module.css';
 
 export function AlbumPage() {
