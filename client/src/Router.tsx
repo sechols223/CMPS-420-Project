@@ -4,6 +4,7 @@ import GalleryPage from './pages/GalleryPage/Gallery-Page';
 import { GetStartedPage } from './pages/get-started-page/GetStarted.page';
 import { HomePage } from './pages/home-page/Home.page';
 import { RegistrationForm } from './registration/RegistrationForm';
+import { AlbumPage } from './pages/AlbumPage/AlbumPage';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
     path: '/signupform',
     element: <RegistrationForm />,
   },
+  {
+    path: '/albums',
+    element: <AlbumPage/>
+  }
 ]);
 
 export function Router() {
