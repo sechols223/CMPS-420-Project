@@ -66,7 +66,7 @@ export function AlbumPage() {
   ];
   // Stuff I added
   const routeToAlbum = (albumId: number) => {
-    let path = `/albums/${albumId}`;
+    let path = `/OpenAlbum/${albumId}`;
     navigate(path);
   };
 
