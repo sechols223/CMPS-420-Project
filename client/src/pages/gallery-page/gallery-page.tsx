@@ -143,7 +143,7 @@ export default function GalleryPage() {
                   searchable
                   nothingFoundMessage="Nothing Found... :\"
                 />
-                <Modal opened={opened} onClose={close} title="Authentication" centered>
+                <Modal opened={opened} onClose={close} centered radius={'lg'}>
                   {
                     <div className={classes.wrapper}>
                     <Dropzone

@@ -5,4 +5,5 @@ export interface PhotoDto{
     title: string;
     description: string;
     tags: Array<string>;
+    isFavorite: boolean;
 }
