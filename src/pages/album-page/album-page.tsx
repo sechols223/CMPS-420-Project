@@ -28,6 +28,7 @@ import {
   Title,
   useMantineTheme,
 } from '@mantine/core';
+import logo from '../../components/Images/Logo_Small_2x.png'; // Adjust the path as needed
 import classes from '../../CSS/HeaderMegaMenu.module.css';
 
 export function AlbumPage() {
@@ -79,14 +80,29 @@ export function AlbumPage() {
       {' '}
       <Box pb={50}>
         <header className={classes.header}>
+          <div className={classes.logoContainer}>
+            <img src={logo} alt="Logo" className={classes.logo} />
+          </div>
           <Group h="100%" gap={10} visibleFrom="sm">
-            <Button title="Home" onClick={routeToUserHome}>
+            <Button
+              title="Home"
+              onClick={routeToUserHome}
+              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
+            >
               Home
             </Button>
-            <Button title="Gallery" onClick={routeToGallery}>
+            <Button
+              title="Gallery"
+              onClick={routeToGallery}
+              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
+            >
               Gallery
             </Button>
-            <Button title="Albums" onClick={routeToAlbums}>
+            <Button
+              title="Albums"
+              onClick={routeToAlbums}
+              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
+            >
               Albums
             </Button>
           </Group>

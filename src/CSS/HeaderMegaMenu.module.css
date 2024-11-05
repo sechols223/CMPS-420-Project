@@ -9,6 +9,18 @@
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
+  background-color: #39445a;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  margin-right: var(--mantine-spacing-md);
+}
+
+.logo {
+  height: 100px; /* Adjust the height as needed */
+  /* margin: var(--mantine-spacing-sm); */
 }
 
 .header .searchBar {
@@ -22,6 +34,7 @@
   display: flex;
   flex-grow: 1;
   gap: var(--mantine-spacing-md);
+  padding-left: var(--mantine-spacing-md);
 }
 
 .link {
@@ -40,7 +53,7 @@
     width: 100%;
   }
 
-  @mixin hover {
+  &:hover {
     background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
   }
 }
@@ -50,7 +63,7 @@
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   border-radius: var(--mantine-radius-md);
 
-  @mixin hover {
+  &:hover {
     background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
   }
 }
