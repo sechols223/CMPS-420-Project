@@ -8,6 +8,8 @@ import classes from '../home-page/Home.page.module.css'
 import { useMediaQuery } from '@mantine/hooks';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
+import { useRef } from 'react';
+import Autoplay from 'embla-carousel-autoplay';
 
 
 
@@ -102,68 +104,25 @@ export function HomePage() {
     </Carousel.Slide>
   ));
 
-
+  const autoplay = useRef(Autoplay({ delay: 2000 }));
 
   return (
     <>
     {' '}
       <Box pb={50}>
-        <header className={classes.header}>
-          <div className={classes.logoContainer}>
-            <img src={logo} alt="Logo" className={classes.logo} />
-          </div>
-          <Group h="100%" gap={10} visibleFrom="sm">
-            <Button
-              title="Home"
-              onClick={routeToUserHome}
-              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
-            >
-              Home
-            </Button>
-            <Button
-              title="Gallery"
-              onClick={routeToGallery}
-              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
-            >
-              Gallery
-            </Button>
-            <Button
-              title="Albums"
-              onClick={routeToAlbums}
-              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
-            >
-              Albums
-            </Button>
-          </Group>
-          <div className={classes.searchBar}>
-            <TextInput
-              radius="xl"
-              size="md"
-              placeholder="Search images, albums, and more"
-              rightSectionWidth={42}
-              leftSection={<IconSearch style={{ width: rem(18), height: rem(18) }} stroke={1.5} />}
-              rightSection={
-                <ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
-                  <IconArrowRight style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
-                </ActionIcon>
-              }
-              style={{ width: '40%' }}
-            />
-          </div>
-        </header>
-      </Box>
 
-      <Box pb={50}>
-
-      <Carousel
-      slideSize={{ base: '80%', sm: '50%' }}
-      slideGap={{ base: rem(2), sm: 'xl' }}
-      align="start"
-      slidesToScroll={mobile ? 1 : 2}
-      loop
-    >
-      {slides}
-    </Carousel>
+        <Carousel
+          slideSize={{ base: '80%', sm: '50%' }}
+          slideGap={{ base: rem(2), sm: 'xl' }}
+          align="start"
+          slidesToScroll={mobile ? 1 : 2}
+          loop
+          plugins={[autoplay.current]}
+          onMouseEnter={autoplay.current.stop}
+          onMouseLeave={autoplay.current.reset}
+        >
+          {slides}
+        </Carousel>
       </Box>
   </>
 )}
