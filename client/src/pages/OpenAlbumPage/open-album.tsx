@@ -40,16 +40,10 @@ const CardComponent: React.FC<CardProps> = ({ image, title, category }) => {
       className={classes.card}
     >
       <div>
-        <Text className={classes.category} size="xs">
-          {category}
-        </Text>
         <Title order={3} className={classes.title}>
           {title}
         </Title>
       </div>
-      <Button variant="white" color="dark">
-        Read article
-      </Button>
     </Paper>
   );
 };
@@ -165,19 +159,22 @@ export function OpenAlbumPage() {
           </div>
         </header>
       </Box>
-
-      <Stack>
-        <Center>
-          <Carousel
-            slideSize="33.3333%"
-            slideGap="md"
-            align="start"
-            slidesToScroll={mobile ? 1 : 3}
-          >
-            {slides}
-          </Carousel>
-        </Center>
-      </Stack>
+      <Box pb={50} px="md">
+        <div className={classes.carousel}>
+          <Stack>
+            <Center>
+              <Carousel
+                slideSize="33.3333%"
+                slideGap="md"
+                align="start"
+                slidesToScroll={mobile ? 1 : 3}
+              >
+                {slides}
+              </Carousel>
+            </Center>
+          </Stack>
+        </div>
+      </Box>
     </>
   );
 }
