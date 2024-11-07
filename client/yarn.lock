@@ -859,9 +859,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/core@npm:7.13.0":
-  version: 7.13.0
-  resolution: "@mantine/core@npm:7.13.0"
+"@mantine/carousel@npm:^7.13.4":
+  version: 7.13.4
+  resolution: "@mantine/carousel@npm:7.13.4"
+  peerDependencies:
+    "@mantine/core": 7.13.4
+    "@mantine/hooks": 7.13.4
+    embla-carousel-react: ">=7.0.0"
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 10c0/dccc889c5a7a3ac32b63ade19866cb1ee639f5e6539216b9ab81bc8bb56259d33d19f899bec2ef729222c0c4468627203035b9ad160fdf003091555773c6f4d4
+  languageName: node
+  linkType: hard
+
+"@mantine/core@npm:^7.13.4":
+  version: 7.13.4
+  resolution: "@mantine/core@npm:7.13.4"
   dependencies:
     "@floating-ui/react": "npm:^0.26.9"
     clsx: "npm:^2.1.1"
@@ -870,19 +883,33 @@ __metadata:
     react-textarea-autosize: "npm:8.5.3"
     type-fest: "npm:^4.12.0"
   peerDependencies:
-    "@mantine/hooks": 7.13.0
+    "@mantine/hooks": 7.13.4
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 10c0/69a1aef8aaf0b9dc2a0e6af5457bfaa956f529eabf72467bcf0b66f462a7c2db31f8db7b1ba92ac627f88d1c74d0141af43dcf302fe1e52b0af9155f84d2241f
+  checksum: 10c0/981375992aa4804bb3a3d747b36a9e92d12769fc5fc5fe97d59d1b0773f84c16a47b94d32a8d662a6779e4368bc5b75b18468be854201d9fbdeb4174be2fce37
   languageName: node
   linkType: hard
 
-"@mantine/hooks@npm:7.13.0":
-  version: 7.13.0
-  resolution: "@mantine/hooks@npm:7.13.0"
+"@mantine/dropzone@npm:^7.13.4":
+  version: 7.13.4
+  resolution: "@mantine/dropzone@npm:7.13.4"
+  dependencies:
+    react-dropzone-esm: "npm:15.0.1"
+  peerDependencies:
+    "@mantine/core": 7.13.4
+    "@mantine/hooks": 7.13.4
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 10c0/567ba61bf9e113921503da57cc670de83498b966c15b7dc3213593091e338cc48ea501af443d4c1a7e62497071e112ea0df65ca48e4125d48afefd78a84877a1
+  languageName: node
+  linkType: hard
+
+"@mantine/hooks@npm:^7.13.4":
+  version: 7.13.4
+  resolution: "@mantine/hooks@npm:7.13.4"
   peerDependencies:
     react: ^18.2.0
-  checksum: 10c0/cae0b6d1f1d0bb2b31fd2ae6f179dc8c70827443271aa73fe18b885dd8db887dc9065f32b324ca6072f46821421baebb321b2e6ce74be5a89b15127136df0eff
+  checksum: 10c0/81261966b1a22fdefd8fa3e828fe4e85b0bb210d290c7e77e336ad56f7c91136f3be1a284eaa65f556524b084bb43efe110ec868fb51275ff43d1a4299213ed8
   languageName: node
   linkType: hard
 
@@ -2838,6 +2865,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"embla-carousel-react@npm:^8.3.1":
+  version: 8.3.1
+  resolution: "embla-carousel-react@npm:8.3.1"
+  dependencies:
+    embla-carousel: "npm:8.3.1"
+    embla-carousel-reactive-utils: "npm:8.3.1"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.1 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+  checksum: 10c0/9ba15d3e322210b0dc2a961ef7e49d07ffc6e09b28a3f44277b1463930ed06b4bf277bef9156b122b7ddf2c10681f8dd464433336fd629c1159f94487d49efdb
+  languageName: node
+  linkType: hard
+
+"embla-carousel-reactive-utils@npm:8.3.1":
+  version: 8.3.1
+  resolution: "embla-carousel-reactive-utils@npm:8.3.1"
+  peerDependencies:
+    embla-carousel: 8.3.1
+  checksum: 10c0/33f83150bba95355c0ab2ec9686d0eb035d66ffeb40cb0c04d3ea7754c58011cd99d05795e11520bb28a5e9040c5385d59ea58591d5ab7a9d22ada05221ba939
+  languageName: node
+  linkType: hard
+
+"embla-carousel@npm:8.3.1":
+  version: 8.3.1
+  resolution: "embla-carousel@npm:8.3.1"
+  checksum: 10c0/2c6af7af5145913939e61e185264965b8ef008134e926eeb43b354f0df15e75d823856d95b73c7fce201150306a23752eb3115126870be68d3cd24d0e354db08
+  languageName: node
+  linkType: hard
+
 "emoji-regex@npm:^8.0.0":
   version: 8.0.0
   resolution: "emoji-regex@npm:8.0.0"
@@ -4709,8 +4764,10 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.10.0"
     "@ianvs/prettier-plugin-sort-imports": "npm:^4.3.1"
-    "@mantine/core": "npm:7.13.0"
-    "@mantine/hooks": "npm:7.13.0"
+    "@mantine/carousel": "npm:^7.13.4"
+    "@mantine/core": "npm:^7.13.4"
+    "@mantine/dropzone": "npm:^7.13.4"
+    "@mantine/hooks": "npm:^7.13.4"
     "@storybook/addon-essentials": "npm:^8.2.9"
     "@storybook/addon-interactions": "npm:^8.2.9"
     "@storybook/addon-links": "npm:^8.2.9"
@@ -4726,6 +4783,7 @@ __metadata:
     "@types/react": "npm:^18.3.12"
     "@types/react-dom": "npm:^18.3.0"
     "@vitejs/plugin-react": "npm:^4.3.1"
+    embla-carousel-react: "npm:^8.3.1"
     eslint: "npm:^9.10.0"
     eslint-config-mantine: "npm:^4.0.3"
     eslint-plugin-jsx-a11y: "npm:^6.10.0"
@@ -5531,6 +5589,17 @@ __metadata:
   peerDependencies:
     react: ^18.3.1
   checksum: 10c0/a752496c1941f958f2e8ac56239172296fcddce1365ce45222d04a1947e0cc5547df3e8447f855a81d6d39f008d7c32eab43db3712077f09e3f67c4874973e85
+  languageName: node
+  linkType: hard
+
+"react-dropzone-esm@npm:15.0.1":
+  version: 15.0.1
+  resolution: "react-dropzone-esm@npm:15.0.1"
+  dependencies:
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    react: ">= 16.8 || 18.0.0"
+  checksum: 10c0/4bd7054a78a9d8b98d13f0abfbdec334e647c681ccb62c5c38fce72e1bace4cdb7d5eb22675ab2ce63f6cca11ec40c0e2081a28a725a38f331cf930abb170e7d
   languageName: node
   linkType: hard
 
