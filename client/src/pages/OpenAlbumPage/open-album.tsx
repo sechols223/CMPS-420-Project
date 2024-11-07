@@ -24,13 +24,13 @@ import logo from '../../components/Images/Logo_Small@2x.png'; // Adjust the path
 import carouselClasses from '../../CSS/CardCarousel.module.css';
 import classes from '../../CSS/HeaderMegaMenu.module.css';
 
-interface CardProps {
+type CardProps = {
   image: string;
   title: string;
   category: string;
-}
+};
 
-function CardComponent({ image, title, category }: CardProps) {
+const CardComponent: React.FC<CardProps> = ({ image, title, category }) => {
   return (
     <Paper
       shadow="md"
@@ -52,7 +52,7 @@ function CardComponent({ image, title, category }: CardProps) {
       </Button>
     </Paper>
   );
-}
+};
 
 const data = [
   {
@@ -94,21 +94,21 @@ const data = [
 ];
 
 export function OpenAlbumPage() {
-  let { albumId } = useParams();
-  let navigate = useNavigate();
+  const { albumId } = useParams();
+  const navigate = useNavigate();
   const theme = useMantineTheme(); // Get the theme object
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
   const routeToUserHome = () => {
-    let path = '/home';
+    const path = '/home';
     navigate(path);
   };
   const routeToGallery = () => {
-    let path = '/gallery';
+    const path = '/gallery';
     navigate(path);
   };
   const routeToAlbums = () => {
-    let path = '/albums';
+    const path = '/albums';
     navigate(path);
   };
 
