@@ -1,10 +1,11 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { LoginForm } from './login/login-form';
+import { AlbumPage } from './pages/AlbumPage/AlbumPage';
 import GalleryPage from './pages/GalleryPage/Gallery-Page';
 import { GetStartedPage } from './pages/get-started-page/GetStarted.page';
 import { HomePage } from './pages/home-page/Home.page';
+import { OpenAlbumPage } from './pages/OpenAlbumPage/open-album';
 import { RegistrationForm } from './registration/RegistrationForm';
-import { AlbumPage } from './pages/AlbumPage/AlbumPage';
 
 const router = createBrowserRouter([
   {
@@ -29,8 +30,12 @@ const router = createBrowserRouter([
   },
   {
     path: '/albums',
-    element: <AlbumPage/>
-  }
+    element: <AlbumPage />,
+  },
+  {
+    path: `/OpenAlbum/:albumId`,
+    element: <OpenAlbumPage />,
+  },
 ]);
 
 export function Router() {
