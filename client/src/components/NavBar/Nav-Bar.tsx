@@ -1,8 +1,8 @@
-import { ActionIcon, Box, Button, Group, rem, TextInput } from "@mantine/core";
+import { ActionIcon, Box, Button, Group, rem, TextInput, useComputedColorScheme, useMantineColorScheme, useMantineTheme } from "@mantine/core";
 import classes from '../../CSS/HeaderMegaMenu.module.css';
 import logo from '../../components/Images/Logo_Small@2x.png'; // Adjust the path as needed
 import { Outlet, useNavigate } from "react-router-dom";
-import { IconArrowRight, IconSearch } from "@tabler/icons-react";
+import { IconArrowRight, IconMoon, IconSearch, IconSun } from "@tabler/icons-react";
 import { theme } from "@/theme";
 
 
@@ -20,6 +20,15 @@ export function NavBar (){
     let path = '/';
     navigate(path);
   };
+
+  const theme = useMantineTheme();
+  const {setColorScheme} = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme('light');
+
+  const toggleColorScheme = () => {
+    setColorScheme(computedColorScheme === "dark" ? 'light' : 'dark')
+  }
+
 
     return(
         <>
@@ -49,6 +58,13 @@ export function NavBar (){
                     style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
                     >
                     Albums
+                    </Button>
+
+                    <Button 
+                        onClick={toggleColorScheme}
+                        style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold'}}
+                        >
+                        {computedColorScheme === "dark" ? <IconSun /> : <IconMoon/>}  
                     </Button>
                 </Group>
                 <div className={classes.searchBar}>

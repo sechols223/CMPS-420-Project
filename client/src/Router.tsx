@@ -36,15 +36,20 @@ const router = createBrowserRouter([
       },
     ]
   },
+]);
+
+const router2 = createBrowserRouter([
   {
-    path: '/get-started',
+    path: '/',
     element: <GetStartedPage/>
   },
-
-
 ]);
 
 export function Router() {
 
   return <RouterProvider router={router} />;
+}
+
+export function Router2() {
+  return <RouterProvider router={router2} />
 }
