@@ -1,14 +1,5 @@
-// Stuff I added
-import {
-  IconArrowRight,
-  IconDots,
-  IconEye,
-  IconFileZip,
-  IconPlus,
-  IconSearch,
-  IconTrash,
-} from '@tabler/icons-react';
-// Stuff I added
+import React, { useState } from 'react';
+import { IconArrowRight, IconPlus, IconSearch } from '@tabler/icons-react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   ActionIcon,
@@ -18,13 +9,12 @@ import {
   Center,
   Group,
   Image,
-  Menu,
+  Modal,
   rem,
   SimpleGrid,
   Stack,
   Text,
   TextInput,
-  TextInputProps,
   Title,
   useMantineTheme,
 } from '@mantine/core';
@@ -34,6 +24,10 @@ import classes from '../../CSS/HeaderMegaMenu.module.css';
 export function AlbumPage() {
   let navigate = useNavigate();
   const theme = useMantineTheme(); // Get the theme object
+  const [modalOpened, setModalOpened] = useState(false);
+  const [newAlbumTitle, setNewAlbumTitle] = useState('');
+  const [newAlbumCover, setNewAlbumCover] = useState('');
+
   const routeToUserHome = () => {
     let path = '/home';
     navigate(path);
@@ -64,74 +58,47 @@ export function AlbumPage() {
       cover: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-3.png',
     },
   ];
-  // Stuff I added
+
   const routeToAlbum = (albumId: number) => {
     let path = `/OpenAlbum/${albumId}`;
     navigate(path);
   };
 
   const addNewAlbum = () => {
-    // Logic to add a new album
-    console.log('Add new album');
+    setModalOpened(true);
+  };
+
+  const handleCreateAlbum = () => {
+    console.log('New album created:', newAlbumTitle, newAlbumCover);
+    setModalOpened(false);
   };
 
   return (
     <>
-      {' '}
-      <Box pb={50}>
-        <header className={classes.header}>
-          <div className={classes.logoContainer}>
-            <img src={logo} alt="Logo" className={classes.logo} />
-          </div>
-          <Group h="100%" gap={10} visibleFrom="sm">
-            <Button
-              title="Home"
-              onClick={routeToUserHome}
-              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
-            >
-              Home
-            </Button>
-            <Button
-              title="Gallery"
-              onClick={routeToGallery}
-              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
-            >
-              Gallery
-            </Button>
-            <Button
-              title="Albums"
-              onClick={routeToAlbums}
-              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
-            >
-              Albums
-            </Button>
-          </Group>
-          <div className={classes.searchBar}>
-            <TextInput
-              radius="xl"
-              size="md"
-              placeholder="Search images, albums, and more"
-              rightSectionWidth={42}
-              leftSection={<IconSearch style={{ width: rem(18), height: rem(18) }} stroke={1.5} />}
-              rightSection={
-                <ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
-                  <IconArrowRight style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
-                </ActionIcon>
-              }
-              style={{ width: '40%' }}
-            />
-          </div>
-        </header>
-      </Box>
       <Stack>
         <Center>
           <Title style={{ marginBottom: '20px' }}> Albums </Title>
         </Center>
         <Center>
           <Group style={{ display: 'flex', alignContent: 'center' }}>
-            {/* Vanna, put all your stuff in here. */}
             <SimpleGrid cols={3} spacing="lg">
-              {albums.map((album) => (
+              <Link to={`/OpenAlbum/${albums[0].id}`} style={{ textDecoration: 'none' }}>
+                <Card
+                  key={albums[0].id}
+                  withBorder
+                  shadow="sm"
+                  radius="md"
+                  style={{ cursor: 'pointer', textAlign: 'center' }}
+                >
+                  <Card.Section>
+                    <Image src={albums[0].cover} height={160} alt={albums[0].title} />
+                  </Card.Section>
+                  <Text mt="sm" fw={500}>
+                    {albums[0].title}
+                  </Text>
+                </Card>
+              </Link>
+              {albums.slice(1).map((album) => (
                 <Card
                   key={album.id}
                   withBorder
@@ -165,10 +132,26 @@ export function AlbumPage() {
                 </Text>
               </Card>
             </SimpleGrid>
-            {/* End of my stuff */}
           </Group>
         </Center>
       </Stack>
+      <Modal opened={modalOpened} onClose={() => setModalOpened(false)} title="Create New Album">
+        <Stack>
+          <TextInput
+            label="Album Title"
+            placeholder="Enter album title"
+            value={newAlbumTitle}
+            onChange={(event) => setNewAlbumTitle(event.currentTarget.value)}
+          />
+          <TextInput
+            label="Album Cover URL"
+            placeholder="Enter album cover URL"
+            value={newAlbumCover}
+            onChange={(event) => setNewAlbumCover(event.currentTarget.value)}
+          />
+          <Button onClick={handleCreateAlbum}>Create Album</Button>
+        </Stack>
+      </Modal>
     </>
   );
 }

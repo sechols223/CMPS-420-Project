@@ -3,9 +3,9 @@ import '@mantine/carousel/styles.css';
 
 
 import { MantineProvider } from '@mantine/core';
-import { Router } from './Router';
+import { Router, Router2 } from './Router';
 import { theme } from './theme';
-import { Router2 } from './Router2';
+
 
 
 const isLoggedIn = true;
