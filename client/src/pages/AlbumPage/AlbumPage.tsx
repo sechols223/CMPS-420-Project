@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconArrowRight, IconPlus, IconSearch } from '@tabler/icons-react';
+import { IconArrowRight, IconMoon, IconPlus, IconSearch, IconSun } from '@tabler/icons-react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   ActionIcon,
@@ -16,6 +16,8 @@ import {
   Text,
   TextInput,
   Title,
+  useComputedColorScheme,
+  useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
 import logo from '../../components/Images/Logo_Small@2x.png'; // Adjust the path as needed
@@ -24,6 +26,8 @@ import classes from '../../CSS/HeaderMegaMenu.module.css';
 export function AlbumPage() {
   let navigate = useNavigate();
   const theme = useMantineTheme(); // Get the theme object
+  const { setColorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme('light');
   const [modalOpened, setModalOpened] = useState(false);
   const [newAlbumTitle, setNewAlbumTitle] = useState('');
   const [newAlbumCover, setNewAlbumCover] = useState('');
@@ -39,6 +43,10 @@ export function AlbumPage() {
   const routeToAlbums = () => {
     let path = '/albums';
     navigate(path);
+  };
+
+  const toggleColorScheme = () => {
+    setColorScheme(computedColorScheme === 'dark' ? 'light' : 'dark');
   };
 
   const albums = [
@@ -101,6 +109,12 @@ export function AlbumPage() {
               style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
             >
               Albums
+            </Button>
+            <Button
+              onClick={toggleColorScheme}
+              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
+            >
+              {computedColorScheme === 'dark' ? <IconSun /> : <IconMoon />}
             </Button>
           </Group>
           <div className={classes.searchBar}>
