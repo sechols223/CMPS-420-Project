@@ -217,6 +217,8 @@ export function OpenAlbumPage() {
           marginTop: '20px',
           margin: '50px',
           padding: '20px',
+          marginLeft: '110px',
+          marginRight: '110px',
         }}
       >
         <div className={classes.carousel}>
@@ -241,7 +243,7 @@ export function OpenAlbumPage() {
       </Box>
 
       {/*Thumnails*/}
-      <Box>
+      <Box style={{ marginLeft: '30px', marginRight: '30px' }}>
         <Group align="center" justify="center" gap="xs" style={{ flexWrap: 'wrap' }}>
           {imageThumbnails.map((url, index) => (
             <Image
