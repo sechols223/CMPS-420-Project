@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconArrowRight, IconPlus, IconSearch } from '@tabler/icons-react';
+import { IconArrowRight, IconMoon, IconPlus, IconSearch, IconSun } from '@tabler/icons-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Carousel } from '@mantine/carousel';
 import {
@@ -16,6 +16,8 @@ import {
   Text,
   TextInput,
   Title,
+  useComputedColorScheme,
+  useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
@@ -87,6 +89,29 @@ const data = [
   },
 ];
 
+const imageThumbnails = [
+  'https://images.unsplash.com/photo-1511135570219-bbad9a02f103?q=80&w=2187&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  'https://images.unsplash.com/photo-1549144511-f099e773c147?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjAzfHx0cmF2ZWx8ZW58MHx8MHx8fDA%3D',
+  'https://plus.unsplash.com/premium_photo-1661589618168-232634f788cb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTU0fHx0cmF2ZWx8ZW58MHx8MHx8fDA%3D',
+  'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTUzfHx0cmF2ZWx8ZW58MHx8MHx8fDA%3D',
+  'https://images.unsplash.com/photo-1501700072703-15ee3d019f07?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTQ4fHx0cmF2ZWx8ZW58MHx8MHx8fDA%3D',
+  'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTQ0fHx0cmF2ZWx8ZW58MHx8MHx8fDA%3D',
+  'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTM3fHx0cmF2ZWx8ZW58MHx8MHx8fDA%3D',
+  'https://plus.unsplash.com/premium_photo-1726313836390-8b1e86742c98?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTMxfHx0cmF2ZWx8ZW58MHx8MHx8fDA%3D',
+  'https://images.unsplash.com/photo-1556276797-5086e6b45ff9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTIyfHx0cmF2ZWx8ZW58MHx8MHx8fDA%3D',
+  'https://images.unsplash.com/photo-1505069446780-4ef442b5207f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTEwfHx0cmF2ZWx8ZW58MHx8MHx8fDA%3D',
+  'https://images.unsplash.com/photo-1475189778702-5ec9941484ae?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTExfHx0cmF2ZWx8ZW58MHx8MHx8fDA%3D',
+  'https://plus.unsplash.com/premium_photo-1722680738736-66a4cdc08923?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTA1fHx0cmF2ZWx8ZW58MHx8MHx8fDA%3D',
+  'https://images.unsplash.com/photo-1475688621402-4257c812d6db?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OTh8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D',
+  'https://plus.unsplash.com/premium_photo-1699566448055-671c8dbcc7ee?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8ODl8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D',
+  'https://images.unsplash.com/photo-1513415564515-763d91423bdd?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8ODh8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D',
+  'https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nzl8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D',
+  'https://images.unsplash.com/photo-1523568129082-a8d6c095638e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzZ8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D',
+  'https://plus.unsplash.com/premium_photo-1683121054777-acb80e8c5dc4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Njl8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D',
+  'https://images.unsplash.com/photo-1487622750296-6360190669a1?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjR8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D',
+  'https://plus.unsplash.com/premium_photo-1683141079772-acf46d5e2ebb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjV8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D',
+];
+
 export function OpenAlbumPage() {
   const { albumId } = useParams();
   const navigate = useNavigate();
@@ -106,6 +131,16 @@ export function OpenAlbumPage() {
     navigate(path);
   };
 
+  {
+    /* Light/Dark Mode variables */
+  }
+  const { setColorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme('light');
+
+  const toggleColorScheme = () => {
+    setColorScheme(computedColorScheme === 'dark' ? 'light' : 'dark');
+  };
+
   const slides = data.map((item) => (
     <Carousel.Slide key={item.title}>
       <CardComponent {...item} />
@@ -114,7 +149,15 @@ export function OpenAlbumPage() {
 
   return (
     <>
-      <Box pb={50}>
+      <Box
+        pb={10}
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 1000,
+          backgroundColor: computedColorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+        }}
+      >
         <header className={classes.header}>
           <div className={classes.logoContainer}>
             <img src={logo} alt="Logo" className={classes.logo} />
@@ -141,6 +184,12 @@ export function OpenAlbumPage() {
             >
               Albums
             </Button>
+            <Button
+              onClick={toggleColorScheme}
+              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
+            >
+              {computedColorScheme === 'dark' ? <IconSun /> : <IconMoon />}
+            </Button>
           </Group>
           <div className={classes.searchBar}>
             <TextInput
@@ -159,9 +208,24 @@ export function OpenAlbumPage() {
           </div>
         </header>
       </Box>
-      <Box pb={50} px="md">
+
+      {/* Carousel */}
+      <Box
+        pb={50}
+        px="md"
+        style={{
+          marginTop: '20px',
+          margin: '50px',
+          padding: '20px',
+        }}
+      >
         <div className={classes.carousel}>
           <Stack>
+            <Center>
+              <Title order={2} style={{ paddingBottom: '10px' }}>
+                Album Title
+              </Title>
+            </Center>
             <Center>
               <Carousel
                 slideSize="33.3333%"
@@ -174,6 +238,22 @@ export function OpenAlbumPage() {
             </Center>
           </Stack>
         </div>
+      </Box>
+
+      {/*Thumnails*/}
+      <Box>
+        <Group align="center" justify="center" gap="xs" style={{ flexWrap: 'wrap' }}>
+          {imageThumbnails.map((url, index) => (
+            <Image
+              key={index}
+              src={url}
+              alt={`Thumbnail ${index + 1}`}
+              width={100}
+              height={210}
+              style={{ margin: '5px', flex: '1 0 calc(25% - 10px)', borderRadius: '8px' }} // Adjust the margin, flex, and borderRadius as needed
+            />
+          ))}
+        </Group>
       </Box>
     </>
   );
