@@ -37,6 +37,23 @@
   padding-left: var(--mantine-spacing-md);
 }
 
+.navButton {
+  background-color: #ff914d;
+  color: #39445a;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+
+.navButton:hover {
+  transform: scale(1.1);
+  background-color: #4dbbff;
+  color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: var(--mantine-shadowmd);
+}
+
 .link {
   display: flex;
   align-items: center;
@@ -75,4 +92,15 @@
   padding: var(--mantine-spacing-md) calc(var(--mantine-spacing-md) * 2);
   padding-bottom: var(--mantine-spacing-xl);
   border-top: rem(1px) solid light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
+}
+
+.card {
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: var(--mantine-shadow-md);
+  }
 }

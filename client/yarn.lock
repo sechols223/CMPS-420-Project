@@ -706,7 +706,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react@npm:^0.26.9":
+"@floating-ui/react@npm:^0.26.27":
   version: 0.26.27
   resolution: "@floating-ui/react@npm:0.26.27"
   dependencies:
@@ -860,56 +860,56 @@ __metadata:
   linkType: hard
 
 "@mantine/carousel@npm:^7.13.4":
-  version: 7.13.4
-  resolution: "@mantine/carousel@npm:7.13.4"
+  version: 7.13.5
+  resolution: "@mantine/carousel@npm:7.13.5"
   peerDependencies:
-    "@mantine/core": 7.13.4
-    "@mantine/hooks": 7.13.4
+    "@mantine/core": 7.13.5
+    "@mantine/hooks": 7.13.5
     embla-carousel-react: ">=7.0.0"
-    react: ^18.2.0
-    react-dom: ^18.2.0
-  checksum: 10c0/dccc889c5a7a3ac32b63ade19866cb1ee639f5e6539216b9ab81bc8bb56259d33d19f899bec2ef729222c0c4468627203035b9ad160fdf003091555773c6f4d4
+    react: ^18.x || ^19.x
+    react-dom: ^18.x || ^19.x
+  checksum: 10c0/595c9934666b3c064935da6a147f1fd548b2640bc0d2ceea6fde0e6a7945020b6609e8825d7397f90b5040300041ff4b39287411af9287ace18720ad7a8613a7
   languageName: node
   linkType: hard
 
-"@mantine/core@npm:^7.13.4":
-  version: 7.13.4
-  resolution: "@mantine/core@npm:7.13.4"
+"@mantine/core@npm:^7.13.5":
+  version: 7.13.5
+  resolution: "@mantine/core@npm:7.13.5"
   dependencies:
-    "@floating-ui/react": "npm:^0.26.9"
+    "@floating-ui/react": "npm:^0.26.27"
     clsx: "npm:^2.1.1"
-    react-number-format: "npm:^5.3.1"
-    react-remove-scroll: "npm:^2.5.7"
-    react-textarea-autosize: "npm:8.5.3"
-    type-fest: "npm:^4.12.0"
+    react-number-format: "npm:^5.4.2"
+    react-remove-scroll: "npm:^2.6.0"
+    react-textarea-autosize: "npm:8.5.4"
+    type-fest: "npm:^4.26.1"
   peerDependencies:
-    "@mantine/hooks": 7.13.4
-    react: ^18.2.0
-    react-dom: ^18.2.0
-  checksum: 10c0/981375992aa4804bb3a3d747b36a9e92d12769fc5fc5fe97d59d1b0773f84c16a47b94d32a8d662a6779e4368bc5b75b18468be854201d9fbdeb4174be2fce37
+    "@mantine/hooks": 7.13.5
+    react: ^18.x || ^19.x
+    react-dom: ^18.x || ^19.x
+  checksum: 10c0/1cb11eb9ca18f3b602350a60405b54b33e1a83ef7b17512ff8a21a3629e5f31c30255a523e1a36c546970fa7e0467cf5cd2ced1bbb440105790635de4ff08e90
   languageName: node
   linkType: hard
 
-"@mantine/dropzone@npm:^7.13.4":
-  version: 7.13.4
-  resolution: "@mantine/dropzone@npm:7.13.4"
+"@mantine/dropzone@npm:^7.13.5":
+  version: 7.13.5
+  resolution: "@mantine/dropzone@npm:7.13.5"
   dependencies:
     react-dropzone-esm: "npm:15.0.1"
   peerDependencies:
-    "@mantine/core": 7.13.4
-    "@mantine/hooks": 7.13.4
-    react: ^18.2.0
-    react-dom: ^18.2.0
-  checksum: 10c0/567ba61bf9e113921503da57cc670de83498b966c15b7dc3213593091e338cc48ea501af443d4c1a7e62497071e112ea0df65ca48e4125d48afefd78a84877a1
+    "@mantine/core": 7.13.5
+    "@mantine/hooks": 7.13.5
+    react: ^18.x || ^19.x
+    react-dom: ^18.x || ^19.x
+  checksum: 10c0/0f002a758a9b650cb71929333de8d9c2f5af91f2cdd1098294419c2d122bb801044610861b23eb7f4ab443f225586fd9119720339143830cc10bca7fda7ac3ba
   languageName: node
   linkType: hard
 
-"@mantine/hooks@npm:^7.13.4":
-  version: 7.13.4
-  resolution: "@mantine/hooks@npm:7.13.4"
+"@mantine/hooks@npm:^7.13.5":
+  version: 7.13.5
+  resolution: "@mantine/hooks@npm:7.13.5"
   peerDependencies:
-    react: ^18.2.0
-  checksum: 10c0/81261966b1a22fdefd8fa3e828fe4e85b0bb210d290c7e77e336ad56f7c91136f3be1a284eaa65f556524b084bb43efe110ec868fb51275ff43d1a4299213ed8
+    react: ^18.x || ^19.x
+  checksum: 10c0/2934f36c4e14288e06f0d7cb22cc0c7003300ab2c612d8f11a57c5bbedc18f5c3aa95bbd6095e51f1adb2d944369b1e3fd7f69f9d61aa3c5003ad95ac4509e1b
   languageName: node
   linkType: hard
 
@@ -2104,6 +2104,16 @@ __metadata:
     json-schema-traverse: "npm:^1.0.0"
     require-from-string: "npm:^2.0.2"
   checksum: 10c0/ec3ba10a573c6b60f94639ffc53526275917a2df6810e4ab5a6b959d87459f9ef3f00d5e7865b82677cb7d21590355b34da14d1d0b9c32d75f95a187e76fff35
+  languageName: node
+  linkType: hard
+
+"animated-backgrounds@npm:^1.0.11":
+  version: 1.0.11
+  resolution: "animated-backgrounds@npm:1.0.11"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/1530253618fd9dc92b24e086ec1a56d9e8197490842e558bad697b21465e0b95981eeb70ce1a55633e8e087f962b0f3ac1bdbbcf341c22f37f777596c92cbf5e
   languageName: node
   linkType: hard
 
@@ -4774,9 +4784,9 @@ __metadata:
     "@eslint/js": "npm:^9.10.0"
     "@ianvs/prettier-plugin-sort-imports": "npm:^4.3.1"
     "@mantine/carousel": "npm:^7.13.4"
-    "@mantine/core": "npm:^7.13.4"
-    "@mantine/dropzone": "npm:^7.13.4"
-    "@mantine/hooks": "npm:^7.13.4"
+    "@mantine/core": "npm:^7.13.5"
+    "@mantine/dropzone": "npm:^7.13.5"
+    "@mantine/hooks": "npm:^7.13.5"
     "@storybook/addon-essentials": "npm:^8.2.9"
     "@storybook/addon-interactions": "npm:^8.2.9"
     "@storybook/addon-links": "npm:^8.2.9"
@@ -4792,6 +4802,7 @@ __metadata:
     "@types/react": "npm:^18.3.12"
     "@types/react-dom": "npm:^18.3.0"
     "@vitejs/plugin-react": "npm:^4.3.1"
+    animated-backgrounds: "npm:^1.0.11"
     embla-carousel-autoplay: "npm:^8.3.1"
     embla-carousel-react: "npm:^8.3.1"
     eslint: "npm:^9.10.0"
@@ -4807,6 +4818,7 @@ __metadata:
     prop-types: "npm:^15.8.1"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
+    react-dynamic-background: "npm:^1.0.1"
     react-hook-form: "npm:^7.53.1"
     react-router-dom: "npm:^6.26.1"
     stash: "npm:^0.0.3"
@@ -5590,7 +5602,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0, react-dom@npm:^18.3.1":
+"react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0, react-dom@npm:^18.2.0, react-dom@npm:^18.3.1":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
   dependencies:
@@ -5610,6 +5622,19 @@ __metadata:
   peerDependencies:
     react: ">= 16.8 || 18.0.0"
   checksum: 10c0/4bd7054a78a9d8b98d13f0abfbdec334e647c681ccb62c5c38fce72e1bace4cdb7d5eb22675ab2ce63f6cca11ec40c0e2081a28a725a38f331cf930abb170e7d
+  languageName: node
+  linkType: hard
+
+"react-dynamic-background@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "react-dynamic-background@npm:1.0.1"
+  dependencies:
+    react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
+  peerDependencies:
+    react: ">=16.0.0"
+    react-dom: ">=16.0.0"
+  checksum: 10c0/88a523ffb7a9107a43db1e1c997a1b204b5ae7eea7aa51526200294803a1c1700d3bda5dceee52580ad0b0935d78564453dad0b0483f17bc5dc8060915d1be06
   languageName: node
   linkType: hard
 
@@ -5636,7 +5661,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-number-format@npm:^5.3.1":
+"react-number-format@npm:^5.4.2":
   version: 5.4.2
   resolution: "react-number-format@npm:5.4.2"
   peerDependencies:
@@ -5669,7 +5694,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-remove-scroll@npm:^2.5.7":
+"react-remove-scroll@npm:^2.6.0":
   version: 2.6.0
   resolution: "react-remove-scroll@npm:2.6.0"
   dependencies:
@@ -5729,20 +5754,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-textarea-autosize@npm:8.5.3":
-  version: 8.5.3
-  resolution: "react-textarea-autosize@npm:8.5.3"
+"react-textarea-autosize@npm:8.5.4":
+  version: 8.5.4
+  resolution: "react-textarea-autosize@npm:8.5.4"
   dependencies:
     "@babel/runtime": "npm:^7.20.13"
     use-composed-ref: "npm:^1.3.0"
     use-latest: "npm:^1.2.1"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/33d38a6d96cf584842695b50c341980944ece23a42155bf0bd1958f02396adb185c7720b88678dc677817fe111783059c0ebcdf7761644006892583b10e258ee
+  checksum: 10c0/ea92fda2128983c1a8e84c74706ffb4b8bfa1a19c803d210868ec031c1ac3b8ceee8028766ef5d91017265da2bdccf6a85e5b6e5d553005e839f0c47e5758b43
   languageName: node
   linkType: hard
 
-"react@npm:^16.8.0 || ^17.0.0 || ^18.0.0, react@npm:^18.3.1":
+"react@npm:^16.8.0 || ^17.0.0 || ^18.0.0, react@npm:^18.2.0, react@npm:^18.3.1":
   version: 18.3.1
   resolution: "react@npm:18.3.1"
   dependencies:
@@ -6761,7 +6786,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^4.12.0":
+"type-fest@npm:^4.26.1":
   version: 4.26.1
   resolution: "type-fest@npm:4.26.1"
   checksum: 10c0/d2719ff8d380befe8a3c61068f37f28d6fa2849fd140c5d2f0f143099e371da6856aad7c97e56b83329d45bfe504afe9fd936a7cff600cc0d46aa9ffb008d6c6
