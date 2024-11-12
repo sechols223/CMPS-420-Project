@@ -65,6 +65,7 @@
     padding-left: var(--mantine-spacing-md);
   }
   
+  
   .link {
     display: flex;
     align-items: center;
@@ -103,4 +104,149 @@
     padding: var(--mantine-spacing-md) calc(var(--mantine-spacing-md) * 2);
     padding-bottom: var(--mantine-spacing-xl);
     border-top: rem(1px) solid light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
+  }
+
+  .responsiveContainer {
+    max-width: 300px;
+  
+    @media (min-width: em(400px)) {
+      max-width: 400px;
+    }
+  
+    @media (min-width: em(600px)) {
+      max-width: 600px;
+    }
+  }
+
+  @keyframes heroBackground {
+    0% {background-image: linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 80%),
+      url('../../components/Images/ladyTakingPicOfBuilding.png');
+      opacity: 1;
+    }
+    8.3% {background-image: linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 80%),
+      url('../../components/Images/ladyTakingPicOfBuilding.png');
+      opacity: 1;
+    }
+    16.7% {background-image: linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 80%),
+      url('../../components/Images/ladyTakingPicOfBuilding.png');
+      opacity: 0;
+    }
+    24.9% {background-image: linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 80%),
+      url('../../components/Images/dudeTakingPicInDesert.png');
+      opacity: 0;
+    }
+    33.2% {background-image: linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 80%),
+      url('../../components/Images/dudeTakingPicInDesert.png');
+      opacity: 1;
+    }
+    41.5% {background-image: linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 80%),
+      url('../../components/Images/dudeTakingPicInDesert.png');
+      opacity: 0;
+    }
+    49.8% {background-image: linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 80%),
+      url('../../components/Images/anotherDudeTakingAPic.png');
+      opacity: 0;
+    }
+    58.1% {background-image: linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 80%),
+      url('../../components/Images/anotherDudeTakingAPic.png');
+      opacity: 1;
+    }
+    66.4% {background-image: linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 80%),
+      url('../../components/Images/anotherDudeTakingAPic.png');
+      opacity: 0;
+    }
+    74.7% {background-image: linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 80%),
+      url('../../components/Images/womanTakingPicOfPlant.png');
+      opacity: 0;
+    }
+    83.0% {background-image: linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 80%),
+      url('../../components/Images/womanTakingPicOfPlant.png');
+      opacity: 1;
+    }  
+    91.3% {background-image: linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 80%),
+      url('../../components/Images/womanTakingPicOfPlant.png');
+      opacity: 0;
+    }  
+    100% {background-image: linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 80%),
+      url('../../components/Images/ladyTakingPicOfBuilding.png');
+      opacity: 0;
+    }  
+  }
+
+  .root {
+ 
+    background-size: cover;
+    background-position: center;
+    background: url('../../components/Images/hero-Vid.mp4');
+    padding-top: calc(var(--mantine-spacing-xl) * 3);
+    padding-bottom: calc(var(--mantine-spacing-xl) * 3);
+
+  }
+  
+  .inner {
+    
+    display: flex;
+    justify-content: space-between;
+  
+    @media (max-width: mantine-breakpoint-md) {
+      flex-direction: column;
+    }
+  }
+  
+  .image {
+
+    
+    @media (max-width: mantine-breakpoint-md) {
+      display: none;
+    }
+  }
+  
+  .content {
+    padding-top: calc(var(--mantine-spacing-xl) * 2);
+    padding-bottom: calc(var(--mantine-spacing-xl) * 2);
+    margin-right: calc(var(--mantine-spacing-xl) * 3);
+  
+    @media (max-width: mantine-breakpoint-md) {
+      margin-right: 0;
+    }
+  }
+  
+  .title {
+    color: var(--mantine-color-white);
+    font-family:
+      Greycliff CF,
+      var(--mantine-font-family);
+    font-weight: 900;
+    line-height: 1.05;
+    max-width: rem(500px);
+    font-size: rem(48px);
+  
+    @media (max-width: mantine-breakpoint-md) {
+      max-width: 100%;
+      font-size: rem(34px);
+      line-height: 1.15;
+    }
+  }
+  
+  .description {
+    color: var(--mantine-color-white);
+    opacity: 0.75;
+    max-width: rem(500px);
+  
+    @media (max-width: mantine-breakpoint-md) {
+      max-width: 100%;
+    }
+  }
+  
+  .control {
+    padding-left: rem(50px);
+    padding-right: rem(50px);
+    font-family:
+      Greycliff CF,
+      var(--mantine-font-family);
+    font-size: rem(22px);
+  
+    @media (max-width: mantine-breakpoint-md) {
+      width: 100%;
+    }
   }

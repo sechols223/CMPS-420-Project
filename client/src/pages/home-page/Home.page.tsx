@@ -1,15 +1,18 @@
 import { useNavigate } from 'react-router-dom';
-import { ActionIcon, Box, Button, Group, Paper, rem, TextInput, useMantineTheme, Text, Title } from '@mantine/core';
+import { Box, Paper, rem, useMantineTheme, Text, Title, Container, Button, } from '@mantine/core';
 import '../../CSS/HeaderMegaMenu.module.css';
-import logo from '../../components/Images/Logo_Small@2x.png'; // Adjust the path as needed
-import { IconArrowRight, IconSearch } from '@tabler/icons-react';
-import { theme } from '@/theme';
 import classes from '../home-page/Home.page.module.css'
 import { useMediaQuery } from '@mantine/hooks';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
 import { useRef } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
+import image1 from '../../components/Images/ladyTakingPicOfBuilding.png';
+import image2 from '../../components/Images/dudeTakingPicInDesert.png';
+import image3 from '../../components/Images/womanTakingPicOfPlant.png';
+import image4 from '../../components/Images/anotherDudeTakingAPic.png';
+import video from '../../components/Images/hero-Vid.mp4';
+
 
 
 
@@ -40,6 +43,21 @@ function Card({ image, title, category }: CardProps) {
     </Paper>
   );
 }
+
+const images = [
+  {
+    image1
+  },
+  {
+    image2
+  },
+  {
+    image3
+  },
+  {
+    image4
+  }
+];
 
 const data = [
   {
@@ -108,9 +126,47 @@ export function HomePage() {
 
   return (
     <>
-    {' '}
-      <Box pb={50}>
+      <div className={classes.root}>
+        <Container size="lg">
+          <div className={classes.inner}>
+            <div className={classes.content}>
+              <Title className={classes.title}>
+                Welcome to{' '}
+                <br/>
+                <Text
+                  component="span"
+                  inherit
+                  variant="gradient"
+                  gradient={{ from: 'pink', to: 'yellow' }}
+                >
+                  What's That
+                </Text>{' '}
+                <br/>
 
+              </Title>
+
+              <Text className={classes.description} mt={30}>
+                Build fully functional accessible web applications with ease – Mantine includes more
+                than 100 customizable components and hooks to cover you in any situation
+              </Text>
+
+              <Button
+                variant="gradient"
+                gradient={{ from: 'pink', to: '#ff914d' }}
+                size="xl"
+                className={classes.control}
+                mt={40}
+                onClick={routeToGallery}
+              >
+                Gallery
+              </Button>
+            </div>
+          </div>
+        </Container>
+        
+      </div>
+      <Container size="xl">
+        <Box pb={50}>
         <Carousel
           slideSize={{ base: '80%', sm: '50%' }}
           slideGap={{ base: rem(2), sm: 'xl' }}
@@ -124,5 +180,6 @@ export function HomePage() {
           {slides}
         </Carousel>
       </Box>
+    </Container>
   </>
 )}

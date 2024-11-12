@@ -43,6 +43,7 @@ const router2 = createBrowserRouter([
     path: '/',
     element: <GetStartedPage/>
   },
+  
 ]);
 
 export function Router() {

@@ -20,13 +20,17 @@ import {
   useComputedColorScheme,
   TextInput,
   ActionIcon,
+  Flex,
+  Space,
+  Affix,
+  Transition,
 } from '@mantine/core';
 import classes from '../../CSS/HeaderMegaMenu.module.css';
 import logo from '../../components/Images/Logo_Small@2x.png'; // Adjust the path as needed
 import { Dropzone, MIME_TYPES} from '@mantine/dropzone';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useWindowScroll } from '@mantine/hooks';
 import { useRef } from 'react';
-import { IconArrowRight, IconCloudUpload, IconDownload, IconMoon, IconSearch, IconSun, IconX } from '@tabler/icons-react';
+import { IconArrowRight, IconArrowUp, IconCloudUpload, IconDownload, IconMoon, IconSearch, IconSun, IconX } from '@tabler/icons-react';
 import '../GalleryPage/Gallery-Page.module.css';
 import '@mantine/dropzone/styles.css';
 
@@ -107,97 +111,103 @@ export default function GalleryPage() {
     <Text></Text>
   ));
 
+  const [scroll, scrollTo] = useWindowScroll();
+
 
 
   return (
     <>
       {' '}
-      
-      <Center>
-        <Group>
-          <Center>
-            <Stack>
-              <Center>
-                <Title> Gallery </Title>
-              </Center>
-              <Group>
-                <MultiSelect
-                classNames={{pill: classes.pill}}
-                  placeholder="Filter by tag(s)"
-                  data={[
-                    'funny','family'
-                  ]}
-                  searchable
-                  nothingFoundMessage="Nothing Found... :\"
-                />
-                <Modal opened={opened} onClose={close} centered radius={'lg'}>
-                  {
-                    <div className={classes.wrapper}>
-                    <Dropzone
-                      openRef={openRef}
-                      onDrop={() => {}}
-                      className={classes.dropzone}
-                      radius="md"
-                      accept={[MIME_TYPES.pdf]}
-                      maxSize={30 * 1024 ** 2}
-                    >
-                      <div style={{ pointerEvents: 'none' }}>
-                        <Group justify="center">
-                          <Dropzone.Accept>
-                            <IconDownload
-                              style={{ width: rem(50), height: rem(50) }}
-                              color={theme.colors.blue[6]}
-                              stroke={1.5}
-                            />
-                          </Dropzone.Accept>
-                          <Dropzone.Reject>
-                            <IconX
-                              style={{ width: rem(50), height: rem(50) }}
-                              color={theme.colors.red[6]}
-                              stroke={1.5}
-                            />
-                          </Dropzone.Reject>
-                          <Dropzone.Idle>
-                            <IconCloudUpload style={{ width: rem(50), height: rem(50) }} stroke={1.5} />
-                          </Dropzone.Idle>
-                        </Group>
-              
-                        <Text ta="center" fw={700} fz="lg" mt="xl">
-                          <Dropzone.Accept>Drop files here</Dropzone.Accept>
-                          <Dropzone.Reject>Pdf file less than 30mb</Dropzone.Reject>
-                          <Dropzone.Idle>Upload resume</Dropzone.Idle>
-                        </Text>
-                        <Text ta="center" fz="sm" mt="xs" c="dimmed">
-                          Drag&apos;n&apos;drop files here to upload. We can accept only <i>.pdf</i> files that
-                          are less than 30mb in size.
-                        </Text>
-                      </div>
-                    </Dropzone>
-              
-                    <Button 
-                      className={classes.control} 
-                      size="md" 
-                      radius="xl" 
-                      onClick={() => openRef.current?.()}
-                      style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold'}}
-                    >
-                      Select files
-                    </Button>
-                  </div>
-                  }
-                </Modal>
-                <Button 
-                  onClick={open}
-                  style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold'}}
-                >
-                  Upload Photo
-                </Button>
-              </Group>
-              <SimpleGrid cols={{ base: 3, sm: 2 }}>{cards}</SimpleGrid>
-            </Stack>
-          </Center>
-        </Group>
-      </Center>
+      <Box pt={50}>
+        <Center>
+          <Group>
+            <Center>
+              <Stack>
+                <Center>
+                  <Title> Gallery </Title>
+                </Center>
+                <Group>
+                  <MultiSelect
+                  classNames={{pill: classes.pill}}
+                    placeholder="Filter by tag(s)"
+                    data={[
+                      'funny','family'
+                    ]}
+                    searchable
+                    nothingFoundMessage="Nothing Found... :\"
+                  />
+                  <Modal opened={opened} onClose={close} centered radius={'lg'}>
+                    {
+                      <div className={classes.wrapper}>
+                      <Dropzone
+                        openRef={openRef}
+                        onDrop={() => {}}
+                        className={classes.dropzone}
+                        radius="md"
+                        accept={[MIME_TYPES.pdf]}
+                        maxSize={30 * 1024 ** 2}
+                      >
+                        <div style={{ pointerEvents: 'none' }}>
+                          <Group justify="center">
+                            <Dropzone.Accept>
+                              <IconDownload
+                                style={{ width: rem(50), height: rem(50) }}
+                                color={theme.colors.blue[6]}
+                                stroke={1.5}
+                              />
+                            </Dropzone.Accept>
+                            <Dropzone.Reject>
+                              <IconX
+                                style={{ width: rem(50), height: rem(50) }}
+                                color={theme.colors.red[6]}
+                                stroke={1.5}
+                              />
+                            </Dropzone.Reject>
+                            <Dropzone.Idle>
+                              <IconCloudUpload style={{ width: rem(50), height: rem(50) }} stroke={1.5} />
+                            </Dropzone.Idle>
+                          </Group>
+                
+                          <Text ta="center" fw={700} fz="lg" mt="xl">
+                            <Dropzone.Accept>Drop files here</Dropzone.Accept>
+                            <Dropzone.Reject>Pdf file less than 30mb</Dropzone.Reject>
+                            <Dropzone.Idle>Upload Picture(s)</Dropzone.Idle>
+                          </Text>
+                          <Text ta="center" fz="sm" mt="xs" c="dimmed">
+                            Drag&apos;n&apos;drop files here to upload. We can accept only <i>.pdf</i> files that
+                            are less than 30mb in size.
+                          </Text>
+                        </div>
+                      </Dropzone>
+                      <Space h="xs"/>
+                      <Flex justify={"center"}>
+                        <Button 
+                          className={classes.navButton} 
+                          size="md" 
+                          radius="xl" 
+                          onClick={() => openRef.current?.()}
+                          style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold'}}
+                        >
+                          Select files
+                        </Button>
+                      </Flex>
+                    </div>
+                    }
+                  </Modal>
+                  <Button 
+                    onClick={open}
+                    style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold',}}
+                    className={classes.navButton}
+                  >
+                    Upload Photo
+                  </Button>
+                </Group>
+                <SimpleGrid cols={{ base: 3, sm: 2 }}>{cards}</SimpleGrid>
+              </Stack>
+            </Center>
+          </Group>
+        </Center>
+      </Box>
     </>
   );
 }
