@@ -21,9 +21,9 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import logo from '../../components/Images/Logo_Small@2x.png'; // Adjust the path as needed
+//import logo from '../../components/Images/Logo_Small@2x.png'; // Adjust the path as needed
 
-import carouselClasses from '../../CSS/CardCarousel.module.css';
+//import carouselClasses from '../../CSS/CardCarousel.module.css';
 import classes from '../../CSS/HeaderMegaMenu.module.css';
 
 type CardProps = {
