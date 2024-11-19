@@ -230,7 +230,7 @@ export function OpenAlbumPage() {
             </Center>
             <Center>
               <Carousel
-                slideSize="33.3333%"
+                slideSize={mobile ? '100%' : '33.3333%'}
                 slideGap="md"
                 align="start"
                 slidesToScroll={mobile ? 1 : 3}
