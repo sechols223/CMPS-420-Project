@@ -198,7 +198,8 @@
     z-index: 1;
     position: absolute;
     align-self:center;
-    padding-left: ;
+    padding-left: var(--mantine-spacing-xl);
+    
 
   }
   
@@ -264,10 +265,17 @@
       Greycliff CF,
       var(--mantine-font-family);
     font-size: rem(22px);
+    transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
   
     @media (max-width: mantine-breakpoint-md) {
       width: 100%;
     }
+  }
+
+  .control:hover{
+    transform: scale(1.05);
   }
 
   .heroVid {

@@ -8,7 +8,7 @@ import { theme } from './theme';
 
 
 
-const isLoggedIn = true;
+const isLoggedIn = false;
 
 
 export default function App() {

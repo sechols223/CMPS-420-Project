@@ -20,6 +20,7 @@ import {
 } from '@mantine/core';
 import logo from '../../components/Images/Logo_Small@2x.png'; // Adjust the path as needed
 import classes from '../../CSS/HeaderMegaMenu.module.css';
+import { NavBar } from '@/components/NavBar/Nav-Bar';
 
 export function AlbumPage() {
   let navigate = useNavigate();
@@ -75,6 +76,7 @@ export function AlbumPage() {
 
   return (
     <>
+      <NavBar/>
       <Stack>
         <Center>
           <Title style={{ marginBottom: '20px' }}> Albums </Title>

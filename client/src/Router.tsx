@@ -47,6 +47,26 @@ const router2 = createBrowserRouter([
     path: '/',
     element: <GetStartedPage/>
   },
+  {
+    path: '/home',
+    element: <HomePage />,
+  },
+  {
+    path: '/gallery',
+    element: <GalleryPage />,
+  },
+  {
+    path: '/loginform',
+    element: <LoginForm />,
+  },
+  {
+    path: '/signupform',
+    element: <RegistrationForm />,
+  },
+  {
+    path: '/albums',
+    element: <AlbumPage/>
+  },
   
 ]);
 

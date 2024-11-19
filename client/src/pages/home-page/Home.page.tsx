@@ -8,6 +8,7 @@ import '@mantine/carousel/styles.css';
 import { useRef } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import video from '../../components/Images/hero-Vid.mp4';
+import { NavBar } from '@/components/NavBar/Nav-Bar';
 
 
 
@@ -170,6 +171,7 @@ export function HomePage() {
 
   return (
     <>
+    <NavBar/>
       <div className={classes.hero}>
         <video src={video} autoPlay muted loop className={classes.heroVid}/>
         <div className={classes.root}>
