@@ -18,7 +18,7 @@ export function NavBar (){
     navigate(path);
   };
   const routeToUserHome = () => {
-    let path = '/';
+    let path = '/home';
     navigate(path);
   };
 
@@ -104,7 +104,7 @@ export function NavBar (){
             )}
           </Transition>
         </Affix> 
-      <Outlet />
+      
     </>
   )
 }

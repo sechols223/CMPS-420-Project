@@ -28,6 +28,7 @@ import { useRef, useState } from 'react';
 import { IconCloudUpload, IconDownload, IconX } from '@tabler/icons-react';
 import '../GalleryPage/Gallery-Page.module.css';
 import '@mantine/dropzone/styles.css';
+import { NavBar } from '@/components/NavBar/Nav-Bar';
 
 
 const userPhotos = [
@@ -176,6 +177,7 @@ export default function GalleryPage() {
 
   return (
     <>
+      <NavBar/>
       {' '}
       <Box pt={50}>
         <Center>
