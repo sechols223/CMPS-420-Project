@@ -36,6 +36,10 @@ const router = createBrowserRouter([
       },
     ]
   },
+  {
+    path: '/get-started',
+    element: <GetStartedPage/>
+  }
 ]);
 
 const router2 = createBrowserRouter([

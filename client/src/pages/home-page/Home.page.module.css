@@ -6,6 +6,26 @@
     align-items: flex-start;
     background-size: cover;
     background-position: center;
+    position: relative;
+    transition:
+    transform 150ms ease,
+    box-shadow 150ms ease
+    ;
+  }
+
+  .card:hover {
+    
+    transform: 
+      scale(1.05);
+    z-index: 1;
+    padding-right: var(--mantine-spacing-md)
+  }
+  .carousel{
+   display: flex;
+  }
+  .carousel:hover{
+    
+    
   }
   
   .title {
@@ -175,11 +195,10 @@
 
   .root {
  
-    background-size: cover;
-    background-position: center;
-    background: url('../../components/Images/hero-Vid.mp4');
-    padding-top: calc(var(--mantine-spacing-xl) * 3);
-    padding-bottom: calc(var(--mantine-spacing-xl) * 3);
+    z-index: 1;
+    position: absolute;
+    align-self:center;
+    padding-left: ;
 
   }
   
@@ -249,4 +268,21 @@
     @media (max-width: mantine-breakpoint-md) {
       width: 100%;
     }
+  }
+
+  .heroVid {
+    opacity: .4;
+    filter: blur(5px);
+    padding-bottom: calc(var(--mantine-spacing-xl) * 3);
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    object-fit: cover;  
+    padding-right: var(--mantine-spacing-md);
+  }
+
+  .hero {
+    position: relative;
+    top: 0;
+    display: flex;
   }

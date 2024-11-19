@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Box, Paper, rem, useMantineTheme, Text, Title, Container, Button, } from '@mantine/core';
+import { Box, Paper, rem, useMantineTheme, Text, Title, Container, Button, Center, Flex, } from '@mantine/core';
 import '../../CSS/HeaderMegaMenu.module.css';
 import classes from '../home-page/Home.page.module.css'
 import { useMediaQuery } from '@mantine/hooks';
@@ -7,11 +7,8 @@ import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
 import { useRef } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
-import image1 from '../../components/Images/ladyTakingPicOfBuilding.png';
-import image2 from '../../components/Images/dudeTakingPicInDesert.png';
-import image3 from '../../components/Images/womanTakingPicOfPlant.png';
-import image4 from '../../components/Images/anotherDudeTakingAPic.png';
 import video from '../../components/Images/hero-Vid.mp4';
+
 
 
 
@@ -44,18 +41,61 @@ function Card({ image, title, category }: CardProps) {
   );
 }
 
-const images = [
+const userFavorites = [
   {
-    image1
+    id: 1,
+    title: "Chrysler Building",
+    image: 'https://media.istockphoto.com/id/1129615025/photo/street-view-of-the-chrysler-building-at-midtown-manhattan-new-york-city-usa.jpg?s=1024x1024&w=is&k=20&c=lJ7QP6oTp20xcw2NE3Y16GiN6PeA0OJZJCuJKRAgEv4=',
+    tags: [
+      "Chrysler Building",
+      "Skyscraper",
+      "NYC"
+    ],
+    isFavorite: true,
   },
   {
-    image2
+    id: 2,
+    title: "St. Louis Cathedral",
+    image: 'https://upload.wikimedia.org/wikipedia/commons/1/19/StLouisCath.jpg',
+    tags: [
+      "Chrysler Building",
+      "Skyscraper",
+      "NYC"
+    ],
+    isFavorite: true,
   },
   {
-    image3
+    id: 3,
+    title: "Bonnet Carre Spillway",
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Army_Corps_operates_spillway_in_Louisiana.jpg/300px-Army_Corps_operates_spillway_in_Louisiana.jpg',
+    tags: [
+      "Louisiana",
+      "Bonnet Carre",
+      "Infrastructure"
+    ],
+    isFavorite: true,
   },
   {
-    image4
+    id: 4,
+    title: "Statue of Unity",
+    image: 'https://preview.redd.it/the-statue-of-unity-in-india-it-is-the-tallest-statue-in-v0-db96pekttwda1.jpg?width=640&crop=smart&auto=webp&s=721e51614374f43c40be74d1cef63a2a30233af9',
+    tags: [
+      "Chrysler Building",
+      "Skyscraper",
+      "NYC"
+    ],
+    isFavorite: true,
+  },
+  {
+    id: 5,
+    title: "Utah Hoodoos",
+    image: 'https://img2.10bestmedia.com/Images/Photos/382106/GettyImages-512495588_55_660x440.jpg',
+    tags: [
+      "Chrysler Building",
+      "Skyscraper",
+      "NYC"
+    ],
+    isFavorite: true,
   }
 ];
 
@@ -116,9 +156,13 @@ export function HomePage() {
   };
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
-  const slides = data.map((item) => (
-    <Carousel.Slide key={item.title}>
-      <Card {...item} />
+  const slides = userFavorites.map((item) => (
+    <Carousel.Slide key={item.title} onClick={routeToGallery}>
+      <Card 
+        category={''} 
+        {...item}
+        
+      />
     </Carousel.Slide>
   ));
 
@@ -126,60 +170,70 @@ export function HomePage() {
 
   return (
     <>
-      <div className={classes.root}>
-        <Container size="lg">
-          <div className={classes.inner}>
-            <div className={classes.content}>
-              <Title className={classes.title}>
-                Welcome to{' '}
-                <br/>
-                <Text
-                  component="span"
-                  inherit
+      <div className={classes.hero}>
+        <video src={video} autoPlay muted loop className={classes.heroVid}/>
+        <div className={classes.root}>
+          <Container size="lg">
+            <div className={classes.inner}>
+              <div className={classes.content}>
+                <Title className={classes.title}>
+                  Welcome to{' '}
+                  <br/>
+                  <Text
+                    component="span"
+                    inherit
+                    variant="gradient"
+                    gradient={{ from: 'pink', to: 'yellow' }}
+                  >
+                    What's That
+                  </Text>{' '}
+                  <br/>
+
+                </Title>
+
+                <Text className={classes.description} mt={30}>
+                Discover What's That, the cutting-edge AI-powered photo organization app that seamlessly categorizes, enhances, and curates your visual memories with unparalleled precision and efficiency.
+                </Text>
+
+                <Button
                   variant="gradient"
-                  gradient={{ from: 'pink', to: 'yellow' }}
+                  gradient={{ from: 'pink', to: '#ff914d' }}
+                  size="xl"
+                  className={classes.control}
+                  mt={40}
+                  onClick={routeToGallery}
                 >
-                  What's That
-                </Text>{' '}
-                <br/>
-
-              </Title>
-
-              <Text className={classes.description} mt={30}>
-                Build fully functional accessible web applications with ease – Mantine includes more
-                than 100 customizable components and hooks to cover you in any situation
-              </Text>
-
-              <Button
-                variant="gradient"
-                gradient={{ from: 'pink', to: '#ff914d' }}
-                size="xl"
-                className={classes.control}
-                mt={40}
-                onClick={routeToGallery}
-              >
-                Gallery
-              </Button>
+                  Gallery
+                </Button>
+              </div>
             </div>
-          </div>
-        </Container>
-        
-      </div>
-      <Container size="xl">
-        <Box pb={50}>
-        <Carousel
-          slideSize={{ base: '80%', sm: '50%' }}
-          slideGap={{ base: rem(2), sm: 'xl' }}
-          align="start"
-          slidesToScroll={mobile ? 1 : 2}
-          loop
-          plugins={[autoplay.current]}
-          onMouseEnter={autoplay.current.stop}
-          onMouseLeave={autoplay.current.reset}
+          </Container>
+        </div>
+      </div> 
+      <div>
+        <Flex
+          gap="lg"
+          direction={"column"}
+          justify={"center"}
+          align={"center"}
+          p={50}
         >
-          {slides}
-        </Carousel>
-      </Box>
-    </Container>
+          <Title> Favorites</Title>
+          <Carousel
+            className={classes.carousel}
+            slideSize={{ base: '70%', sm: '50%' }}
+            slideGap={{ base: rem(8), sm: 'xl' }}
+            height="90%"
+            align="start"
+            slidesToScroll={mobile ? 1 : 2}
+            loop
+            plugins={[autoplay.current]}
+            onMouseEnter={autoplay.current.stop}
+            onMouseLeave={autoplay.current.reset}
+          >
+            {slides}
+          </Carousel>
+        </Flex>
+      </div>
   </>
 )}
