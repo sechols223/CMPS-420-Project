@@ -2,10 +2,8 @@ from pathlib import Path
 from azure.storage.blob.aio import BlobServiceClient, ContainerClient
 import aiofiles
 
-connection_string = "DefaultEndpointsProtocol=https;AccountName=420storage;AccountKey=5c/MrbRwIoO9Zc0CwHxd4HdG0/DjCB3Ezk1wPyTaSh5qd4C4cv9JFI7Ty34hw2+zKxDzQMXnL83g+AStoIFiYw==;EndpointSuffix=core.windows.net"
 container_name = "images"
-
-blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+blob_service_client = BlobServiceClient.from_connection_string("DefaultEndpointsProtocol=https;AccountName=420storage;AccountKey=5c/MrbRwIoO9Zc0CwHxd4HdG0/DjCB3Ezk1wPyTaSh5qd4C4cv9JFI7Ty34hw2+zKxDzQMXnL83g+AStoIFiYw==;EndpointSuffix=core.windows.net")
 
 
 async def create_container() -> ContainerClient:
