@@ -109,6 +109,10 @@ const imageThumbnails = [
   'https://plus.unsplash.com/premium_photo-1683121054777-acb80e8c5dc4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Njl8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D',
   'https://images.unsplash.com/photo-1487622750296-6360190669a1?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjR8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D',
   'https://plus.unsplash.com/premium_photo-1683141079772-acf46d5e2ebb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjV8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D',
+  'https://cdn.pixabay.com/photo/2023/02/04/16/29/boat-7767575_640.jpg',
+  'https://cdn.pixabay.com/photo/2024/11/05/07/09/elephants-9175178_640.jpg',
+  'https://cdn.pixabay.com/photo/2024/01/29/19/38/forest-8540698_640.jpg',
+  'https://cdn.pixabay.com/photo/2023/09/25/20/38/lisbon-8275994_640.jpg',
 ];
 
 export function OpenAlbumPage() {
@@ -116,6 +120,13 @@ export function OpenAlbumPage() {
   const navigate = useNavigate();
   const theme = useMantineTheme(); // Get the theme object
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const [modalOpened, setModalOpened] = useState(false);
+  const [currentImage, setCurrentImage] = useState<string | null>(null);
+
+  const handleThumbnailClick = (url: string) => {
+    setCurrentImage(url);
+    setModalOpened(true);
+  };
 
   const routeToUserHome = () => {
     const path = '/home';
@@ -195,6 +206,27 @@ export function OpenAlbumPage() {
         </div>
       </Box>
 
+      {/* Modal for displaying full image */}
+      <Modal
+        opened={modalOpened}
+        onClose={() => setModalOpened(false)}
+        size="auto"
+        centered
+        withCloseButton
+        zIndex={1000}
+      >
+        {currentImage && (
+          <Image
+            src={currentImage}
+            alt="Full-size image"
+            style={{
+              maxWidth: '100%',
+              maxHeight: '80vh', // Ensures the image fits within the viewport
+            }}
+          />
+        )}
+      </Modal>
+
       {/*Thumnails*/}
       <Box style={{ marginLeft: '30px', marginRight: '30px' }}>
         <Group align="center" justify="center" gap="xs" style={{ flexWrap: 'wrap' }}>
@@ -203,9 +235,15 @@ export function OpenAlbumPage() {
               key={index}
               src={url}
               alt={`Thumbnail ${index + 1}`}
-              width={100}
-              height={210}
-              style={{ margin: '5px', flex: '1 0 calc(25% - 10px)', borderRadius: '8px' }} // Adjust the margin, flex, and borderRadius as needed
+              width={50}
+              height={50}
+              style={{
+                margin: '5px',
+                borderRadius: '8px',
+                objectFit: 'cover',
+                cursor: 'pointer',
+              }}
+              onClick={() => handleThumbnailClick(url)} // Set image and open modal
             />
           ))}
         </Group>
