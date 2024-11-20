@@ -14,8 +14,6 @@ from server.routers.pixtral import process_images, generate_tags, generate_album
 router = APIRouter()
 image_db = database['Images']
 
-
-
 @router.post("/api/images/upload")
 async def upload_images(data: UploadImagesDto):
     images = data.images
