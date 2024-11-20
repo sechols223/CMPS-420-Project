@@ -2,7 +2,7 @@ import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
 
 import { MantineProvider } from '@mantine/core';
-import { Router, Router2 } from './Router';
+import { Router } from './Router';
 import { theme } from './theme';
 
 const isLoggedIn = false;
@@ -10,7 +10,7 @@ const isLoggedIn = false;
 export default function App() {
   return (
     <MantineProvider theme={theme}>
-      {isLoggedIn === false ? <Router2 /> : <Router />}
+      <Router />
     </MantineProvider>
   );
 }

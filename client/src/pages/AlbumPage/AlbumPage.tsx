@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IconArrowRight, IconMoon, IconPlus, IconSearch, IconSun } from '@tabler/icons-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   ActionIcon,
   Box,
@@ -66,7 +66,11 @@ export function AlbumPage() {
     },
   ];
 
-  const routeToAlbum = (albumId: number) => {
+  const { albumId } = useParams();
+  console.log(albumId);
+
+  const routeToOpenAlbum = (albumId: number) => {
+    console.log(`Navigating to /OpenAlbum/${albumId}`);
     let path = `/OpenAlbum/${albumId}`;
     navigate(path);
   };
@@ -82,7 +86,6 @@ export function AlbumPage() {
 
   return (
     <>
-      <NavBar />
       <Box pb={50}></Box>
       <Stack>
         <Center>
@@ -113,7 +116,7 @@ export function AlbumPage() {
                   withBorder
                   shadow="sm"
                   radius="md"
-                  onClick={() => routeToAlbum(album.id)}
+                  onClick={() => routeToOpenAlbum(album.id)}
                   style={{ cursor: 'pointer', textAlign: 'center' }}
                 >
                   <Card.Section>
