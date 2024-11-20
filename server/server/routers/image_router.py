@@ -6,10 +6,10 @@ from fastapi import APIRouter, Query
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import Response
 
-from database.db import database
-from models.Image import UploadImagesDto, ImageGetDto, Image, UpdateImageDto
-from models.queries import ImageQuery, PaginatedResponse
-from routers.pixtral import process_images, generate_tags, generate_albums
+from server.database.db import database
+from server.models.Image import UploadImagesDto, ImageGetDto, Image, UpdateImageDto
+from server.models.queries import ImageQuery, PaginatedResponse
+from server.routers.pixtral import process_images, generate_tags, generate_albums
 
 router = APIRouter()
 image_db = database['Images']

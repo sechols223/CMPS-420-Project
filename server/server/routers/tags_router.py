@@ -2,7 +2,7 @@ from typing import List
 
 from fastapi import APIRouter
 
-from database.db import database
+from server.database.db import database
 
 router = APIRouter()
 

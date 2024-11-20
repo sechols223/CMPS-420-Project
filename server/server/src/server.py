@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from database.db import client
 
-from routers.image_router import router as image_router
-from routers.albums_router import router as album_router
-from routers.tags_router import router as tag_router
+from server.routers.image_router import router as image_router
+from server.routers.albums_router import router as album_router
+from server.routers.tags_router import router as tag_router
+
+from server.database.db import client
 
 server_origins = ["*"]
 server_methods = ["*"]

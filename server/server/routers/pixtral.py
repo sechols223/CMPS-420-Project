@@ -15,10 +15,10 @@ from openai import OpenAI
 from openai.types.chat import ParsedChoice
 from pydantic import BaseModel
 
-from database.blob_storage import upload_image
-from database.db import database
+from server.database.blob_storage import upload_image
+from server.database.db import database
 
-import models.Image as ImageModel
+import server.models.Image as ImageModel
 
 def is_url(path):
   """
@@ -69,7 +69,7 @@ class AlbumModel(BaseModel):
 class Albums(BaseModel):
   albums: list[AlbumModel]
 
-env_vars = dotenv_values(dotenv_path='./.env')
+env_vars = dotenv_values(dotenv_path='./server/.env')
 
 api_key = env_vars.get('MISTRAL_API_KEY')
 openai_api_key = env_vars.get("OPENAI_API_KEY")
