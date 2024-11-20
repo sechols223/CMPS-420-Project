@@ -22,9 +22,10 @@ import {
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 //import logo from '../../components/Images/Logo_Small@2x.png'; // Adjust the path as needed
+import { NavBar } from '@/components/NavBar/Nav-Bar';
 
 //import carouselClasses from '../../CSS/CardCarousel.module.css';
-import classes from '../../CSS/HeaderMegaMenu.module.css';
+//import classes from '../../CSS/HeaderMegaMenu.module.css';
 
 type CardProps = {
   image: string;
@@ -39,12 +40,10 @@ const CardComponent: React.FC<CardProps> = ({ image, title, category }) => {
       p="xl"
       radius="md"
       style={{ backgroundImage: `url(${image})` }}
-      className={classes.card}
+      //className={classes.card}
     >
       <div>
-        <Title order={3} className={classes.title}>
-          {title}
-        </Title>
+        <Title order={3} /* className={classes.title} */>{title}</Title>
       </div>
     </Paper>
   );
@@ -149,6 +148,10 @@ export function OpenAlbumPage() {
 
   return (
     <>
+      <div>
+        <h1>Open Album Page</h1>
+        <p>Album ID: {albumId}</p>
+      </div>
       <Box
         pb={10}
         style={{
@@ -157,57 +160,7 @@ export function OpenAlbumPage() {
           zIndex: 1000,
           backgroundColor: computedColorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
         }}
-      >
-        <header className={classes.header}>
-          <div className={classes.logoContainer}>
-            <img src={logo} alt="Logo" className={classes.logo} />
-          </div>
-          <Group h="100%" gap={10} visibleFrom="sm">
-            <Button
-              title="Home"
-              onClick={routeToUserHome}
-              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
-            >
-              Home
-            </Button>
-            <Button
-              title="Gallery"
-              onClick={routeToGallery}
-              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
-            >
-              Gallery
-            </Button>
-            <Button
-              title="Albums"
-              onClick={routeToAlbums}
-              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
-            >
-              Albums
-            </Button>
-            <Button
-              onClick={toggleColorScheme}
-              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
-            >
-              {computedColorScheme === 'dark' ? <IconSun /> : <IconMoon />}
-            </Button>
-          </Group>
-          <div className={classes.searchBar}>
-            <TextInput
-              radius="xl"
-              size="md"
-              placeholder="Search images, albums, and more"
-              rightSectionWidth={42}
-              leftSection={<IconSearch style={{ width: rem(18), height: rem(18) }} stroke={1.5} />}
-              rightSection={
-                <ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
-                  <IconArrowRight style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
-                </ActionIcon>
-              }
-              style={{ width: '40%' }}
-            />
-          </div>
-        </header>
-      </Box>
+      ></Box>
 
       {/* Carousel */}
       <Box
@@ -221,7 +174,7 @@ export function OpenAlbumPage() {
           marginRight: '110px',
         }}
       >
-        <div className={classes.carousel}>
+        <div /*className={classes.carousel} */>
           <Stack>
             <Center>
               <Title order={2} style={{ paddingBottom: '10px' }}>

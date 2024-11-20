@@ -6,6 +6,7 @@ import { AlbumPage } from './pages/AlbumPage/AlbumPage';
 import GalleryPage from './pages/GalleryPage/Gallery-Page';
 import { GetStartedPage } from './pages/get-started-page/GetStarted.page';
 import { HomePage } from './pages/home-page/Home.page';
+import { OpenAlbumPage } from './pages/OpenAlbumPage/open-album';
 import { RegistrationForm } from './registration/RegistrationForm';
 
 const router = createBrowserRouter([
@@ -33,6 +34,14 @@ const router = createBrowserRouter([
         path: '/albums',
         element: <AlbumPage />,
       },
+      {
+        path: '/OpenAlbum/:albumId',
+        element: <OpenAlbumPage />,
+      },
+      {
+        path: '*',
+        element: <div>Page not found</div>, // Simple catch-all route and fallback for debugging
+      },
     ],
   },
   {
@@ -41,7 +50,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-const router2 = createBrowserRouter([
+/* const router2 = createBrowserRouter([
   {
     path: '/',
     element: <GetStartedPage />,
@@ -66,12 +75,12 @@ const router2 = createBrowserRouter([
     path: '/albums',
     element: <AlbumPage />,
   },
-]);
+]); */
 
 export function Router() {
   return <RouterProvider router={router} />;
 }
 
-export function Router2() {
+/* export function Router2() {
   return <RouterProvider router={router2} />;
-}
+} */
