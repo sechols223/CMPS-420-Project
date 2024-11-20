@@ -3,7 +3,7 @@ from azure.storage.blob.aio import BlobServiceClient, ContainerClient
 import aiofiles
 from dotenv import dotenv_values
 
-env = dotenv_values(dotenv_path='./.env')
+env = dotenv_values(dotenv_path='./server/.env')
 
 connection_string = env['AZURE_CONNECTION_STRING']
 
