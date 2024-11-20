@@ -86,7 +86,7 @@ export function AlbumPage() {
 
   return (
     <>
-      <Box pb={50}></Box>
+      <Box pb={200}></Box>
       <Stack>
         <Center>
           <Title style={{ marginBottom: '20px' }}> Albums </Title>
@@ -147,7 +147,12 @@ export function AlbumPage() {
           </Group>
         </Center>
       </Stack>
-      <Modal opened={modalOpened} onClose={() => setModalOpened(false)} title="Create New Album">
+      <Modal
+        opened={modalOpened}
+        onClose={() => setModalOpened(false)}
+        title="Create New Album"
+        zIndex={1000}
+      >
         <Stack>
           <TextInput
             label="Album Title"
