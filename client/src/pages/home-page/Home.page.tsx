@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Box, Paper, rem, useMantineTheme, Text, Title, Container, Button, Center, Flex, } from '@mantine/core';
+import { Box, Paper, rem, useMantineTheme, Text, Title, Container, Button, Center, Flex, AspectRatio, Image, } from '@mantine/core';
 import '../../CSS/HeaderMegaMenu.module.css';
 import classes from '../home-page/Home.page.module.css'
 import { useMediaQuery } from '@mantine/hooks';
@@ -17,28 +17,18 @@ import { NavBar } from '@/components/NavBar/Nav-Bar';
 
 interface CardProps {
   image: string;
-  title: string;
-  category: string;
 }
 
-function Card({ image, title, category }: CardProps) {
+function Card({ image }: CardProps) {
   return (
     <Paper
       shadow="md"
       p="xl"
       radius="md"
-      style={{ backgroundImage: `url(${image})` }}
+      style={{ backgroundImage: `url(${image})`, aspectRatio: 1920/1080 }}
       className={classes.card}
-    >
-      <div>
-        <Text className={classes.category} size="xs">
-          {category}
-        </Text>
-        <Title order={3} className={classes.title}>
-          {title}
-        </Title>
-      </div>
-    </Paper>
+    />
+    
   );
 }
 
@@ -159,10 +149,8 @@ export function HomePage() {
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
   const slides = userFavorites.map((item) => (
     <Carousel.Slide key={item.title} onClick={routeToGallery}>
-      <Card 
-        category={''} 
+      <Card  
         {...item}
-        
       />
     </Carousel.Slide>
   ));
@@ -186,6 +174,7 @@ export function HomePage() {
                     inherit
                     variant="gradient"
                     gradient={{ from: 'pink', to: 'yellow' }}
+                    className={classes.titles}
                   >
                     What's That
                   </Text>{' '}
@@ -213,29 +202,38 @@ export function HomePage() {
         </div>
       </div> 
       <div>
+        
         <Flex
           gap="lg"
           direction={"column"}
           justify={"center"}
           align={"center"}
-          p={50}
+          py={50}
+          
         >
-          <Title> Favorites</Title>
-          <Carousel
-            className={classes.carousel}
-            slideSize={{ base: '70%', sm: '50%' }}
-            slideGap={{ base: rem(8), sm: 'xl' }}
-            height="90%"
-            align="start"
-            slidesToScroll={mobile ? 1 : 2}
-            loop
-            plugins={[autoplay.current]}
-            onMouseEnter={autoplay.current.stop}
-            onMouseLeave={autoplay.current.reset}
-          >
-            {slides}
-          </Carousel>
+          <Title className={classes.titles}> Favorites</Title>
+          <Paper shadow='md' radius="xl" withBorder >
+            <Center>
+            <Carousel
+              className={classes.carousel}
+              slideSize="33.333333%"
+              slideGap={{ base: rem(8), sm: 'xl' }}
+              height="90%"
+              align="center"
+              slidesToScroll={mobile ? 1 : 2}
+              loop
+              plugins={[autoplay.current]}
+              onMouseEnter={autoplay.current.stop}
+              onMouseLeave={autoplay.current.reset}
+              py={70}
+              style={{ width: '90%', flexShrink:1 }}
+            >
+              {slides}
+            </Carousel>
+            </Center>
+          </Paper>
         </Flex>
+        
       </div>
   </>
 )}
