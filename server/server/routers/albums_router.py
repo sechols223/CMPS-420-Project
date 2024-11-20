@@ -3,9 +3,9 @@ from typing import List
 from bson import ObjectId
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from database.db import database
-from models.Image import Image, ImageGetDto
-from models.base import BaseDBSchema, PyObjectId
+from server.database.db import database
+from server.models.Image import Image, ImageGetDto
+from server.models.base import BaseDBSchema, PyObjectId
 
 router = APIRouter()
 album_db = database['Albums']

@@ -3,7 +3,7 @@ from typing import TypeVar, Generic, List
 
 from pydantic import Field
 
-from models.base import BaseSchema
+from server.models.base import BaseSchema
 
 TData = TypeVar('TData')
 
