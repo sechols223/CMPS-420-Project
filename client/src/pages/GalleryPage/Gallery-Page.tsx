@@ -5,7 +5,6 @@ import {
   Button,
   Card,
   Center,
-  Container,
   Group,
   Image,
   Modal,
@@ -22,14 +21,19 @@ import {
   ActionIcon,
 } from '@mantine/core';
 import classes from '../../CSS/HeaderMegaMenu.module.css';
-import logo from '../../components/Images/Logo_Small@2x.png'; // Adjust the path as needed
+import logo from '../../components/Images/Logo_Small@2x.png';
 import { Dropzone, MIME_TYPES} from '@mantine/dropzone';
 import { useDisclosure } from '@mantine/hooks';
-import { useRef } from 'react';
+import {useRef} from 'react';
 import { IconArrowRight, IconCloudUpload, IconDownload, IconMoon, IconSearch, IconSun, IconX } from '@tabler/icons-react';
 import '../GalleryPage/Gallery-Page.module.css';
 import '@mantine/dropzone/styles.css';
+import {api} from '@/api';
+import {ImageGetDto} from '@/types';
+import {useAsync} from 'react-use';
+import {ImageCards} from '@/pages/GalleryPage/image-cards';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mockdata = [
   {
     title: 'Top 10 places to visit in Norway this summer',
@@ -61,18 +65,51 @@ const mockdata = [
   },
 ];
 
+const Cards = () => {
+  const fetchImages = useAsync(async () => {
+    const response = await api.get<ImageGetDto[]>('/api/images')
+    return response.data
+  }, [])
+  
+  if (fetchImages.loading) {
+    return <>Loading...</>
+  }
+  
+  if (!fetchImages.value) {
+    return <>No Images Found</>
+  }
+  
+  return (
+    fetchImages.value && (
+      fetchImages.value?.map((image) => (
+        <Card key={image.name} p="md" radius="md" component="a" href="#" className={classes.card}>
+          <AspectRatio ratio={1920 / 1080}>
+            <Image src={image.imageData} />
+          </AspectRatio>
+          <Text className={classes.title} mt={5}>
+            {image.name}
+          </Text>
+          <Text className={classes.title} mt={5}>
+            {image.tags}
+          </Text>
+        </Card>
+      ))
+    )
+  )
+}
+
 export default function GalleryPage() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const routeToGallery = () => {
-    let path = '/gallery';
+    const path = '/gallery';
     navigate(path);
   };
   const routeToAlbums = () => {
-    let path = '/albums';
+    const path = '/albums';
     navigate(path);
   };
   const routeToHome = () => {
-    let path = '/home';
+    const path = '/home';
     navigate(path);
   };
 
@@ -82,33 +119,16 @@ export default function GalleryPage() {
   const {setColorScheme} = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme('light');
 
+   
+  
   const toggleColorScheme = () => {
     setColorScheme(computedColorScheme === "dark" ? 'light' : 'dark')
   }
-
-  const cards = mockdata.map((article) => (
-    <Card key={article.title} p="md" radius="md" component="a" href="#" className={classes.card}>
-      <AspectRatio ratio={1920 / 1080}>
-        <Image src={article.image} />
-      </AspectRatio>
-      <Text c="dimmed" size="xs" tt="uppercase" fw={700} mt="md">
-        {article.date}
-      </Text>
-      <Text className={classes.title} mt={5}>
-        {article.title}
-      </Text>
-      <Text className={classes.title} mt={5}>
-        {article.tags}
-      </Text>
-    </Card>
-  ));
-
-  const tags = mockdata.map((article) =>(
-    <Text></Text>
-  ));
-
-
-
+  
+  
+  
+  
+ 
   return (
     <>
       {' '}
@@ -180,9 +200,8 @@ export default function GalleryPage() {
                   searchable
                   nothingFoundMessage="Nothing Found... :\"
                 />
-                <Modal opened={opened} onClose={close} centered radius={'lg'}>
-                  {
-                    <div className={classes.wrapper}>
+                <Modal opened={opened} onClose={close} centered radius="lg">
+                  <div className={classes.wrapper}>
                     <Dropzone
                       openRef={openRef}
                       onDrop={() => {}}
@@ -234,7 +253,6 @@ export default function GalleryPage() {
                       Select files
                     </Button>
                   </div>
-                  }
                 </Modal>
                 <Button 
                   onClick={open}
@@ -243,7 +261,9 @@ export default function GalleryPage() {
                   Upload Photo
                 </Button>
               </Group>
-              <SimpleGrid cols={{ base: 3, sm: 2 }}>{cards}</SimpleGrid>
+              <SimpleGrid cols={{ base: 3, sm: 2 }}>
+                <ImageCards />
+              </SimpleGrid>
             </Stack>
           </Center>
         </Group>
