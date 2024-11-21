@@ -1,11 +1,9 @@
-import { useNavigate } from 'react-router-dom';
 import {
   AspectRatio,
   Box,
   Button,
   Card,
   Center,
-  Container,
   Group,
   Image,
   Modal,
@@ -16,238 +14,265 @@ import {
   Text,
   Title,
   useMantineTheme,
-  useMantineColorScheme,
-  useComputedColorScheme,
-  TextInput,
-  ActionIcon,
+  Flex,
+  Space,
+  Pill,
+  useCombobox,
+  Combobox,
+  TagsInput,
 } from '@mantine/core';
 import classes from '../../CSS/HeaderMegaMenu.module.css';
-import logo from '../../components/Images/Logo_Small@2x.png'; // Adjust the path as needed
 import { Dropzone, MIME_TYPES} from '@mantine/dropzone';
-import { useDisclosure } from '@mantine/hooks';
-import { useRef } from 'react';
-import { IconArrowRight, IconCloudUpload, IconDownload, IconMoon, IconSearch, IconSun, IconX } from '@tabler/icons-react';
+import { useDisclosure, useWindowScroll } from '@mantine/hooks';
+import { useRef, useState } from 'react';
+import { IconCloudUpload, IconDownload, IconX } from '@tabler/icons-react';
 import '../GalleryPage/Gallery-Page.module.css';
 import '@mantine/dropzone/styles.css';
+import { NavBar } from '@/components/NavBar/Nav-Bar';
 
-const mockdata = [
+
+const userPhotos = [
   {
-    title: 'Top 10 places to visit in Norway this summer',
-    image:
-      'https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80',
-    date: 'August 18, 2022',
-    tags:['funny','family'],
+    id: 1,
+    title: "Chrysler",
+    image: 'https://media.istockphoto.com/id/1129615025/photo/street-view-of-the-chrysler-building-at-midtown-manhattan-new-york-city-usa.jpg?s=1024x1024&w=is&k=20&c=lJ7QP6oTp20xcw2NE3Y16GiN6PeA0OJZJCuJKRAgEv4=',
+    tags: [
+      "Chrysler Building",
+      "Skyscraper",
+      "NYC",
+      "Architecture"
+    ],
+    isFavorite: true,
   },
   {
-    title: 'Best forests to visit in North America',
-    image:
-      'https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80',
-    date: 'August 27, 2022',
-    tags:['funny','family'],
+    id: 2,
+    title: "St. Louis Cathedral",
+    image: 'https://upload.wikimedia.org/wikipedia/commons/1/19/StLouisCath.jpg',
+    tags: [
+      "New Orleans",
+      "Architecture",
+      "French Quarter",
+      "Religious Building"
+    ],
+    isFavorite: true,
   },
   {
-    title: 'Hawaii beaches review: better than you think',
-    image:
-      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80',
-    date: 'September 9, 2022',
-    tags:['funny','family'],
+    id: 3,
+    title: "Bonnet Carre Spillway",
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Army_Corps_operates_spillway_in_Louisiana.jpg/300px-Army_Corps_operates_spillway_in_Louisiana.jpg',
+    tags: [
+      "Louisiana",
+      "Bonnet Carre",
+      "Infrastructure"
+    ],
+    isFavorite: true,
   },
   {
-    title: 'Mountains at night: 12 best locations to enjoy the view',
-    image:
-      'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80',
-    date: 'September 12, 2022',
-    tags:['funny','family'],
+    id: 4,
+    title: "Statue of Unity",
+    image: 'https://preview.redd.it/the-statue-of-unity-in-india-it-is-the-tallest-statue-in-v0-db96pekttwda1.jpg?width=640&crop=smart&auto=webp&s=721e51614374f43c40be74d1cef63a2a30233af9',
+    tags: [
+      "Chrysler Building",
+      "Skyscraper",
+      "NYC"
+    ],
+    isFavorite: true,
   },
+  {
+    id: 5,
+    title: "Utah Hoodoos",
+    image: 'https://img2.10bestmedia.com/Images/Photos/382106/GettyImages-512495588_55_660x440.jpg',
+    tags: [
+      "Chrysler Building",
+      "Skyscraper",
+      "NYC"
+    ],
+    isFavorite: true,
+  }
 ];
 
 export default function GalleryPage() {
-  let navigate = useNavigate();
-  const routeToGallery = () => {
-    let path = '/gallery';
-    navigate(path);
-  };
-  const routeToAlbums = () => {
-    let path = '/albums';
-    navigate(path);
-  };
-  const routeToHome = () => {
-    let path = '/home';
-    navigate(path);
-  };
-
   const [opened, { open, close }] = useDisclosure(false);
   const openRef = useRef<() => void>(null);
   const theme = useMantineTheme();
-  const {setColorScheme} = useMantineColorScheme();
-  const computedColorScheme = useComputedColorScheme('light');
+  /* Filter Function. Does Not Work
+  const allTags = [...new Set(userPhotos.flatMap(photo => photo.tags))];
+  const [selectedTags, setSelectedTags] = useState([]);
 
-  const toggleColorScheme = () => {
-    setColorScheme(computedColorScheme === "dark" ? 'light' : 'dark')
-  }
+  const filteredPhotos = userPhotos.filter(photo =>
+    selectedTags.length === 0 || selectedTags.some(tag => photo.tags.includes(tag))
+  );
 
-  const cards = mockdata.map((article) => (
+  const handleSelectTag = (currentTag: string): void => {
+    setSelectedTags((prevTags: Array<string>) => 
+      prevTags.includes(currentTag)
+        ? prevTags.filter(tag => tag !== currentTag)
+        : [...prevTags, currentTag]
+    );
+  };
+
+  const removeTag = (tagToRemove) => {
+    setSelectedTags(prev => prev.filter(tag => tag !== tagToRemove));
+  };
+
+  const combobox = useCombobox({
+    onDropdownClose: () => combobox.resetSelectedOption(),
+    onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
+  });
+
+  const [search, setSearch] = useState('');
+  const [value, setValue] = useState<string[]>([]);
+
+  const handleValueSelect = (val: string) =>
+    setValue((current) =>
+      current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
+  );
+
+  const handleValueRemove = (val: string) =>
+    setValue((current) => current.filter((v) => v !== val)
+  );
+
+  const values = value.map((item) => (
+    <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>
+      {item}
+    </Pill>
+  ));  
+
+  const options = userPhotos
+    .filter((item) => item.tags.includes(search.trim().toLowerCase()))
+    .map((item) => (
+      <Combobox.Option value={item.tags} key={item} active={value.includes(item)}>
+        <Group gap="sm">
+          {value.includes(item) ? <CheckIcon size={12} /> : null}
+          <span>{item}</span>
+        </Group>
+      </Combobox.Option>
+    ));*/
+
+  const cards = userPhotos.map((article) => (
     <Card key={article.title} p="md" radius="md" component="a" href="#" className={classes.card}>
       <AspectRatio ratio={1920 / 1080}>
         <Image src={article.image} />
       </AspectRatio>
-      <Text c="dimmed" size="xs" tt="uppercase" fw={700} mt="md">
-        {article.date}
-      </Text>
+
       <Text className={classes.title} mt={5}>
         {article.title}
       </Text>
-      <Text className={classes.title} mt={5}>
-        {article.tags}
-      </Text>
+      {article.tags.map((tags)=> (
+        <>
+          <Flex>
+            <Pill>
+              {tags}
+            </Pill>
+          </Flex>
+        </>
+      ))}
     </Card>
   ));
 
-  const tags = mockdata.map((article) =>(
-    <Text></Text>
-  ));
+
+  const [scroll, scrollTo] = useWindowScroll();
 
 
 
   return (
     <>
+      <NavBar/>
       {' '}
-      <Box pb={50}>
-        <header className={classes.header}>
-          <div className={classes.logoContainer}>
-            <img src={logo} alt="Logo" className={classes.logo} />
-          </div>
-          <Group h="100%" gap={10} visibleFrom="sm">
-            <Button
-              title="Home"
-              onClick={routeToHome}
-              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
-            >
-              Home
-            </Button>
-            <Button
-              title="Gallery"
-              onClick={routeToGallery}
-              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
-            >
-              Gallery
-            </Button>
-            <Button
-              title="Albums"
-              onClick={routeToAlbums}
-              style={{ backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold' }}
-            >
-              Albums
-            </Button>
-            <Button 
-              onClick={toggleColorScheme}
-              style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold'}}
-            >
-              {computedColorScheme === "dark" ? <IconSun /> : <IconMoon/>}  
-            </Button>
+      <Box pt={50}>
+        <Center>
+          <Group>
+            <Center>
+              <Stack>
+                <Center>
+                  <Title> Gallery </Title>
+                </Center>
+                <Group>
+                  <MultiSelect
+                  classNames={{pill: classes.pill}}
+                    placeholder="Filter by tag(s)"
+                    data={[
+                      
+                    ]}
+                    searchable
+                    nothingFoundMessage="Nothing Found... :\"
+                  />
+                  {/*<TagsInput
+                    label="Press Enter to submit a tag"
+                    placeholder="Pick tag from list"
+                    data={['React', 'Angular', 'Svelte']}
+                  /> */}
+                  <Modal opened={opened} onClose={close} centered radius={'lg'}>
+                    {
+                      <div className={classes.wrapper}>
+                      <Dropzone
+                        openRef={openRef}
+                        onDrop={() => {}}
+                        className={classes.dropzone}
+                        radius="md"
+                        accept={[MIME_TYPES.pdf]}
+                        maxSize={30 * 1024 ** 2}
+                      >
+                        <div style={{ pointerEvents: 'none' }}>
+                          <Group justify="center">
+                            <Dropzone.Accept>
+                              <IconDownload
+                                style={{ width: rem(50), height: rem(50) }}
+                                color={theme.colors.blue[6]}
+                                stroke={1.5}
+                              />
+                            </Dropzone.Accept>
+                            <Dropzone.Reject>
+                              <IconX
+                                style={{ width: rem(50), height: rem(50) }}
+                                color={theme.colors.red[6]}
+                                stroke={1.5}
+                              />
+                            </Dropzone.Reject>
+                            <Dropzone.Idle>
+                              <IconCloudUpload style={{ width: rem(50), height: rem(50) }} stroke={1.5} />
+                            </Dropzone.Idle>
+                          </Group>
+                
+                          <Text ta="center" fw={700} fz="lg" mt="xl">
+                            <Dropzone.Accept>Drop files here</Dropzone.Accept>
+                            <Dropzone.Reject>Pdf file less than 30mb</Dropzone.Reject>
+                            <Dropzone.Idle>Upload Picture(s)</Dropzone.Idle>
+                          </Text>
+                          <Text ta="center" fz="sm" mt="xs" c="dimmed">
+                            Pssss... You can upload up to 8 images at a time!
+                          </Text>
+                        </div>
+                      </Dropzone>
+                      <Space h="xs"/>
+                      <Flex justify={"center"}>
+                        <Button 
+                          className={classes.navButton} 
+                          size="md" 
+                          radius="xl" 
+                          onClick={() => openRef.current?.()}
+                          style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold'}}
+                        >
+                          Select files
+                        </Button>
+                      </Flex>
+                    </div>
+                    }
+                  </Modal>
+                  <Button 
+                    onClick={open}
+                    style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold',}}
+                    className={classes.navButton}
+                  >
+                    Upload Photo
+                  </Button>
+                </Group>
+                <SimpleGrid cols={{ base: 3, sm: 2 }}>{cards}</SimpleGrid>
+              </Stack>
+            </Center>
           </Group>
-          <div className={classes.searchBar}>
-            <TextInput
-              radius="xl"
-              size="md"
-              placeholder="Search images, albums, and more"
-              rightSectionWidth={42}
-              leftSection={<IconSearch style={{ width: rem(18), height: rem(18) }} stroke={1.5} />}
-              rightSection={
-                <ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
-                  <IconArrowRight style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
-                </ActionIcon>
-              }
-              style={{ width: '40%' }}
-            />
-          </div>
-        </header>
+        </Center>
       </Box>
-      <Center>
-        <Group>
-          <Center>
-            <Stack>
-              <Center>
-                <Title> Gallery </Title>
-              </Center>
-              <Group>
-                <MultiSelect
-                classNames={{pill: classes.pill}}
-                  placeholder="Filter by tag(s)"
-                  data={[
-                    'funny','family'
-                  ]}
-                  searchable
-                  nothingFoundMessage="Nothing Found... :\"
-                />
-                <Modal opened={opened} onClose={close} centered radius={'lg'}>
-                  {
-                    <div className={classes.wrapper}>
-                    <Dropzone
-                      openRef={openRef}
-                      onDrop={() => {}}
-                      className={classes.dropzone}
-                      radius="md"
-                      accept={[MIME_TYPES.pdf]}
-                      maxSize={30 * 1024 ** 2}
-                    >
-                      <div style={{ pointerEvents: 'none' }}>
-                        <Group justify="center">
-                          <Dropzone.Accept>
-                            <IconDownload
-                              style={{ width: rem(50), height: rem(50) }}
-                              color={theme.colors.blue[6]}
-                              stroke={1.5}
-                            />
-                          </Dropzone.Accept>
-                          <Dropzone.Reject>
-                            <IconX
-                              style={{ width: rem(50), height: rem(50) }}
-                              color={theme.colors.red[6]}
-                              stroke={1.5}
-                            />
-                          </Dropzone.Reject>
-                          <Dropzone.Idle>
-                            <IconCloudUpload style={{ width: rem(50), height: rem(50) }} stroke={1.5} />
-                          </Dropzone.Idle>
-                        </Group>
-              
-                        <Text ta="center" fw={700} fz="lg" mt="xl">
-                          <Dropzone.Accept>Drop files here</Dropzone.Accept>
-                          <Dropzone.Reject>Pdf file less than 30mb</Dropzone.Reject>
-                          <Dropzone.Idle>Upload resume</Dropzone.Idle>
-                        </Text>
-                        <Text ta="center" fz="sm" mt="xs" c="dimmed">
-                          Drag&apos;n&apos;drop files here to upload. We can accept only <i>.pdf</i> files that
-                          are less than 30mb in size.
-                        </Text>
-                      </div>
-                    </Dropzone>
-              
-                    <Button 
-                      className={classes.control} 
-                      size="md" 
-                      radius="xl" 
-                      onClick={() => openRef.current?.()}
-                      style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold'}}
-                    >
-                      Select files
-                    </Button>
-                  </div>
-                  }
-                </Modal>
-                <Button 
-                  onClick={open}
-                  style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold'}}
-                >
-                  Upload Photo
-                </Button>
-              </Group>
-              <SimpleGrid cols={{ base: 3, sm: 2 }}>{cards}</SimpleGrid>
-            </Stack>
-          </Center>
-        </Group>
-      </Center>
     </>
   );
 }

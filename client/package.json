@@ -21,12 +21,16 @@
   },
   "dependencies": {
     "@mantine/carousel": "^7.13.4",
-    "@mantine/core": "7.13.0",
-    "@mantine/hooks": "7.13.0",
+    "@mantine/core": "^7.13.5",
+    "@mantine/dropzone": "^7.13.5",
+    "@mantine/hooks": "^7.13.5",
     "@tabler/icons-react": "^3.20.0",
+    "animated-backgrounds": "^1.0.11",
+    "embla-carousel-autoplay": "^8.3.1",
     "embla-carousel-react": "^8.3.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-dynamic-background": "^1.0.1",
     "react-hook-form": "^7.53.1",
     "react-router-dom": "^6.26.1"
   },
