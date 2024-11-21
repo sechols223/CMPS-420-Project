@@ -2,14 +2,28 @@ import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
 import '@mantine/dropzone/styles.css';
 
+
 import { MantineProvider } from '@mantine/core';
-import { Router } from './Router';
+import { Router, Router2 } from './Router';
 import { theme } from './theme';
+
+
+
+const isLoggedIn = false;
+
 
 export default function App() {
   return (
     <MantineProvider theme={theme}>
-      <Router />
+      {isLoggedIn === false ?
+        (
+          <Router2/> 
+        ) :
+        (
+          <Router />
+        )
+      }
+      
     </MantineProvider>
   );
 }
