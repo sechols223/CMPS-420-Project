@@ -102,11 +102,6 @@ export default function GalleryPage() {
   const [opened, { open, close }] = useDisclosure(false);
   const openRef = useRef<() => void>(null);
   const theme = useMantineTheme();
-  const columnNumber = 
-
-  const setColumnNumber = () => {
-
-  }
 
   const cards = userPhotos.map((article) => (
     <Card key={article.title} p="md" radius="md" component="a" href="#" className={classes.card}>
