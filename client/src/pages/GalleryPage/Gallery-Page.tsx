@@ -20,13 +20,14 @@ import {
   useCombobox,
   Combobox,
   TagsInput,
+  Slider,
+  Container,
 } from '@mantine/core';
-import classes from '../../CSS/HeaderMegaMenu.module.css';
 import { Dropzone, MIME_TYPES} from '@mantine/dropzone';
 import { useDisclosure, useWindowScroll } from '@mantine/hooks';
 import { useRef, useState } from 'react';
 import { IconCloudUpload, IconDownload, IconX } from '@tabler/icons-react';
-import '../GalleryPage/Gallery-Page.module.css';
+import classes from '../GalleryPage/Gallery-Page.module.css';
 import '@mantine/dropzone/styles.css';
 import { NavBar } from '@/components/NavBar/Nav-Bar';
 
@@ -91,63 +92,21 @@ const userPhotos = [
   }
 ];
 
+const marks = [
+  { value: 0, label: '2' },
+  { value: 50, label: '4' },
+  { value: 100, label: '6' },
+];
+
 export default function GalleryPage() {
   const [opened, { open, close }] = useDisclosure(false);
   const openRef = useRef<() => void>(null);
   const theme = useMantineTheme();
-  /* Filter Function. Does Not Work
-  const allTags = [...new Set(userPhotos.flatMap(photo => photo.tags))];
-  const [selectedTags, setSelectedTags] = useState([]);
+  const columnNumber = 
 
-  const filteredPhotos = userPhotos.filter(photo =>
-    selectedTags.length === 0 || selectedTags.some(tag => photo.tags.includes(tag))
-  );
+  const setColumnNumber = () => {
 
-  const handleSelectTag = (currentTag: string): void => {
-    setSelectedTags((prevTags: Array<string>) => 
-      prevTags.includes(currentTag)
-        ? prevTags.filter(tag => tag !== currentTag)
-        : [...prevTags, currentTag]
-    );
-  };
-
-  const removeTag = (tagToRemove) => {
-    setSelectedTags(prev => prev.filter(tag => tag !== tagToRemove));
-  };
-
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
-    onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
-  });
-
-  const [search, setSearch] = useState('');
-  const [value, setValue] = useState<string[]>([]);
-
-  const handleValueSelect = (val: string) =>
-    setValue((current) =>
-      current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
-  );
-
-  const handleValueRemove = (val: string) =>
-    setValue((current) => current.filter((v) => v !== val)
-  );
-
-  const values = value.map((item) => (
-    <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>
-      {item}
-    </Pill>
-  ));  
-
-  const options = userPhotos
-    .filter((item) => item.tags.includes(search.trim().toLowerCase()))
-    .map((item) => (
-      <Combobox.Option value={item.tags} key={item} active={value.includes(item)}>
-        <Group gap="sm">
-          {value.includes(item) ? <CheckIcon size={12} /> : null}
-          <span>{item}</span>
-        </Group>
-      </Combobox.Option>
-    ));*/
+  }
 
   const cards = userPhotos.map((article) => (
     <Card key={article.title} p="md" radius="md" component="a" href="#" className={classes.card}>
@@ -170,109 +129,125 @@ export default function GalleryPage() {
     </Card>
   ));
 
-
-  const [scroll, scrollTo] = useWindowScroll();
-
-
+  
 
   return (
     <>
       <NavBar/>
-      {' '}
-      <Box pt={50}>
+      <Container 
+        pt={50} 
+        display={"flex"} 
+        fluid 
+        px={"5%"}
+        className={classes.Container}
+      >
         <Center>
-          <Group>
+          <Stack>
             <Center>
-              <Stack>
-                <Center>
-                  <Title> Gallery </Title>
-                </Center>
-                <Group>
-                  <MultiSelect
-                  classNames={{pill: classes.pill}}
-                    placeholder="Filter by tag(s)"
-                    data={[
-                      
-                    ]}
-                    searchable
-                    nothingFoundMessage="Nothing Found... :\"
-                  />
-                  {/*<TagsInput
-                    label="Press Enter to submit a tag"
-                    placeholder="Pick tag from list"
-                    data={['React', 'Angular', 'Svelte']}
-                  /> */}
-                  <Modal opened={opened} onClose={close} centered radius={'lg'}>
-                    {
-                      <div className={classes.wrapper}>
-                      <Dropzone
-                        openRef={openRef}
-                        onDrop={() => {}}
-                        className={classes.dropzone}
-                        radius="md"
-                        accept={[MIME_TYPES.pdf]}
-                        maxSize={30 * 1024 ** 2}
-                      >
-                        <div style={{ pointerEvents: 'none' }}>
-                          <Group justify="center">
-                            <Dropzone.Accept>
-                              <IconDownload
-                                style={{ width: rem(50), height: rem(50) }}
-                                color={theme.colors.blue[6]}
-                                stroke={1.5}
-                              />
-                            </Dropzone.Accept>
-                            <Dropzone.Reject>
-                              <IconX
-                                style={{ width: rem(50), height: rem(50) }}
-                                color={theme.colors.red[6]}
-                                stroke={1.5}
-                              />
-                            </Dropzone.Reject>
-                            <Dropzone.Idle>
-                              <IconCloudUpload style={{ width: rem(50), height: rem(50) }} stroke={1.5} />
-                            </Dropzone.Idle>
-                          </Group>
-                
-                          <Text ta="center" fw={700} fz="lg" mt="xl">
-                            <Dropzone.Accept>Drop files here</Dropzone.Accept>
-                            <Dropzone.Reject>Pdf file less than 30mb</Dropzone.Reject>
-                            <Dropzone.Idle>Upload Picture(s)</Dropzone.Idle>
-                          </Text>
-                          <Text ta="center" fz="sm" mt="xs" c="dimmed">
-                            Pssss... You can upload up to 8 images at a time!
-                          </Text>
-                        </div>
-                      </Dropzone>
-                      <Space h="xs"/>
-                      <Flex justify={"center"}>
-                        <Button 
-                          className={classes.navButton} 
-                          size="md" 
-                          radius="xl" 
-                          onClick={() => openRef.current?.()}
-                          style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold'}}
-                        >
-                          Select files
-                        </Button>
-                      </Flex>
-                    </div>
-                    }
-                  </Modal>
-                  <Button 
-                    onClick={open}
-                    style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold',}}
-                    className={classes.navButton}
-                  >
-                    Upload Photo
-                  </Button>
-                </Group>
-                <SimpleGrid cols={{ base: 3, sm: 2 }}>{cards}</SimpleGrid>
-              </Stack>
+              <Title> Gallery </Title>
             </Center>
-          </Group>
+
+            <Group className={classes.toolbar} display={"flex"}>
+                <MultiSelect
+                classNames={{pill: classes.pill}}
+                  placeholder="Filter by tag(s)"
+                  data={[
+                    
+                  ]}
+                  searchable
+                  nothingFoundMessage="Nothing Found... :\"
+                  
+                />
+                {/*<TagsInput
+                  label="Press Enter to submit a tag"
+                  placeholder="Pick tag from list"
+                  data={['React', 'Angular', 'Svelte']}
+                /> */}
+                <Modal opened={opened} onClose={close} centered radius={'lg'}>
+                  {
+                    <div className={classes.wrapper}>
+                    <Dropzone
+                      openRef={openRef}
+                      onDrop={() => {}}
+                      className={classes.dropzone}
+                      radius="md"
+                      accept={[MIME_TYPES.pdf]}
+                      maxSize={30 * 1024 ** 2}
+                    >
+                      <div style={{ pointerEvents: 'none' }}>
+                        <Group justify="center">
+                          <Dropzone.Accept>
+                            <IconDownload
+                              style={{ width: rem(50), height: rem(50) }}
+                              color={theme.colors.blue[6]}
+                              stroke={1.5}
+                            />
+                          </Dropzone.Accept>
+                          <Dropzone.Reject>
+                            <IconX
+                              style={{ width: rem(50), height: rem(50) }}
+                              color={theme.colors.red[6]}
+                              stroke={1.5}
+                            />
+                          </Dropzone.Reject>
+                          <Dropzone.Idle>
+                            <IconCloudUpload style={{ width: rem(50), height: rem(50) }} stroke={1.5} />
+                          </Dropzone.Idle>
+                        </Group>
+              
+                        <Text ta="center" fw={700} fz="lg" mt="xl">
+                          <Dropzone.Accept>Drop files here</Dropzone.Accept>
+                          <Dropzone.Reject>Pdf file less than 30mb</Dropzone.Reject>
+                          <Dropzone.Idle>Upload Picture(s)</Dropzone.Idle>
+                        </Text>
+                        <Text ta="center" fz="sm" mt="xs" c="dimmed">
+                          Pssss... You can upload up to 8 images at a time!
+                        </Text>
+                      </div>
+                    </Dropzone>
+                    <Space h="xs"/>
+                    
+                      <Button 
+                        className={classes.navButton} 
+                        size="md" 
+                        radius="xl" 
+                        onClick={() => openRef.current?.()}
+                        style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold'}}
+                      >
+                        Select files
+                      </Button>
+                    
+                  </div>
+                  }
+                </Modal>
+                <Button 
+                  onClick={open}
+                  style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold',}}
+                  className={classes.navButton}
+                >
+                  Upload Photo
+                </Button>
+                
+            </Group>
+              <div>
+                <Slider
+                  defaultValue={0}
+                  color='#ff914d'
+                  className={classes.root}
+                  label={(val) => marks.find((mark) => mark.value === val)!.label}
+                  step={50}
+                  marks={marks}
+                  pb={50}
+                  
+                />
+              </div>
+            <SimpleGrid cols={{ base: 3, sm: 2 }}>
+              {cards}
+            </SimpleGrid>
+
+          </Stack>
         </Center>
-      </Box>
+      </Container>
     </>
   );
 }

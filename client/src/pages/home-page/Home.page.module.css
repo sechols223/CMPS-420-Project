@@ -12,7 +12,11 @@
     transform 150ms ease,
     box-shadow 150ms ease
     ;
+    min-width: 15.25rem;
+    height: 90%;
   }
+
+  
 
   .card:hover {
     
@@ -25,10 +29,7 @@
    
   }
 
-  .slide:hover{
-    transform: scale(1.05);
 
-  }
 
   
   .title {
