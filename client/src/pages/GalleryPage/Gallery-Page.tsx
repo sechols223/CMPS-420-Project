@@ -1,184 +1,99 @@
 import {
-  AspectRatio,
   Box,
   Button,
-  Card,
   Center,
+  Flex,
   Group,
-  Image,
+  LoadingOverlay,
   Modal,
   MultiSelect,
   rem,
   SimpleGrid,
+  Space,
   Stack,
   Text,
   Title,
   useMantineTheme,
-  Flex,
-  Space,
-  Pill,
-  useCombobox,
-  Combobox,
-  TagsInput,
 } from '@mantine/core';
 import classes from '../../CSS/HeaderMegaMenu.module.css';
-import { Dropzone, MIME_TYPES} from '@mantine/dropzone';
-import { useDisclosure, useWindowScroll } from '@mantine/hooks';
-import { useRef, useState } from 'react';
+import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
+import { useDisclosure } from '@mantine/hooks';
+import React, { useRef } from 'react';
 import { IconCloudUpload, IconDownload, IconX } from '@tabler/icons-react';
 import '../GalleryPage/Gallery-Page.module.css';
 import '@mantine/dropzone/styles.css';
 import { NavBar } from '@/components/NavBar/Nav-Bar';
-
+import { useAsync } from 'react-use';
+import { api } from '@/api';
+import { ImageGetDto, PaginatedResponse } from '@/types';
+import { ImageCard } from '@/components/image-card';
 
 const userPhotos = [
   {
     id: 1,
-    title: "Chrysler",
-    image: 'https://media.istockphoto.com/id/1129615025/photo/street-view-of-the-chrysler-building-at-midtown-manhattan-new-york-city-usa.jpg?s=1024x1024&w=is&k=20&c=lJ7QP6oTp20xcw2NE3Y16GiN6PeA0OJZJCuJKRAgEv4=',
-    tags: [
-      "Chrysler Building",
-      "Skyscraper",
-      "NYC",
-      "Architecture"
-    ],
+    title: 'Chrysler',
+    image:
+      'https://media.istockphoto.com/id/1129615025/photo/street-view-of-the-chrysler-building-at-midtown-manhattan-new-york-city-usa.jpg?s=1024x1024&w=is&k=20&c=lJ7QP6oTp20xcw2NE3Y16GiN6PeA0OJZJCuJKRAgEv4=',
+    tags: ['Chrysler Building', 'Skyscraper', 'NYC', 'Architecture'],
     isFavorite: true,
   },
   {
     id: 2,
-    title: "St. Louis Cathedral",
-    image: 'https://upload.wikimedia.org/wikipedia/commons/1/19/StLouisCath.jpg',
+    title: 'St. Louis Cathedral',
+    image:
+      'https://upload.wikimedia.org/wikipedia/commons/1/19/StLouisCath.jpg',
     tags: [
-      "New Orleans",
-      "Architecture",
-      "French Quarter",
-      "Religious Building"
+      'New Orleans',
+      'Architecture',
+      'French Quarter',
+      'Religious Building',
     ],
     isFavorite: true,
   },
   {
     id: 3,
-    title: "Bonnet Carre Spillway",
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Army_Corps_operates_spillway_in_Louisiana.jpg/300px-Army_Corps_operates_spillway_in_Louisiana.jpg',
-    tags: [
-      "Louisiana",
-      "Bonnet Carre",
-      "Infrastructure"
-    ],
+    title: 'Bonnet Carre Spillway',
+    image:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Army_Corps_operates_spillway_in_Louisiana.jpg/300px-Army_Corps_operates_spillway_in_Louisiana.jpg',
+    tags: ['Louisiana', 'Bonnet Carre', 'Infrastructure'],
     isFavorite: true,
   },
   {
     id: 4,
-    title: "Statue of Unity",
-    image: 'https://preview.redd.it/the-statue-of-unity-in-india-it-is-the-tallest-statue-in-v0-db96pekttwda1.jpg?width=640&crop=smart&auto=webp&s=721e51614374f43c40be74d1cef63a2a30233af9',
-    tags: [
-      "Chrysler Building",
-      "Skyscraper",
-      "NYC"
-    ],
+    title: 'Statue of Unity',
+    image:
+      'https://preview.redd.it/the-statue-of-unity-in-india-it-is-the-tallest-statue-in-v0-db96pekttwda1.jpg?width=640&crop=smart&auto=webp&s=721e51614374f43c40be74d1cef63a2a30233af9',
+    tags: ['Chrysler Building', 'Skyscraper', 'NYC'],
     isFavorite: true,
   },
   {
     id: 5,
-    title: "Utah Hoodoos",
-    image: 'https://img2.10bestmedia.com/Images/Photos/382106/GettyImages-512495588_55_660x440.jpg',
-    tags: [
-      "Chrysler Building",
-      "Skyscraper",
-      "NYC"
-    ],
+    title: 'Utah Hoodoos',
+    image:
+      'https://img2.10bestmedia.com/Images/Photos/382106/GettyImages-512495588_55_660x440.jpg',
+    tags: ['Chrysler Building', 'Skyscraper', 'NYC'],
     isFavorite: true,
-  }
+  },
 ];
 
 export default function GalleryPage() {
   const [opened, { open, close }] = useDisclosure(false);
   const openRef = useRef<() => void>(null);
   const theme = useMantineTheme();
-  /* Filter Function. Does Not Work
-  const allTags = [...new Set(userPhotos.flatMap(photo => photo.tags))];
-  const [selectedTags, setSelectedTags] = useState([]);
 
-  const filteredPhotos = userPhotos.filter(photo =>
-    selectedTags.length === 0 || selectedTags.some(tag => photo.tags.includes(tag))
-  );
-
-  const handleSelectTag = (currentTag: string): void => {
-    setSelectedTags((prevTags: Array<string>) => 
-      prevTags.includes(currentTag)
-        ? prevTags.filter(tag => tag !== currentTag)
-        : [...prevTags, currentTag]
-    );
-  };
-
-  const removeTag = (tagToRemove) => {
-    setSelectedTags(prev => prev.filter(tag => tag !== tagToRemove));
-  };
-
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
-    onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
-  });
-
-  const [search, setSearch] = useState('');
-  const [value, setValue] = useState<string[]>([]);
-
-  const handleValueSelect = (val: string) =>
-    setValue((current) =>
-      current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
-  );
-
-  const handleValueRemove = (val: string) =>
-    setValue((current) => current.filter((v) => v !== val)
-  );
-
-  const values = value.map((item) => (
-    <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>
-      {item}
-    </Pill>
-  ));  
-
-  const options = userPhotos
-    .filter((item) => item.tags.includes(search.trim().toLowerCase()))
-    .map((item) => (
-      <Combobox.Option value={item.tags} key={item} active={value.includes(item)}>
-        <Group gap="sm">
-          {value.includes(item) ? <CheckIcon size={12} /> : null}
-          <span>{item}</span>
-        </Group>
-      </Combobox.Option>
-    ));*/
-
-  const cards = userPhotos.map((article) => (
-    <Card key={article.title} p="md" radius="md" component="a" href="#" className={classes.card}>
-      <AspectRatio ratio={1920 / 1080}>
-        <Image src={article.image} />
-      </AspectRatio>
-
-      <Text className={classes.title} mt={5}>
-        {article.title}
-      </Text>
-      {article.tags.map((tags)=> (
-        <>
-          <Flex>
-            <Pill>
-              {tags}
-            </Pill>
-          </Flex>
-        </>
-      ))}
-    </Card>
-  ));
-
-
-  const [scroll, scrollTo] = useWindowScroll();
-
-
+  const fetchImages = useAsync(async () => {
+    const response =
+      await api.get<PaginatedResponse<ImageGetDto>>('/api/images');
+    return response.data;
+  }, []);
 
   return (
     <>
-      <NavBar/>
-      {' '}
+      <NavBar />
+      <LoadingOverlay
+        visible={fetchImages.loading}
+        loaderProps={{ children: 'Loading...' }}
+      />
       <Box pt={50}>
         <Center>
           <Group>
@@ -189,22 +104,15 @@ export default function GalleryPage() {
                 </Center>
                 <Group>
                   <MultiSelect
-                  classNames={{pill: classes.pill}}
+                    p={15}
+                    classNames={{ pill: classes.pill }}
                     placeholder="Filter by tag(s)"
-                    data={[
-                      
-                    ]}
+                    data={[]}
                     searchable
                     nothingFoundMessage="Nothing Found... :\"
                   />
-                  {/*<TagsInput
-                    label="Press Enter to submit a tag"
-                    placeholder="Pick tag from list"
-                    data={['React', 'Angular', 'Svelte']}
-                  /> */}
-                  <Modal opened={opened} onClose={close} centered radius={'lg'}>
-                    {
-                      <div className={classes.wrapper}>
+                  <Modal opened={opened} onClose={close} centered radius="lg">
+                    <div className={classes.wrapper}>
                       <Dropzone
                         openRef={openRef}
                         onDrop={() => {}}
@@ -230,13 +138,18 @@ export default function GalleryPage() {
                               />
                             </Dropzone.Reject>
                             <Dropzone.Idle>
-                              <IconCloudUpload style={{ width: rem(50), height: rem(50) }} stroke={1.5} />
+                              <IconCloudUpload
+                                style={{ width: rem(50), height: rem(50) }}
+                                stroke={1.5}
+                              />
                             </Dropzone.Idle>
                           </Group>
-                
+
                           <Text ta="center" fw={700} fz="lg" mt="xl">
                             <Dropzone.Accept>Drop files here</Dropzone.Accept>
-                            <Dropzone.Reject>Pdf file less than 30mb</Dropzone.Reject>
+                            <Dropzone.Reject>
+                              Pdf file less than 30mb
+                            </Dropzone.Reject>
                             <Dropzone.Idle>Upload Picture(s)</Dropzone.Idle>
                           </Text>
                           <Text ta="center" fz="sm" mt="xs" c="dimmed">
@@ -244,30 +157,41 @@ export default function GalleryPage() {
                           </Text>
                         </div>
                       </Dropzone>
-                      <Space h="xs"/>
-                      <Flex justify={"center"}>
-                        <Button 
-                          className={classes.navButton} 
-                          size="md" 
-                          radius="xl" 
+                      <Space h="xs" />
+                      <Flex justify="center">
+                        <Button
+                          className={classes.navButton}
+                          size="md"
+                          radius="xl"
                           onClick={() => openRef.current?.()}
-                          style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold'}}
+                          style={{
+                            backgroundColor: '#ff914d',
+                            color: '#39445a',
+                            fontWeight: 'bold',
+                          }}
                         >
                           Select files
                         </Button>
                       </Flex>
                     </div>
-                    }
                   </Modal>
-                  <Button 
+                  <Button
                     onClick={open}
-                    style={{backgroundColor: '#ff914d', color: '#39445a', fontWeight: 'bold',}}
+                    style={{
+                      backgroundColor: '#ff914d',
+                      color: '#39445a',
+                      fontWeight: 'bold',
+                    }}
                     className={classes.navButton}
                   >
                     Upload Photo
                   </Button>
                 </Group>
-                <SimpleGrid cols={{ base: 3, sm: 2 }}>{cards}</SimpleGrid>
+                <SimpleGrid cols={{ base: 3, sm: 2 }}>
+                  {fetchImages.value?.items.map((image) => (
+                    <ImageCard image={image} />
+                  ))}
+                </SimpleGrid>
               </Stack>
             </Center>
           </Group>

@@ -14,8 +14,6 @@ from server.routers.pixtral import process_images, generate_tags, generate_album
 router = APIRouter()
 image_db = database['Images']
 
-
-
 @router.post("/api/images/upload")
 async def upload_images(data: UploadImagesDto):
     images = data.images
@@ -50,58 +48,6 @@ async def upload_images(data: UploadImagesDto):
     results = jsonable_encoder(results)
 
     return results
-
-@router.post("/api/albums")
-async def make_albums():
-    albums = await generate_albums()
-    albums = albums.message.parsed
-
-    for album in albums.albums:
-        json_data = album.model_dump_json()
-        json_object = json.loads(json_data)
-
-        database['Albums'].insert_one(json_object)
-
-    aggregation_pipeline = [
-        {
-            "$unwind": "$images"
-        },
-        {
-            "$lookup":
-                {
-                    "from": "Albums",
-                    "localField": "images",
-                    "foreignField": "_id",
-                    "as": "images"
-                }
-        }
-    ]
-
-    albums = database['Albums'].aggregate(aggregation_pipeline)
-    return albums
-
-@router.get("/api/albums")
-async def get_albums():
-    aggregation_pipeline = [
-        {
-            "$unwind": "$imageIds"
-        },
-        {
-            "$lookup":
-            {
-                "from": "Albums",
-                "localField": "imageIds",
-                "foreignField": "_id",
-                "as": "images"
-            }
-        }
-    ]
-
-    albums = database['Albums'].aggregate(aggregation_pipeline)
-    print(albums)
-
-    return albums
-
 
 @router.get("/api/images/{image_id}")
 async def get_image_by_id(image_id: str) -> ImageGetDto | None:
@@ -150,10 +96,3 @@ async def edit_image(id: str, dto: UpdateImageDto) -> ImageGetDto:
     result = image_db.update_one({ "_id": ObjectId(id)}, { "$set": model})
     return ImageGetDto(**image_db.find_one(result.upserted_id))
 
-@router.post("/images/{image_id}/albums/{album_id}")
-async def add_image_to_album(image_id: str, album_id: str):
-    database['albums'].update_one(
-        {"_id": album_id},
-        { "$push": { "imageIds": image_id } }
-    )
-    return True

@@ -3,9 +3,12 @@ from typing import List
 from bson import ObjectId
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel
+
 from server.database.db import database
-from server.models.Image import Image, ImageGetDto
+from server.models.Image import ImageGetDto
 from server.models.base import BaseDBSchema, PyObjectId
+from server.routers.pixtral import generate_albums
 
 router = APIRouter()
 album_db = database['Albums']
@@ -16,6 +19,11 @@ class Album(BaseDBSchema):
     imageIds: List[PyObjectId]
     images: List[ImageGetDto]
 
+class AlbumCreateDto(BaseModel):
+    name: str
+
+class AlbumImageListDto(BaseModel):
+    image_ids: list[str]
 
 def _get_albums() -> List[Album]:
     """
@@ -95,9 +103,17 @@ def _get_album_by_id(id: str) -> Album | None:
 not_found = JSONResponse(content={"message": "Album not found"}, status_code=404)
 
 
-@router.get("/api/albums/")
+@router.get("/api/albums")
 async def get_albums():
     albums = _get_albums()
+
+    if len(albums) <= 0:
+        generated_albums = await generate_albums()
+        for album in generated_albums.message.parsed.albums:
+            album_db.insert_one(album.__dict__)
+
+        albums = _get_albums()
+
     return albums
 
 @router.get('/api/albums/{id}', response_model=Album)
@@ -121,3 +137,73 @@ async def delete_album(id: str):
 
     album_db.delete_one({ "_id": ObjectId(id) })
     return True
+
+@router.post('/api/albums')
+async def create_album(dto: AlbumCreateDto):
+    found_album = album_db.find_one({'name': f'/^{dto.name}$/i'})
+    if found_album is not None:
+        return JSONResponse({'message': 'An album already exists with this name'}, 400)
+
+    inserted_album = album_db.insert_one(dto.__dict__)
+    album = Album(**album_db.find_one(inserted_album.inserted_id))
+
+    return album
+
+@router.post("/api/albums/{id}")
+async def add_image_to_album(id: str, dto: AlbumImageListDto):
+
+    if not ObjectId.is_valid(id):
+        return JSONResponse(content={"message": "Album not found"}, status_code=404)
+
+    album = _get_album_by_id(id)
+    if album is None:
+        return JSONResponse(content={"message": "Album not found"}, status_code=404)
+
+    ids_to_insert = [id for id in dto.image_ids if id not in album.imageIds]
+
+    database['albums'].update_one(
+        {"_id": id},
+        { "$push": { "imageIds": {'$each': ids_to_insert} } }
+    )
+
+
+    return album
+
+@router.delete('/api/albums/{id}/remove-single/{image_id}')
+async def remove_image_from_album(id:str, image_id: str):
+    if not ObjectId.is_valid(id) or not ObjectId.is_valid(image_id):
+        return JSONResponse(content={"message": "Album not found"}, status_code=404)
+
+    album = _get_album_by_id(id)
+    if album is None:
+        return JSONResponse(content={"message": "Album not found"}, status_code=404)
+
+    update_result = album_db.update_one({'_id': ObjectId(id)}, {
+        '$pull':
+            {
+                'imageIds': { '$in': [image_id] }
+            }
+    })
+
+    album = _get_album_by_id(id)
+    return album
+
+@router.put('/api/albums/{id}/remove')
+async def remove_images_from_album(id: str, dto: AlbumImageListDto) -> Album:
+
+    if not ObjectId.is_valid(id):
+        return JSONResponse(content={"message": "Album not found"}, status_code=404)
+
+    album = _get_album_by_id(id)
+    if album is None:
+        return JSONResponse(content={"message": "Album not found"}, status_code=404)
+
+    update_result = album_db.update_one({'_id': ObjectId(id)}, {
+        '$pull':
+        {
+            'imageIds': { '$in': dto.image_ids }
+        }
+    })
+
+    album = _get_album_by_id(id)
+    return album
