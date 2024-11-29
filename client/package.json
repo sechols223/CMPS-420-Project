@@ -4,12 +4,14 @@
   "type": "module",
   "version": "0.0.0",
   "scripts": {
+    "start": "vite",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "npm run eslint && npm run stylelint",
     "eslint": "eslint . --cache",
+    "eslint-fix": "eslint --fix --ext .jsx .tsx",
     "stylelint": "stylelint '**/*.css' --cache",
     "prettier": "prettier --check \"**/*.{ts,tsx}\"",
     "prettier:write": "prettier --write \"**/*.{ts,tsx}\"",
@@ -26,13 +28,17 @@
     "@mantine/hooks": "^7.13.5",
     "@tabler/icons-react": "^3.20.0",
     "animated-backgrounds": "^1.0.11",
+    "axios": "^1.7.7",
     "embla-carousel-autoplay": "^8.3.1",
     "embla-carousel-react": "^8.3.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-dynamic-background": "^1.0.1",
     "react-hook-form": "^7.53.1",
-    "react-router-dom": "^6.26.1"
+    "react-icons": "^5.3.0",
+    "react-router-dom": "^6.26.1",
+    "react-toastify": "^10.0.6",
+    "react-use": "^17.5.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.10.0",
@@ -72,5 +78,15 @@
     "vite": "^5.4.6",
     "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^2.0.5"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "semi": true,
+    "jsxSingleQuote": false,
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "singleQuote": true,
+    "printWidth": 80
   }
 }

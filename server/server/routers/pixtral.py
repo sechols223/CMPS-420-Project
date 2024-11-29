@@ -301,7 +301,15 @@ def get_images() -> list[ImageModel]:
   images = [ImageModel.AlbumImage(**image).__dict__ for image in images]
   return images
 
-albums_prompt = """
+def get_images_in_list(image_ids: list[str]) -> list[ImageModel.Image]:
+  images = database['Images'].find({
+    '_id': { '$in': image_ids }
+  })
+
+  images = [ImageModel.Image(**image) for image in images]
+  return images
+
+albums_prompt_list = """
 Using the provided json data of images. Create albums for these images based on similar tags, categories, and descriptions. One image is allowed to belong to multiple albums.
 The album name should be something related to the images tags, category, and description.
 """
@@ -312,7 +320,7 @@ async def generate_albums():
   messages = [
     {
       "role": "system",
-      "content": albums_prompt
+      "content": albums_prompt_list
     },
     {
       "role": "user",
@@ -332,4 +340,6 @@ async def generate_albums():
     response_format=Albums
   )
 
+
+  print(openai_response.choices[0])
   return openai_response.choices[0]
