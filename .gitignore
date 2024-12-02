@@ -5,3 +5,5 @@
 client/node_modules
 .bin
 .build
+.env
+server/server/.env
