@@ -151,7 +151,6 @@ async def create_album(dto: AlbumCreateDto):
 
 @router.post("/api/albums/{id}")
 async def add_image_to_album(id: str, dto: AlbumImageListDto):
-
     if not ObjectId.is_valid(id):
         return JSONResponse(content={"message": "Album not found"}, status_code=404)
 
@@ -161,13 +160,13 @@ async def add_image_to_album(id: str, dto: AlbumImageListDto):
 
     ids_to_insert = [id for id in dto.image_ids if id not in album.imageIds]
 
-    database['albums'].update_one(
-        {"_id": id},
-        { "$push": { "imageIds": {'$each': ids_to_insert} } }
+    # Convert string ID to ObjectId 
+    album_db.update_one(  
+        {"_id": ObjectId(id)},  # Convert id to ObjectId
+        {"$push": {"imageIds": {'$each': ids_to_insert}}}
     )
 
-
-    return album
+    return _get_album_by_id(id)  # Return fresh data after update
 
 @router.delete('/api/albums/{id}/remove-single/{image_id}')
 async def remove_image_from_album(id:str, image_id: str):
