@@ -7,3 +7,5 @@ client/node_modules
 .build
 .env
 server/server/.env
+node_modules
+yarn.lock
