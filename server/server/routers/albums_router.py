@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from bson import ObjectId
 from fastapi import APIRouter
@@ -16,8 +16,8 @@ album_db = database['Albums']
 
 class Album(BaseDBSchema):
     name: str
-    imageIds: List[PyObjectId]
-    images: List[ImageGetDto]
+    imageIds: Optional[List[PyObjectId]] = None
+    images: Optional[List[ImageGetDto]] = None
 
 class AlbumCreateDto(BaseModel):
     name: str
