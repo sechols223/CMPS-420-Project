@@ -25,6 +25,10 @@ class AlbumCreateDto(BaseModel):
 class AlbumImageListDto(BaseModel):
     image_ids: Optional[list[str]] = None
 
+class AlbumImageCreateDto(BaseModel):
+    album_id: str
+    image_id: str
+
 def _get_albums() -> List[Album]:
     """
     Retrieves all albums from the database
@@ -220,7 +224,7 @@ async def create_album(dto: AlbumCreateDto):
     return album
 
 @router.post("/api/albums/{id}")
-async def add_image_to_album(id: str, dto: AlbumImageListDto):
+async def add_images_to_album(id: str, dto: AlbumImageListDto):
     if not ObjectId.is_valid(id):
         return JSONResponse(content={"message": "Album not found"}, status_code=404)
 
@@ -237,6 +241,28 @@ async def add_image_to_album(id: str, dto: AlbumImageListDto):
     )
 
     return _get_album_by_id(id)  # Return fresh data after update
+
+@router.post('/api/albums/image')
+async def add_image_to_album(dto: AlbumImageCreateDto):
+    if not (ObjectId.is_valid(dto.album_id) and ObjectId.is_valid(dto.image_id)):
+        return JSONResponse(content={"message": "invalid ids"}, status_code=400)
+
+    album = _get_album_by_id(id)
+    if album is None:
+        return JSONResponse(content={"message": "Album not found"}, status_code=404)
+
+    image = database['Images'].find_one(ObjectId(dto.image_id))
+    if image is None:
+        return JSONResponse(content={"message": "Image not found"}, status_code=404)
+
+    ids_to_insert = [dto.image_id]
+
+    album_db.update_one(
+        {"_id": ObjectId(id)},  # Convert id to ObjectId
+        {"$push": {"imageIds": {'$each': ids_to_insert}}}
+    )
+
+    return _get_album_by_id(id)
 
 @router.delete('/api/albums/{id}/remove-single/{image_id}')
 async def remove_image_from_album(id:str, image_id: str):
