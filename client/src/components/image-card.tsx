@@ -1,4 +1,9 @@
-﻿import { ImageGetDto, ImageUpdateDto } from '@/types';
+﻿import {
+  AlbumGetDto,
+  AlbumImageListDto,
+  ImageGetDto,
+  ImageUpdateDto,
+} from '@/types';
 import {
   ActionIcon,
   AspectRatio,
@@ -17,6 +22,7 @@ import {
   Textarea,
   TextInput,
   Title,
+  validateMantineTheme,
 } from '@mantine/core';
 import React, { CSSProperties, useEffect } from 'react';
 import { useDisclosure } from '@mantine/hooks';
@@ -24,7 +30,7 @@ import classes from '@/CSS/HeaderMegaMenu.module.css';
 import { Controller, useForm } from 'react-hook-form';
 import { api } from '@/api';
 import { useAsyncFn, useAsyncRetry } from 'react-use';
-import { FaEllipsis, FaPencil, FaTrashCan } from 'react-icons/fa6';
+import { FaEllipsis, FaPencil, FaPlus, FaTrashCan } from 'react-icons/fa6';
 import { toast } from 'react-toastify';
 
 type ImageModalProps = {
@@ -82,6 +88,7 @@ export const ImageModal: React.FC<{
   }, [imageId]);
 
   const [editMode, editModeMethods] = useDisclosure(false);
+  const [albumDropdown, albumDropdownThing] = useDisclosure(false);
 
   const { register, handleSubmit, control, reset } = useForm<ImageUpdateDto>({
     defaultValues: {
@@ -105,6 +112,16 @@ export const ImageModal: React.FC<{
     }
   });
 
+  //fetch albums
+  const fetchAlbums = useAsyncRetry(async () => {
+    const response = await api.get<AlbumGetDto[]>('/api/albums');
+    return response.data;
+  });
+  //add to da album
+  const addToAlbum = useAsyncFn(async (values: AlbumImageListDto) => {
+    const response = await api.post(`/api/albums/${fetchImage.value?._id}`);
+  });
+
   useEffect(() => {
     fetchImage.retry();
     reset({
@@ -113,99 +130,113 @@ export const ImageModal: React.FC<{
   }, []);
 
   return (
-    <Modal opened={opened} onClose={close} withCloseButton={false}>
-      <LoadingOverlay
-        visible={submitState.loading || fetchImage.loading}
-        loaderProps={{ children: 'Loading...' }}
-      />
-      {fetchImage.value && (
-        <>
-          <Modal.Title>
-            <Flex justify="space-between" align="center">
-              {!editMode ? (
-                <Title>{fetchImage.value?.name}</Title>
-              ) : (
-                <TextInput {...register('name')} label={'Name'} />
-              )}
-              {editMode ? (
-                <Button onClick={editModeMethods.close} color={'gray'}>
-                  Cancel
-                </Button>
-              ) : (
-                <Menu>
-                  <Menu.Target>
-                    <ActionIcon size={'lg'} variant={'transparent'}>
-                      <FaEllipsis />
-                    </ActionIcon>
-                  </Menu.Target>
-                  <Menu.Dropdown>
-                    {!editMode && (
+    <>
+      <Modal opened={opened} onClose={close} withCloseButton={false}>
+        <LoadingOverlay
+          visible={submitState.loading || fetchImage.loading}
+          loaderProps={{ children: 'Loading...' }}
+        />
+        {fetchImage.value && (
+          <>
+            <Modal.Title>
+              <Flex justify="space-between" align="center">
+                {!editMode ? (
+                  <Title>{fetchImage.value?.name}</Title>
+                ) : (
+                  <TextInput {...register('name')} label={'Name'} />
+                )}
+                {editMode ? (
+                  <Button onClick={editModeMethods.close} color={'gray'}>
+                    Cancel
+                  </Button>
+                ) : (
+                  <Menu>
+                    <Menu.Target>
+                      <ActionIcon size={'lg'} variant={'transparent'}>
+                        <FaEllipsis />
+                      </ActionIcon>
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                      {!editMode && (
+                        <Menu.Item
+                          leftSection={<FaPencil />}
+                          onClick={editModeMethods.open}
+                        >
+                          Edit
+                        </Menu.Item>
+                      )}
                       <Menu.Item
-                        leftSection={<FaPencil />}
-                        onClick={editModeMethods.open}
+                        leftSection={<FaTrashCan color="red" />}
+                        color={'red'}
                       >
-                        Edit
+                        Delete
                       </Menu.Item>
-                    )}
-                    <Menu.Item
-                      leftSection={<FaTrashCan color="red" />}
-                      color={'red'}
-                    >
-                      Delete
-                    </Menu.Item>
-                  </Menu.Dropdown>
-                </Menu>
-              )}
-            </Flex>
-          </Modal.Title>
-          {!editMode ? (
-            <Stack h={'100%'} pt={10}>
-              <AspectRatio ratio={1080 / 720}>
-                <Image src={fetchImage.value?.imageData} />
-              </AspectRatio>
-              <Text fs={'italic'}>{fetchImage.value?.category}</Text>
-              <Group>
-                {fetchImage.value?.tags.map((tag) => <Badge>{tag}</Badge>)}
-              </Group>
-              <Text>{fetchImage.value?.description}</Text>
-            </Stack>
-          ) : (
-            <>
-              <form onSubmit={handleSubmit(submit)}>
-                <Stack h={'100%'} pt={10}>
-                  <AspectRatio ratio={1080 / 720}>
-                    <Image src={fetchImage.value?.imageData} />
-                  </AspectRatio>
-                  <Controller
-                    control={control}
-                    render={({ field }) => {
-                      console.log(field);
-                      return (
-                        <TagsInput
-                          label="Tags"
-                          value={field.value || []}
-                          onChange={(value) => field.onChange(value)}
-                        />
-                      );
-                    }}
-                    name={'tags'}
-                  />
-                  <Textarea
-                    {...register('description')}
-                    label={'Description'}
-                    style={textAreaStyle}
-                    autosize
-                  />
-                  <Group justify={'end'}>
-                    <Button type={'submit'}>Save</Button>
-                  </Group>
-                </Stack>
-              </form>
-            </>
-          )}
-        </>
-      )}
-    </Modal>
+                      <Menu.Item
+                        leftSection={<FaPlus color="green" />}
+                        color={'gray'}
+                        onClick={albumDropdownThing.open}
+                      >
+                        Add to album
+                      </Menu.Item>
+                    </Menu.Dropdown>
+                  </Menu>
+                )}
+              </Flex>
+            </Modal.Title>
+            {!editMode ? (
+              <Stack h={'100%'} pt={10}>
+                <AspectRatio ratio={1080 / 720}>
+                  <Image src={fetchImage.value?.imageData} />
+                </AspectRatio>
+                <Text fs={'italic'}>{fetchImage.value?.category}</Text>
+                <Group>
+                  {fetchImage.value?.tags.map((tag) => <Badge>{tag}</Badge>)}
+                </Group>
+                <Text>{fetchImage.value?.description}</Text>
+              </Stack>
+            ) : (
+              <>
+                <form onSubmit={handleSubmit(submit)}>
+                  <Stack h={'100%'} pt={10}>
+                    <AspectRatio ratio={1080 / 720}>
+                      <Image src={fetchImage.value?.imageData} />
+                    </AspectRatio>
+                    <Controller
+                      control={control}
+                      render={({ field }) => {
+                        console.log(field);
+                        return (
+                          <TagsInput
+                            label="Tags"
+                            value={field.value || []}
+                            onChange={(value) => field.onChange(value)}
+                          />
+                        );
+                      }}
+                      name={'tags'}
+                    />
+                    <Textarea
+                      {...register('description')}
+                      label={'Description'}
+                      style={textAreaStyle}
+                      autosize
+                    />
+                    <Group justify={'end'}>
+                      <Button type={'submit'}>Save</Button>
+                    </Group>
+                  </Stack>
+                </form>
+              </>
+            )}
+          </>
+        )}
+      </Modal>
+      <Modal
+        opened={albumDropdown}
+        onClose={albumDropdownThing.close}
+        withCloseButton={true}
+      ></Modal>
+    </>
   );
 };
 

@@ -29,3 +29,6 @@ export type AlbumCreateDto ={
   name: string; 
   imageIds: string[]
 }
+export type AlbumImageListDto ={
+  _id: string;
+}
