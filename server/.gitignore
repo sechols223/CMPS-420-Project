@@ -10,3 +10,4 @@ server/.env
 /installer.ps1
 /model.py
 /notebook.ipynb
+server/server/.env
