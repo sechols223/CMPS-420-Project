@@ -3,6 +3,17 @@
   items: T[];
 };
 
+export type ApiResponse<T> = {
+  data: T;
+  errors: ApiError[];
+  hasErrors: boolean;
+};
+
+export type ApiError = {
+  property: string;
+  message: string;
+};
+
 export type ImageGetDto = {
   _id: string;
   name: string;
