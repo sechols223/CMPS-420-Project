@@ -13,14 +13,6 @@ export const ImageCards: React.FC = () => {
     return response.data;
   }, []);
 
-  const updateImage = useAsyncFn(async (values: ImageUpdateDto) => {
-    try {
-      await api.put<ImageUpdateDto>(`/api/images/${values.id}`);
-    } catch (error) {
-      console.log('failed to update image: ', error);
-    }
-  });
-
   return (
     <LoadingContainer loading={fetchImages.loading}>
       {fetchImages.value?.items.map((image) => (
