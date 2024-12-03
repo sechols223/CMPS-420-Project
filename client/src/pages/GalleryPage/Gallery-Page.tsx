@@ -2,90 +2,74 @@ import {
   Box,
   Button,
   Center,
+  CheckIcon,
+  Combobox,
+  Container,
   Flex,
   Group,
   LoadingOverlay,
   Modal,
   MultiSelect,
+  Pill,
+  PillsInput,
   rem,
   SimpleGrid,
+  Slider,
   Space,
   Stack,
+  TagsInput,
   Text,
   Title,
+  useCombobox,
   useMantineTheme,
 } from '@mantine/core';
 import classes from '../../CSS/HeaderMegaMenu.module.css';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { useDisclosure } from '@mantine/hooks';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { IconCloudUpload, IconDownload, IconX } from '@tabler/icons-react';
 import '../GalleryPage/Gallery-Page.module.css';
 import '@mantine/dropzone/styles.css';
 import { NavBar } from '@/components/NavBar/Nav-Bar';
 import { useAsync } from 'react-use';
 import { api } from '@/api';
-import { ImageGetDto, PaginatedResponse } from '@/types';
+import { ImageGetDto, PaginatedResponse, TagGetDto } from '@/types';
 import { ImageCard } from '@/components/image-card';
+import axios from 'axios';
+import { TagFilter } from '@/components/filter-by-tags/filter-by-tags';
 
-const userPhotos = [
-  {
-    id: 1,
-    title: 'Chrysler',
-    image:
-      'https://media.istockphoto.com/id/1129615025/photo/street-view-of-the-chrysler-building-at-midtown-manhattan-new-york-city-usa.jpg?s=1024x1024&w=is&k=20&c=lJ7QP6oTp20xcw2NE3Y16GiN6PeA0OJZJCuJKRAgEv4=',
-    tags: ['Chrysler Building', 'Skyscraper', 'NYC', 'Architecture'],
-    isFavorite: true,
-  },
-  {
-    id: 2,
-    title: 'St. Louis Cathedral',
-    image:
-      'https://upload.wikimedia.org/wikipedia/commons/1/19/StLouisCath.jpg',
-    tags: [
-      'New Orleans',
-      'Architecture',
-      'French Quarter',
-      'Religious Building',
-    ],
-    isFavorite: true,
-  },
-  {
-    id: 3,
-    title: 'Bonnet Carre Spillway',
-    image:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Army_Corps_operates_spillway_in_Louisiana.jpg/300px-Army_Corps_operates_spillway_in_Louisiana.jpg',
-    tags: ['Louisiana', 'Bonnet Carre', 'Infrastructure'],
-    isFavorite: true,
-  },
-  {
-    id: 4,
-    title: 'Statue of Unity',
-    image:
-      'https://preview.redd.it/the-statue-of-unity-in-india-it-is-the-tallest-statue-in-v0-db96pekttwda1.jpg?width=640&crop=smart&auto=webp&s=721e51614374f43c40be74d1cef63a2a30233af9',
-    tags: ['Chrysler Building', 'Skyscraper', 'NYC'],
-    isFavorite: true,
-  },
-  {
-    id: 5,
-    title: 'Utah Hoodoos',
-    image:
-      'https://img2.10bestmedia.com/Images/Photos/382106/GettyImages-512495588_55_660x440.jpg',
-    tags: ['Chrysler Building', 'Skyscraper', 'NYC'],
-    isFavorite: true,
-  },
+
+
+const marks = [
+  { value: 0, label: '2' },
+  { value: 50, label: '4' },
+  { value: 100, label: '6' },
 ];
 
 export default function GalleryPage() {
   const [opened, { open, close }] = useDisclosure(false);
   const openRef = useRef<() => void>(null);
   const theme = useMantineTheme();
+  const [search, setSearch] = useState('');
+  const [value, setValue] = useState<string[]>([]);
 
   const fetchImages = useAsync(async () => {
     const response =
       await api.get<PaginatedResponse<ImageGetDto>>('/api/images');
     return response.data;
   }, []);
+
+  
+ 
+  console.log(fetchImages)
+
+
+
+
+
+
+
+  
 
   return (
     <>
@@ -94,23 +78,24 @@ export default function GalleryPage() {
         visible={fetchImages.loading}
         loaderProps={{ children: 'Loading...' }}
       />
-      <Box pt={50}>
+ 
+      <Container 
+        pt={50} 
+        display={"flex"} 
+        fluid 
+        px={"5%"}
+        className={classes.Container}
+      >
         <Center>
-          <Group>
             <Center>
               <Stack>
                 <Center>
                   <Title> Gallery </Title>
                 </Center>
-                <Group>
-                  <MultiSelect
-                    p={15}
-                    classNames={{ pill: classes.pill }}
-                    placeholder="Filter by tag(s)"
-                    data={[]}
-                    searchable
-                    nothingFoundMessage="Nothing Found... :\"
-                  />
+                <Group className={classes.toolbar} display={"flex"}>
+
+                  <TagFilter/>
+
                   <Modal opened={opened} onClose={close} centered radius="lg">
                     <div className={classes.wrapper}>
                       <Dropzone
@@ -118,8 +103,9 @@ export default function GalleryPage() {
                         onDrop={() => {}}
                         className={classes.dropzone}
                         radius="md"
-                        accept={[MIME_TYPES.pdf]}
+                        accept={[MIME_TYPES.pdf, MIME_TYPES.png, MIME_TYPES.jpeg]}
                         maxSize={30 * 1024 ** 2}
+                        
                       >
                         <div style={{ pointerEvents: 'none' }}>
                           <Group justify="center">
@@ -187,6 +173,18 @@ export default function GalleryPage() {
                     Upload Photo
                   </Button>
                 </Group>
+                <div>
+                  <Slider
+                    defaultValue={0}
+                    color='#ff914d'
+                    className={classes.m_dd36362e}
+                    label={(val) => marks.find((mark) => mark.value === val)!.label}
+                    step={50}
+                    marks={marks}
+                    pb={50}
+                    
+                  />
+                </div>
                 <SimpleGrid cols={{ base: 3, sm: 2 }}>
                   {fetchImages.value?.items.map((image) => (
                     <ImageCard image={image} />
@@ -194,9 +192,8 @@ export default function GalleryPage() {
                 </SimpleGrid>
               </Stack>
             </Center>
-          </Group>
         </Center>
-      </Box>
+      </Container>
     </>
   );
 }

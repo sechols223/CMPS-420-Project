@@ -13,6 +13,11 @@ export type ImageGetDto = {
   location?: string;
 };
 
+export type TagGetDto = {
+  _id: string;
+  name: string;
+}
+
 export type AlbumGetDto = {
   _id: string;
   name: string;

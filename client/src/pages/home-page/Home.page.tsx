@@ -1,16 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import {
-  Button,
-  Container,
-  Flex,
-  Paper,
-  rem,
-  Text,
-  Title,
-  useMantineTheme,
-} from '@mantine/core';
+import { Box, Paper, rem, useMantineTheme, Text, Title, Container, Button, Center, Flex, AspectRatio, Image, } from '@mantine/core';
 import '../../CSS/HeaderMegaMenu.module.css';
-import classes from '../home-page/Home.page.module.css';
+import classes from '../home-page/Home.page.module.css'
 import { useMediaQuery } from '@mantine/hooks';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
@@ -19,74 +10,84 @@ import Autoplay from 'embla-carousel-autoplay';
 import video from '../../components/Images/hero-Vid.mp4';
 import { NavBar } from '@/components/NavBar/Nav-Bar';
 
+
+
+
+
+
 interface CardProps {
   image: string;
-  title: string;
-  category: string;
 }
 
-function Card({ image, title, category }: CardProps) {
+function Card({ image }: CardProps) {
   return (
     <Paper
       shadow="md"
       p="xl"
       radius="md"
-      style={{ backgroundImage: `url(${image})` }}
+      style={{ backgroundImage: `url(${image})`, aspectRatio: 1920/1080 }}
       className={classes.card}
-    >
-      <div>
-        <Text className={classes.category} size="xs">
-          {category}
-        </Text>
-        <Title order={3} className={classes.title}>
-          {title}
-        </Title>
-      </div>
-    </Paper>
+    />
+    
   );
 }
 
 const userFavorites = [
   {
     id: 1,
-    title: 'Chrysler Building',
-    image:
-      'https://media.istockphoto.com/id/1129615025/photo/street-view-of-the-chrysler-building-at-midtown-manhattan-new-york-city-usa.jpg?s=1024x1024&w=is&k=20&c=lJ7QP6oTp20xcw2NE3Y16GiN6PeA0OJZJCuJKRAgEv4=',
-    tags: ['Chrysler Building', 'Skyscraper', 'NYC'],
+    title: "Chrysler Building",
+    image: 'https://media.istockphoto.com/id/1129615025/photo/street-view-of-the-chrysler-building-at-midtown-manhattan-new-york-city-usa.jpg?s=1024x1024&w=is&k=20&c=lJ7QP6oTp20xcw2NE3Y16GiN6PeA0OJZJCuJKRAgEv4=',
+    tags: [
+      "Chrysler Building",
+      "Skyscraper",
+      "NYC"
+    ],
     isFavorite: true,
   },
   {
     id: 2,
-    title: 'St. Louis Cathedral',
-    image:
-      'https://upload.wikimedia.org/wikipedia/commons/1/19/StLouisCath.jpg',
-    tags: ['Chrysler Building', 'Skyscraper', 'NYC'],
+    title: "St. Louis Cathedral",
+    image: 'https://upload.wikimedia.org/wikipedia/commons/1/19/StLouisCath.jpg',
+    tags: [
+      "Chrysler Building",
+      "Skyscraper",
+      "NYC"
+    ],
     isFavorite: true,
   },
   {
     id: 3,
-    title: 'Bonnet Carre Spillway',
-    image:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Army_Corps_operates_spillway_in_Louisiana.jpg/300px-Army_Corps_operates_spillway_in_Louisiana.jpg',
-    tags: ['Louisiana', 'Bonnet Carre', 'Infrastructure'],
+    title: "Bonnet Carre Spillway",
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Army_Corps_operates_spillway_in_Louisiana.jpg/300px-Army_Corps_operates_spillway_in_Louisiana.jpg',
+    tags: [
+      "Louisiana",
+      "Bonnet Carre",
+      "Infrastructure"
+    ],
     isFavorite: true,
   },
   {
     id: 4,
-    title: 'Statue of Unity',
-    image:
-      'https://preview.redd.it/the-statue-of-unity-in-india-it-is-the-tallest-statue-in-v0-db96pekttwda1.jpg?width=640&crop=smart&auto=webp&s=721e51614374f43c40be74d1cef63a2a30233af9',
-    tags: ['Chrysler Building', 'Skyscraper', 'NYC'],
+    title: "Statue of Unity",
+    image: 'https://preview.redd.it/the-statue-of-unity-in-india-it-is-the-tallest-statue-in-v0-db96pekttwda1.jpg?width=640&crop=smart&auto=webp&s=721e51614374f43c40be74d1cef63a2a30233af9',
+    tags: [
+      "Chrysler Building",
+      "Skyscraper",
+      "NYC"
+    ],
     isFavorite: true,
   },
   {
     id: 5,
-    title: 'Utah Hoodoos',
-    image:
-      'https://img2.10bestmedia.com/Images/Photos/382106/GettyImages-512495588_55_660x440.jpg',
-    tags: ['Chrysler Building', 'Skyscraper', 'NYC'],
+    title: "Utah Hoodoos",
+    image: 'https://img2.10bestmedia.com/Images/Photos/382106/GettyImages-512495588_55_660x440.jpg',
+    tags: [
+      "Chrysler Building",
+      "Skyscraper",
+      "NYC"
+    ],
     isFavorite: true,
-  },
+  }
 ];
 
 const data = [
@@ -128,6 +129,8 @@ const data = [
   },
 ];
 
+
+
 export function HomePage() {
   let navigate = useNavigate();
   const routeToGallery = () => {
@@ -146,7 +149,9 @@ export function HomePage() {
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
   const slides = userFavorites.map((item) => (
     <Carousel.Slide key={item.title} onClick={routeToGallery}>
-      <Card category={''} {...item} />
+      <Card  
+        {...item}
+      />
     </Carousel.Slide>
   ));
 
@@ -154,31 +159,31 @@ export function HomePage() {
 
   return (
     <>
-      <NavBar />
+    <NavBar/>
       <div className={classes.hero}>
-        <video src={video} autoPlay muted loop className={classes.heroVid} />
+        <video src={video} autoPlay muted loop className={classes.heroVid}/>
         <div className={classes.root}>
           <Container size="lg">
             <div className={classes.inner}>
               <div className={classes.content}>
                 <Title className={classes.title}>
-                  Welcome to <br />
+                  Welcome to{' '}
+                  <br/>
                   <Text
                     component="span"
                     inherit
                     variant="gradient"
                     gradient={{ from: 'pink', to: 'yellow' }}
+                    className={classes.titles}
                   >
                     What's That
                   </Text>{' '}
-                  <br />
+                  <br/>
+
                 </Title>
 
                 <Text className={classes.description} mt={30}>
-                  Discover What's That, the cutting-edge AI-powered photo
-                  organization app that seamlessly categorizes, enhances, and
-                  curates your visual memories with unparalleled precision and
-                  efficiency.
+                Discover What's That, the cutting-edge AI-powered photo organization app that seamlessly categorizes, enhances, and curates your visual memories with unparalleled precision and efficiency.
                 </Text>
 
                 <Button
@@ -195,32 +200,40 @@ export function HomePage() {
             </div>
           </Container>
         </div>
-      </div>
+      </div> 
       <div>
+        
         <Flex
           gap="lg"
-          direction={'column'}
-          justify={'center'}
-          align={'center'}
-          p={50}
+          direction={"column"}
+          justify={"center"}
+          align={"center"}
+          py={50}
+          
         >
-          <Title> Favorites</Title>
-          <Carousel
-            className={classes.carousel}
-            slideSize={{ base: '70%', sm: '50%' }}
-            slideGap={{ base: rem(8), sm: 'xl' }}
-            height="90%"
-            align="start"
-            slidesToScroll={mobile ? 1 : 2}
-            loop
-            plugins={[autoplay.current]}
-            onMouseEnter={autoplay.current.stop}
-            onMouseLeave={autoplay.current.reset}
-          >
-            {slides}
-          </Carousel>
+          <Title className={classes.titles}> Favorites</Title>
+          <Paper shadow='md' radius="xl" withBorder >
+            <Center>
+            <Carousel
+              className={classes.carousel}
+              slideSize="33.333333%"
+              slideGap={{ base: rem(8), sm: 'xl' }}
+              height="90%"
+              align="center"
+              slidesToScroll={mobile ? 1 : 2}
+              loop
+              plugins={[autoplay.current]}
+              onMouseEnter={autoplay.current.stop}
+              onMouseLeave={autoplay.current.reset}
+              py={70}
+              style={{ width: '90%', flexShrink:1 }}
+            >
+              {slides}
+            </Carousel>
+            </Center>
+          </Paper>
         </Flex>
+        
       </div>
-    </>
-  );
-}
+  </>
+)}

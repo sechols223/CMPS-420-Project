@@ -45,6 +45,7 @@ export function AlbumPage() {
     console.log('New album created:', newAlbumTitle, newAlbumCover);
     setModalOpened(false);
   };
+  console.log(fetchAlbums)
 
   return (
     <>

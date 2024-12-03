@@ -1,5 +1,6 @@
 .header {
   min-height: 60px;
+  width: 100vw;
   padding-top: var(--mantine-spacing-md);
   padding-left: var(--mantine-spacing-md);
   padding-right: var(--mantine-spacing-md);
