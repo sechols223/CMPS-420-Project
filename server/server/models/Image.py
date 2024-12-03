@@ -42,3 +42,4 @@ class UpdateImageDto(BaseSchema):
     location: Optional[str] = None
     description: Optional[str] = None
     tags: Optional[List[str]] = None
+
