@@ -1,7 +1,7 @@
 import { api } from "@/api";
-import { TagGetDto } from "@/types";
+import { ApiResponse, TagGetDto } from "@/types";
 import { CheckIcon, Combobox, Group, Pill, PillsInput, useCombobox } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAsync } from "react-use";
 import '@mantine/core/styles/PillsInput.css';
 import { useFetch } from "@mantine/hooks";
@@ -13,24 +13,10 @@ export function TagFilter() {
     const fetchTags = useAsync(async () => {
         const response = 
         await api.get<TagGetDto[]>('/api/tags');
-        console.log(response.data?.map((tag) => tag.name))
-        return response.data?.map((tag) => tag.name);
+        console.log(response.data)
+        return response.data;
         
     }, []);
-
-    const {
-        data: tags,
-        loading,
-        error
-    } = useFetch<TagGetDto[]>(
-        "/api/tags",
-        {
-            method: "get"
-        }
-    )
-
-    console.log(tags)
-
 
       
     const combobox = useCombobox({
@@ -49,14 +35,14 @@ export function TagFilter() {
     const handleValueRemove = (val: string) =>
         setValue((current) => current.filter((v) => v !== val));
 
-    const values = (fetchTags.value || []).map((item) => (
+    const values = fetchTags.value?.map((item) => (
         <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>
         {item}
         </Pill>
     ));
 
     console.log(fetchTags.value);
-    console.log();
+    //console.log("tags",tags);
     console.log(groceries);
 
    const options = fetchTags.value?.filter((item) => (item ?? '').toLowerCase().includes(search.trim().toLowerCase()))?.map((item) => (
