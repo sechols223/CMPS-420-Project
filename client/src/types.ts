@@ -20,7 +20,6 @@ export type AlbumGetDto = {
 };
 
 export type ImageUpdateDto = {
-  id: string;
   name: string;
   tags: string[];
   description?: string;
