@@ -19,6 +19,8 @@ from server.database.blob_storage import upload_image
 from server.database.db import database
 
 import server.models.Image as ImageModel
+from server.database.secret_manager import get_openai_key
+
 
 def is_url(path):
   """
@@ -71,9 +73,6 @@ class Albums(BaseModel):
 
 env_vars = dotenv_values(dotenv_path='./server/.env')
 
-api_key = env_vars.get('MISTRAL_API_KEY')
-openai_api_key = env_vars.get("OPENAI_API_KEY")
-
 model = "pixtral-12b-2409"
 openai_model = "gpt-4o"
 with_tags: bool = False
@@ -104,6 +103,9 @@ categories_cursor: [str] = database["Categories"].find({}, category_projection).
 category_names = [document['category'] for document in categories_cursor]
 
 predefined_categories = list(set(category_names) & set(predefined_categories))
+
+api_key = ''
+openai_api_key = get_openai_key()
 
 client: Mistral = Mistral(api_key=api_key)
 openai_client = OpenAI(api_key=openai_api_key)
