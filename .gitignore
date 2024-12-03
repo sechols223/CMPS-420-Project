@@ -7,3 +7,9 @@ client/node_modules
 .build
 .env
 server/server/.env
+node_modules
+*.env
+**/__pycache__/
+
+yarn-lock.json
+package-lock.json
