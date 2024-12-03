@@ -13,6 +13,7 @@ export const ImageCards: React.FC = () => {
 		return response.data
 	}, [])
 	
+
 	return (
 		<LoadingContainer loading={fetchImages.loading}>
 			{	fetchImages.value?.items.map((image) => (

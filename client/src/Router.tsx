@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, useNavigate } from 'react-router-dom';
 import { LoginForm } from './login/login-form';
 import GalleryPage from './pages/GalleryPage/Gallery-Page';
 import { GetStartedPage } from './pages/get-started-page/GetStarted.page';
@@ -78,9 +78,11 @@ const router2 = createBrowserRouter([
     path: '/albums/:id',
     element: <AlbumDetails />,
   },
+  
 ]);
 
 export function Router() {
+
   return <RouterProvider router={router} />;
 }
 

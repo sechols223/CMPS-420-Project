@@ -10,3 +10,8 @@ server/.env
 /installer.ps1
 /model.py
 /notebook.ipynb
+server/server/.env
+
+server/server/__pycache__/**/*
+server/server/__pycache__
+**/__pycache__/
