@@ -4,6 +4,7 @@ import { CheckIcon, Combobox, Group, Pill, PillsInput, useCombobox } from "@mant
 import { useState } from "react";
 import { useAsync } from "react-use";
 import '@mantine/core/styles/PillsInput.css';
+import { useFetch } from "@mantine/hooks";
 
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
@@ -12,10 +13,23 @@ export function TagFilter() {
     const fetchTags = useAsync(async () => {
         const response = 
         await api.get<TagGetDto[]>('/api/tags');
-        return response.data;
+        console.log(response.data?.map((tag) => tag.name))
+        return response.data?.map((tag) => tag.name);
+        
     }, []);
 
-    const tagNames = fetchTags.value ? fetchTags.value.map(tag => tag.name) : [];
+    const {
+        data: tags,
+        loading,
+        error
+    } = useFetch<TagGetDto[]>(
+        "/api/tags",
+        {
+            method: "get"
+        }
+    )
+
+    console.log(tags)
 
 
       
@@ -36,20 +50,20 @@ export function TagFilter() {
         setValue((current) => current.filter((v) => v !== val));
 
     const values = (fetchTags.value || []).map((item) => (
-        <Pill key={item.name} withRemoveButton onRemove={() => handleValueRemove(item.name)}>
-        {item.name}
+        <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>
+        {item}
         </Pill>
     ));
 
     console.log(fetchTags.value);
-    console.log(tagNames);
+    console.log();
     console.log(groceries);
 
-   const options = (fetchTags.value || []).filter((item) => (item.name ?? '').toLowerCase().includes(search.trim().toLowerCase()))?.map((item) => (
+   const options = fetchTags.value?.filter((item) => (item ?? '').toLowerCase().includes(search.trim().toLowerCase()))?.map((item) => (
     
-      <Combobox.Option value={item.name} key={item.name} active={value.includes(item.name)}>
+      <Combobox.Option value={item} key={item} active={value.includes(item)}>
         <Group gap="sm">
-          {value.includes(item.name) ? <CheckIcon size={12} /> : null}
+          {value.includes(item) ? <CheckIcon size={12} /> : null}
         </Group>
       </Combobox.Option>
     )); 

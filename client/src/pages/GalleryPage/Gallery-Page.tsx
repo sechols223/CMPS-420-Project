@@ -23,12 +23,11 @@ import {
   useCombobox,
   useMantineTheme,
 } from '@mantine/core';
-import classes from '../../CSS/HeaderMegaMenu.module.css';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { useDisclosure } from '@mantine/hooks';
 import React, { useRef, useState } from 'react';
 import { IconCloudUpload, IconDownload, IconX } from '@tabler/icons-react';
-import '../GalleryPage/Gallery-Page.module.css';
+import classes from '../GalleryPage/Gallery-Page.module.css';
 import '@mantine/dropzone/styles.css';
 import { NavBar } from '@/components/NavBar/Nav-Bar';
 import { useAsync } from 'react-use';
@@ -50,6 +49,7 @@ export default function GalleryPage() {
   const [opened, { open, close }] = useDisclosure(false);
   const openRef = useRef<() => void>(null);
   const theme = useMantineTheme();
+  const [columns, setColumns] = useState(3);
   const [search, setSearch] = useState('');
   const [value, setValue] = useState<string[]>([]);
 
@@ -175,17 +175,27 @@ export default function GalleryPage() {
                 </Group>
                 <div>
                   <Slider
-                    defaultValue={0}
+                    defaultValue={2}
+                    min={2}
+                    max={6}
+                    value={columns}
+                    onChange={setColumns}
                     color='#ff914d'
-                    className={classes.m_dd36362e}
-                    label={(val) => marks.find((mark) => mark.value === val)!.label}
-                    step={50}
-                    marks={marks}
+                    className={classes.root}
+                    step={1}
+                    marks={[
+                      { value: 2, label: '2' },
+                      { value: 3, label: '3' },
+                      { value: 4, label: '4' },
+                      { value: 5, label: '5' },
+                      { value: 6, label: '6' },
+                    ]}
+                    label={(label) => `${label} columns`}
                     pb={50}
                     
                   />
                 </div>
-                <SimpleGrid cols={{ base: 3, sm: 2 }}>
+                <SimpleGrid cols={columns}>
                   {fetchImages.value?.items.map((image) => (
                     <ImageCard image={image} />
                   ))}
