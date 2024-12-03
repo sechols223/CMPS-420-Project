@@ -10,12 +10,14 @@ import {
   Badge,
   Button,
   Card,
+  Center,
   Flex,
   Group,
   Image,
   LoadingOverlay,
   Menu,
   Modal,
+  Select,
   Stack,
   TagsInput,
   Text,
@@ -24,7 +26,7 @@ import {
   Title,
   validateMantineTheme,
 } from '@mantine/core';
-import React, { CSSProperties, useEffect } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import classes from '@/CSS/HeaderMegaMenu.module.css';
 import { Controller, useForm } from 'react-hook-form';
@@ -111,16 +113,34 @@ export const ImageModal: React.FC<{
       fetchImage.retry();
     }
   });
-
+  const [selectedAlbum, setSelectedAlbum] = useState<string | null>(null);
   //fetch albums
   const fetchAlbums = useAsyncRetry(async () => {
-    const response = await api.get<AlbumGetDto[]>('/api/albums');
-    return response.data;
-  });
+    const response = await api.get('/api/albums');
+    return response.data.map((album: { _id: string; name: string }) => ({
+      value: album._id, // Album ID
+      label: album.name, // Album name
+    }));
+  }, []);
   //add to da album
-  const addToAlbum = useAsyncFn(async (values: AlbumImageListDto) => {
-    const response = await api.post(`/api/albums/${fetchImage.value?._id}`);
-  });
+  const addImageToAlbum = async () => {
+    if (!selectedAlbum) {
+      toast.error('Please select an album.');
+      return;
+    }
+    try {
+      const response = await api.post(
+        `/api/albums/${selectedAlbum}/images/${imageId}`
+      );
+      if (response.status === 200) {
+        toast.success('Image successfully added to album!');
+        albumDropdownThing.close(); // Close the modal
+      }
+    } catch (error) {
+      console.error('Failed to add image to album:', error);
+      toast.error('Failed to add image to album.');
+    }
+  };
 
   useEffect(() => {
     fetchImage.retry();
@@ -131,7 +151,7 @@ export const ImageModal: React.FC<{
 
   return (
     <>
-      <Modal opened={opened} onClose={close} withCloseButton={false}>
+      <Modal opened={opened} onClose={close} withCloseButton={false} centered>
         <LoadingOverlay
           visible={submitState.loading || fetchImage.loading}
           loaderProps={{ children: 'Loading...' }}
@@ -232,10 +252,34 @@ export const ImageModal: React.FC<{
         )}
       </Modal>
       <Modal
+        title="Add this image to an album"
         opened={albumDropdown}
         onClose={albumDropdownThing.close}
         withCloseButton={true}
-      ></Modal>
+        centered
+      >
+        <Center>
+          <Group>
+            <Stack>
+              <Select
+                size="lg"
+                placeholder="Select an album"
+                data={fetchAlbums.value || []} // Populate with fetched album data
+                onChange={setSelectedAlbum} // Set selected album ID
+                value={selectedAlbum} // Controlled value
+                disabled={fetchAlbums.loading} // Disable while loading
+              />
+              <Button
+                onClick={addImageToAlbum}
+                disabled={!selectedAlbum || fetchAlbums.loading}
+                size="sm"
+              >
+                Add to Album
+              </Button>
+            </Stack>
+          </Group>
+        </Center>
+      </Modal>
     </>
   );
 };
