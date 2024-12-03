@@ -94,7 +94,7 @@ export default function GalleryPage() {
         visible={fetchImages.loading}
         loaderProps={{ children: 'Loading...' }}
       />
-      <Box pt={50}>
+      <Box>
         <Center>
           <Group>
             <Center>
