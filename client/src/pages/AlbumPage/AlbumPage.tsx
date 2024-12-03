@@ -56,10 +56,6 @@ export function AlbumPage() {
     setModalOpened(true);
   };
 
-  //Trying shit out. I have no clue what the fuck is going on.
-  type createAlbumData = {
-    albumName: string;
-  };
   const { register, handleSubmit } = useForm<AlbumCreateDto>({
     defaultValues: {
       name: 'newAlbumName',
