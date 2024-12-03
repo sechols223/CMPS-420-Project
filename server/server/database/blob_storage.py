@@ -3,9 +3,9 @@ from azure.storage.blob.aio import BlobServiceClient, ContainerClient
 import aiofiles
 from dotenv import dotenv_values
 
-env = dotenv_values(dotenv_path='./server/.env')
+from server.database.secret_manager import get_azure_url
 
-connection_string = env['AZURE_CONNECTION_STRING']
+connection_string = get_azure_url()
 
 container_name = "images"
 blob_service_client = BlobServiceClient.from_connection_string(connection_string)
