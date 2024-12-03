@@ -4,12 +4,21 @@
   padding-left: var(--mantine-spacing-md);
   padding-right: var(--mantine-spacing-md);
   padding-bottom: calc(1.5rem * var(--mantine-scale));
-  border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  border-bottom: rem(1px) solid
+    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
   background-color: #39445a;
+  /* added stuff to get the nav bar to stay in place*/
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .logoContainer {
@@ -19,8 +28,7 @@
 }
 
 .logo {
-  height: 100px; /* Adjust the height as needed */
-  /* margin: var(--mantine-spacing-sm); */
+  height: 100px;
 }
 
 .header .searchBar {
@@ -28,6 +36,14 @@
   justify-content: flex-end;
   flex-grow: 1;
   padding-top: 10px;
+}
+
+/* Added this for fixed nav bar */
+/* Add this new class for the main content wrapper */
+.mainContent {
+  margin-top: 60px; /*calc(100px + 0.5rem);  /* header height + padding */
+  min-height: calc(100vh - 650px);
+  width: 100%;
 }
 
 .buttonGroup {
@@ -44,7 +60,6 @@
     transform 150ms ease,
     box-shadow 150ms ease;
 }
-
 
 .navButton:hover {
   transform: scale(1.1);
@@ -71,7 +86,10 @@
   }
 
   &:hover {
-    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+    background-color: light-dark(
+      var(--mantine-color-gray-0),
+      var(--mantine-color-dark-6)
+    );
   }
 }
 
@@ -81,17 +99,24 @@
   border-radius: var(--mantine-radius-md);
 
   &:hover {
-    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+    background-color: light-dark(
+      var(--mantine-color-gray-0),
+      var(--mantine-color-dark-7)
+    );
   }
 }
 
 .dropdownFooter {
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+  background-color: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-7)
+  );
   margin: calc(var(--mantine-spacing-md) * -1);
   margin-top: var(--mantine-spacing-sm);
   padding: var(--mantine-spacing-md) calc(var(--mantine-spacing-md) * 2);
   padding-bottom: var(--mantine-spacing-xl);
-  border-top: rem(1px) solid light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
+  border-top: rem(1px) solid
+    light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
 }
 
 .card {
