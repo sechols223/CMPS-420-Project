@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-use": "^17.5.1",
+    "react-use-async": "^0.0.16"
+  }
+}

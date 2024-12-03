@@ -21,6 +21,7 @@ class Album(BaseDBSchema):
 
 class AlbumCreateDto(BaseModel):
     name: str
+    imageIds: List[str]
 
 class AlbumImageListDto(BaseModel):
     image_ids: Optional[list[str]] = None

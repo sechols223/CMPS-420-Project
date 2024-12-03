@@ -25,3 +25,7 @@ export type ImageUpdateDto = {
   description?: string;
   location?: string;
 };
+export type AlbumCreateDto ={ 
+  name: string; 
+  imageIds: string[]
+}

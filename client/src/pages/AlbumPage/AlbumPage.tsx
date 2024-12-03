@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IconPlus } from '@tabler/icons-react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { data, Form, Outlet, useNavigate } from 'react-router-dom';
 import {
   Button,
   Card,
   Center,
   Group,
   Image,
+  Input,
   LoadingOverlay,
   Modal,
   SimpleGrid,
@@ -16,9 +17,10 @@ import {
   Title,
 } from '@mantine/core';
 import { NavBar } from '@/components/NavBar/Nav-Bar';
-import { useAsync } from 'react-use';
+import { useAsync, useAsyncFn, useAsyncRetry } from 'react-use';
 import { api } from '@/api';
-import { AlbumGetDto } from '@/types';
+import { AlbumGetDto, AlbumCreateDto } from '@/types';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 export function AlbumPage() {
   const navigate = useNavigate();
@@ -27,9 +29,22 @@ export function AlbumPage() {
   const [newAlbumTitle, setNewAlbumTitle] = useState('');
   const [newAlbumCover, setNewAlbumCover] = useState('');
 
-  const fetchAlbums = useAsync(async () => {
+  const fetchAlbums = useAsyncRetry(async () => {
     const response = await api.get<AlbumGetDto[]>('/api/albums');
     return response.data;
+  });
+
+  const [, createAlbum] = useAsyncFn(async (values: AlbumCreateDto) => {
+    try {
+      const response = await api.post<AlbumCreateDto[]>('/api/albums', {
+        ...values,
+      });
+      console.log('album created', response.data);
+      fetchAlbums.retry();
+      setModalOpened(false);
+    } catch (error) {
+      console.error('error creating album: ', error);
+    }
   });
 
   const routeToAlbum = (id: string) => {
@@ -41,11 +56,20 @@ export function AlbumPage() {
     setModalOpened(true);
   };
 
-  const handleCreateAlbum = () => {
-    console.log('New album created:', newAlbumTitle, newAlbumCover);
-    setModalOpened(false);
+  //Trying shit out. I have no clue what the fuck is going on.
+  type createAlbumData = {
+    albumName: string;
   };
+  const { register, handleSubmit } = useForm<AlbumCreateDto>({
+    defaultValues: {
+      name: 'newAlbumName',
+      imageIds: [],
+    },
+  });
 
+  useEffect(() => {
+    fetchAlbums.retry();
+  }, []);
   return (
     <>
       <NavBar />
@@ -110,13 +134,19 @@ export function AlbumPage() {
         title="Create New Album"
       >
         <Stack>
-          <TextInput
-            label="Album Title"
-            placeholder="Enter album title"
-            value={newAlbumTitle}
-            onChange={(event) => setNewAlbumTitle(event.currentTarget.value)}
-          />
-          <Button onClick={handleCreateAlbum}>Create Album</Button>
+          <form onSubmit={handleSubmit(createAlbum)}>
+            <TextInput
+              withAsterisk
+              label="Album Name"
+              placeholder="Your new album"
+              {...register('name')}
+            />
+
+            <br></br>
+            <center>
+              <Button type="submit">Submit</Button>
+            </center>
+          </form>
         </Stack>
       </Modal>
       <Outlet />
