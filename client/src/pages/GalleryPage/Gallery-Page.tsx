@@ -61,7 +61,7 @@ export default function GalleryPage() {
 
   
  
-  console.log(fetchImages)
+
 
 
 
