@@ -3,7 +3,6 @@ from typing import Annotated, Optional
 from pydantic import BaseModel, ConfigDict, Field, BeforeValidator, computed_field
 from pydantic.alias_generators import to_camel
 
-
 PyObjectId = Annotated[str, BeforeValidator(str)]
 
 class BaseSchema(BaseModel):
@@ -15,7 +14,3 @@ class BaseSchema(BaseModel):
 
 class BaseDBSchema(BaseSchema):
     id: Optional[PyObjectId] = Field(alias="_id")
-
-
-
-
