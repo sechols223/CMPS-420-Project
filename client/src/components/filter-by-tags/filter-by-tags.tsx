@@ -3,6 +3,7 @@ import { TagGetDto } from "@/types";
 import { CheckIcon, Combobox, Group, Pill, PillsInput, useCombobox } from "@mantine/core";
 import { useState } from "react";
 import { useAsync } from "react-use";
+import '@mantine/core/styles/PillsInput.css';
 
 const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
 
@@ -14,11 +15,10 @@ export function TagFilter() {
         return response.data;
     }, []);
 
-    
+    const tagNames = fetchTags.value ? fetchTags.value.map(tag => tag.name) : [];
 
 
       
-    console.log(fetchTags)
     const combobox = useCombobox({
         onDropdownClose: () => combobox.resetSelectedOption(),
         onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
@@ -35,22 +35,24 @@ export function TagFilter() {
     const handleValueRemove = (val: string) =>
         setValue((current) => current.filter((v) => v !== val));
 
-    const values = fetchTags.value?.map((item) => (
+    const values = (fetchTags.value || []).map((item) => (
         <Pill key={item.name} withRemoveButton onRemove={() => handleValueRemove(item.name)}>
         {item.name}
         </Pill>
     ));
 
-    const options = groceries
-        .filter((item) => item.toLowerCase().includes(search.trim().toLowerCase()))
-        .map((item) => (
-        <Combobox.Option value={item} key={item} active={value.includes(item)}>
-            <Group gap="sm">
-            {value.includes(item) ? <CheckIcon size={12} /> : null}
-            <span>{item}</span>
-            </Group>
-        </Combobox.Option>
-        ));
+    console.log(fetchTags.value);
+    console.log(tagNames);
+    console.log(groceries);
+
+   const options = (fetchTags.value || []).filter((item) => (item.name ?? '').toLowerCase().includes(search.trim().toLowerCase()))?.map((item) => (
+    
+      <Combobox.Option value={item.name} key={item.name} active={value.includes(item.name)}>
+        <Group gap="sm">
+          {value.includes(item.name) ? <CheckIcon size={12} /> : null}
+        </Group>
+      </Combobox.Option>
+    )); 
 
     return (
         <>
@@ -58,7 +60,7 @@ export function TagFilter() {
                 <Combobox.DropdownTarget>
                     <PillsInput onClick={() => combobox.openDropdown()}>
                     <Pill.Group>
-                        {values}
+                        {value}
                         <Combobox.EventsTarget>
                         <PillsInput.Field
                             onFocus={() => combobox.openDropdown()}
@@ -83,7 +85,7 @@ export function TagFilter() {
 
                 <Combobox.Dropdown>
                     <Combobox.Options>
-                    {value.length > 0 ? value : <Combobox.Empty>Nothing found...</Combobox.Empty>}
+                    { options }
                     </Combobox.Options>
                 </Combobox.Dropdown>
             </Combobox>
