@@ -23,7 +23,7 @@ class AlbumCreateDto(BaseModel):
     name: str
 
 class AlbumImageListDto(BaseModel):
-    image_ids: list[str]
+    image_ids: Optional[list[str]] = None
 
 def _get_albums() -> List[Album]:
     """
