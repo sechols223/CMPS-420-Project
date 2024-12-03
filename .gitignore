@@ -7,3 +7,4 @@ client/node_modules
 .build
 .env
 server/server/.env
+server
