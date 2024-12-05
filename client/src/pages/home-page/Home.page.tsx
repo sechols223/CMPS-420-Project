@@ -154,7 +154,6 @@ export function HomePage() {
 
   return (
     <>
-      <NavBar />
       <div className={classes.hero}>
         <video src={video} autoPlay muted loop className={classes.heroVid} />
         <div className={classes.root}>

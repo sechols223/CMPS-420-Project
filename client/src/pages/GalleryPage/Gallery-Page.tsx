@@ -1,4 +1,5 @@
 import {
+  ActionIcon,
   Box,
   Button,
   Center,
@@ -19,7 +20,12 @@ import classes from '../../CSS/HeaderMegaMenu.module.css';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { useDisclosure } from '@mantine/hooks';
 import React, { useRef } from 'react';
-import { IconCloudUpload, IconDownload, IconX } from '@tabler/icons-react';
+import {
+  IconCloudUpload,
+  IconDownload,
+  IconHeart,
+  IconX,
+} from '@tabler/icons-react';
 import '../GalleryPage/Gallery-Page.module.css';
 import '@mantine/dropzone/styles.css';
 import { NavBar } from '@/components/NavBar/Nav-Bar';
@@ -89,7 +95,6 @@ export default function GalleryPage() {
 
   return (
     <>
-      <NavBar />
       <LoadingOverlay
         visible={fetchImages.loading}
         loaderProps={{ children: 'Loading...' }}
@@ -189,7 +194,30 @@ export default function GalleryPage() {
                 </Group>
                 <SimpleGrid cols={{ base: 3, sm: 2 }}>
                   {fetchImages.value?.items.map((image) => (
-                    <ImageCard image={image} />
+                    <div style={{ position: 'relative' }}>
+                      <ImageCard image={image} />
+                      <ActionIcon
+                        variant="filled"
+                        size="lg"
+                        radius="xl"
+                        style={{
+                          position: 'absolute',
+                          bottom: '25px',
+                          right: '25px',
+                          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                          zIndex: 2,
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      >
+                        <IconHeart
+                          style={{ width: '70%', height: '70%' }}
+                          color="gray"
+                        />
+                      </ActionIcon>
+                    </div>
                   ))}
                 </SimpleGrid>
               </Stack>

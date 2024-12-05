@@ -48,7 +48,6 @@ export function AlbumPage() {
 
   return (
     <>
-      <NavBar />
       <LoadingOverlay
         visible={fetchAlbums.loading}
         loaderProps={{ children: 'Loading...' }}

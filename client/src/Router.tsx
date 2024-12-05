@@ -7,6 +7,7 @@ import { RegistrationForm } from './registration/RegistrationForm';
 import { AlbumPage } from './pages/AlbumPage/AlbumPage';
 import { NavBar } from './components/NavBar/Nav-Bar';
 import { AlbumDetails } from './pages/album-details-page/album-details';
+import { FavoritesPage } from './pages/FavoritesPage/Favorites-Page';
 
 const router = createBrowserRouter([
   {
@@ -34,12 +35,12 @@ const router = createBrowserRouter([
         element: <AlbumPage />,
       },
       {
-        path: '/albums',
-        element: <AlbumPage />,
-      },
-      {
         path: '/albums/:id',
         element: <AlbumDetails />,
+      },
+      {
+        path: '/favorites',
+        element: <FavoritesPage />,
       },
     ],
   },
@@ -55,28 +56,38 @@ const router2 = createBrowserRouter([
     element: <GetStartedPage />,
   },
   {
-    path: '/home',
-    element: <HomePage />,
-  },
-  {
-    path: '/gallery',
-    element: <GalleryPage />,
-  },
-  {
-    path: '/loginform',
-    element: <LoginForm />,
-  },
-  {
-    path: '/signupform',
-    element: <RegistrationForm />,
-  },
-  {
-    path: '/albums',
-    element: <AlbumPage />,
-  },
-  {
-    path: '/albums/:id',
-    element: <AlbumDetails />,
+    path: '/',
+    element: <NavBar />,
+    children: [
+      {
+        path: 'home',
+        element: <HomePage />,
+      },
+      {
+        path: 'gallery',
+        element: <GalleryPage />,
+      },
+      {
+        path: 'loginform',
+        element: <LoginForm />,
+      },
+      {
+        path: 'signupform',
+        element: <RegistrationForm />,
+      },
+      {
+        path: 'albums',
+        element: <AlbumPage />,
+      },
+      {
+        path: 'albums/:id',
+        element: <AlbumDetails />,
+      },
+      {
+        path: 'favorites',
+        element: <FavoritesPage />,
+      },
+    ],
   },
 ]);
 
